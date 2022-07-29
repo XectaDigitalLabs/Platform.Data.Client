@@ -9,6 +9,7 @@ from openapi_client import ApiClient, Configuration
 from openapi_client.api.daily_production_api import DailyProductionApi
 from openapi_client.api.well_header_api import WellHeaderApi
 from openapi_client.model.daily_production_input import DailyProductionInput
+from openapi_client.model.well_header_input import WellHeaderInput
 
 
 class XectaApi:

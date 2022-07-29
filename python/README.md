@@ -1,29 +1,59 @@
 
 # Platform Data Client Python
 
+### Generating the xecta openapi client.
+
+We leverage gradle to execute the swagger client code generation. This function will generate all the necessary
+client code to communicate with the api.
+
+```shell
+../gradlew generateSwaggerCode-python
+```
 
 ### Xecta Api Initialization
 
-
 ```python
+    # Initialize the xecta api with the root url, certificate and key
+    xecta_api = XectaApi("https://testawsapi.onxecta.com", '/home/someuser/.auth/my_client.pem', '/home/someuser/.auth/my_client.key')
+    # Authenticating will return you a xecta api client.
+    api_client = xecta_api.authenticate('<aaaabbbbccccdddeeee>','fffggghhhhiiiiijjjjkkkkllllmmmnnnoooppp')
 
 ```
 
 
-
 ### Well Header
+TBD
+```python
 
+well_header_input = WellHeaderInput(
+    uwi="well_uwi",
+    name="well 1",
+    group="group 1",
+    field="field 1",
+    type="INJECTOR",
+    fluid="GAS",
+    route="route",
+    lift_type="GAS_LIFT",
+    lat=0.0,
+    lon=0.0
+)
+
+try:
+    well_header_api = authenticated_client.well_header_api()
+    api_response = well_header_api.production_add_well_header(well_header_input)
+    pprint(api_response)
+except openapi_client.ApiException as e:
+    print("Exception when calling DailyProductionApi->production_add_daily: %s\n" % e)
+
+```
 
 
 ### Daily Production
 Sample code saving daily production
 
-```python
-    
-    x = XectaApi("https://testawsapi.onxecta.com", '/home/someuser/.auth/my_client.pem', '/home/someuser/.auth/my_client.key', )
+#### Adding dailing production record
 
-    authenticated_client = x.authenticate('<aaaabbbbccccdddeeee>','fffggghhhhiiiiijjjjkkkkllllmmmnnnoooppp')
-    # authenticated_client.add_daily_production()
+```python
 
     daily_production_input = [
         DailyProductionInput(
@@ -47,7 +77,7 @@ Sample code saving daily production
     ]  # [DailyProductionInput] |
 
     try:
-        api_response = authenticated_client.daily_production_api().production_add_daily(daily_production_input)
+        api_response = api_client.daily_production_api().production_add_daily(daily_production_input)
         pprint(api_response)
     except openapi_client.ApiException as e:
         print("Exception when calling DailyProductionApi->production_add_daily: %s\n" % e)
