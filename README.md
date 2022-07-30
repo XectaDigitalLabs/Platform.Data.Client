@@ -2,22 +2,36 @@
 The goal of this project is to 
 
 
-### Code Genration
+## Code Genration
 
 We leverage gradle to invoke the oas swagger code generation plugins. Using gradle you can generate a client for a large
 number of api clients.
 
 
-#### Python
+### Python
 The python implementaiton 
 
 
-Linux / OSX
+**Linux / OSX**
 ```shell
 ./gradlew generateSwaggerCodeDataclient-python
 ```
 
-Windows
+**Windows**
 ```shell
 ./gradlew.bat generateSwaggerCodeDataclient-python
+```
+
+
+### CSharp
+
+
+**Linux / OSX**
+```shell
+./gradlew generateSwaggerCodeDataclient-csharp
+```
+
+**Windows**
+```shell
+./gradlew.bat generateSwaggerCodeDataclient-csharp
 ```
