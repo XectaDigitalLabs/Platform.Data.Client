@@ -1,0 +1,18 @@
+# Org.OpenAPITools.Model.WellHeaderInput
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**Uwi** | **string** |  | 
+**Name** | **string** |  | 
+**Group** | **string** |  | 
+**Field** | **string** |  | 
+**Route** | **string** |  | 
+**Type** | **string** |  | 
+**Fluid** | **string** |  | 
+**LiftType** | **string** |  | 
+**Lat** | **double** |  | 
+**Lon** | **double** |  | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
