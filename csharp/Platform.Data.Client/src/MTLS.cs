@@ -7,19 +7,6 @@ namespace Data.Platform.Client.CSharp
 {
     public class MTLS
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public static Configuration Configuration(string certPath = "certs/xecta-data-api.pem",
-            string keyPath = "certs/xecta-data-api.key")
-        {
-            return new Configuration()
-            {
-                ClientCertificates = _x509CertificateCollection(certPath, keyPath)
-            };
-        }
-
         internal static X509CertificateCollection _x509CertificateCollection(string certPath = "certs/xecta-data-api.pem",
             string keyPath = "certs/xecta-data-api.key")
         {
