@@ -22,7 +22,11 @@ client code to communicate with the api.
 
 
 ### Well Header
-TBD
+
+
+
+Adding a single well header
+
 ```python
 
 well_header_input = WellHeaderInput(
