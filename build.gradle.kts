@@ -20,7 +20,7 @@ dependencies {
 tasks {
     swaggerSources {
         create("dataclient-python") {
-            setInputFile(file("../Data.Platform.Production/src/main/resources/schema/production-oas.json"))
+            setInputFile(file("schemas/production-oas.json"))
             code.language = "python"
             code.outputDir = file("python/generated-source")
         }
@@ -28,7 +28,7 @@ tasks {
 
     swaggerSources {
         create("dataclient-kotlin") {
-            setInputFile(file("../Data.Platform.Production/src/main/resources/schema/production-oas.json"))
+            setInputFile(file("schemas/production-oas.json"))
             code.language = "kotlin"
             code.outputDir = file("kotlin/generated-source")
         }
@@ -36,7 +36,7 @@ tasks {
 
     swaggerSources {
         create("dataclient-csharp") {
-            setInputFile(file("../Data.Platform.Production/src/main/resources/schema/production-oas.json"))
+            setInputFile(file("schemas/production-oas.json"))
             code.language = "csharp-netcore"
             code.outputDir = file("csharp/generated-source")
         }
