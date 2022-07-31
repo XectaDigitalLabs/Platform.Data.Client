@@ -20,7 +20,7 @@ namespace Data.Platform.Client.CSharp
 
         public DailyProductionApi ProductionApi()
         {
-            return new DailyProductionApi(_configuration);
+            return new DailyProductionApi(_client, _asyncClient, _configuration);
         }
         public WellHeaderApi WellHeaderApi()
         {

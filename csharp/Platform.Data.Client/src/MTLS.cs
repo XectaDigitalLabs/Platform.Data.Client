@@ -7,7 +7,8 @@ namespace Data.Platform.Client.CSharp
 {
     public class MTLS
     {
-        internal static X509CertificateCollection _x509CertificateCollection(string certPath = "certs/xecta-data-api.pem",
+        internal static X509CertificateCollection _x509CertificateCollection(
+            string certPath = "certs/xecta-data-api.pem",
             string keyPath = "certs/xecta-data-api.key")
         {
             var cert = File.ReadAllBytes(certPath);

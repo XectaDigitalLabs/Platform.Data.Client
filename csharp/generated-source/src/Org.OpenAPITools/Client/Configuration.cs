@@ -507,6 +507,7 @@ namespace Org.OpenAPITools.Client
                 AccessToken = second.AccessToken ?? first.AccessToken,
                 TempFolderPath = second.TempFolderPath ?? first.TempFolderPath,
                 DateTimeFormat = second.DateTimeFormat ?? first.DateTimeFormat
+                
             };
             return config;
         }
