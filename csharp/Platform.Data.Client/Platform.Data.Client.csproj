@@ -13,5 +13,9 @@
         </Content>
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Include="src\.test\Program.cs" />
+    </ItemGroup>
+
 
 </Project>

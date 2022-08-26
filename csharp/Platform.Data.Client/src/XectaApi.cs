@@ -3,7 +3,6 @@ using System.Net;
 using System.Security.Authentication;
 using System.Text;
 using Org.OpenAPITools.Client;
-using Platform.Data.Client;
 
 namespace Data.Platform.Client.CSharp
 {
@@ -11,7 +10,7 @@ namespace Data.Platform.Client.CSharp
     {
         private Configuration _configuration;
 
-        public XectaApi(string baseUrl = "https://testawsapi.onxecta.com", string clientCertFile = null,
+        public XectaApi(string baseUrl = "https://data-sandbox.onxecta.com", string clientCertFile = null,
             string clientKeyFile = null)
         {
             _configuration = new Configuration
