@@ -1,18 +1,18 @@
 # openapi_client.DailyProductionApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://data-sandbox.onxecta.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**production_add_daily**](DailyProductionApi.md#production_add_daily) | **PUT** /api/production/daily | 
-[**production_delete_daily**](DailyProductionApi.md#production_delete_daily) | **DELETE** /api/production/daily/{xid} | 
-[**production_get_daily**](DailyProductionApi.md#production_get_daily) | **GET** /api/production/daily/{uwi} | 
+[**production_add_update_daily**](DailyProductionApi.md#production_add_update_daily) | **POST** /api/production/daily | Bulk Add / Update Daily Production Data
+[**production_delete_daily**](DailyProductionApi.md#production_delete_daily) | **DELETE** /api/production/daily/{xid} | Delete Daily Production Record
+[**production_get_daily**](DailyProductionApi.md#production_get_daily) | **GET** /api/production/daily/{uwi} | Fetch Daily Production Records
 
 
-# **production_add_daily**
-> [DailyProduction] production_add_daily(daily_production_input)
+# **production_add_update_daily**
+> [DailyProduction] production_add_update_daily(daily_production_input)
 
-
+Bulk Add / Update Daily Production Data
 
 ### Example
 
@@ -24,10 +24,10 @@ from openapi_client.api import daily_production_api
 from openapi_client.model.daily_production import DailyProduction
 from openapi_client.model.daily_production_input import DailyProductionInput
 from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://data-sandbox.onxecta.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost"
+    host = "https://data-sandbox.onxecta.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -67,10 +67,11 @@ with openapi_client.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.production_add_daily(daily_production_input)
+        # Bulk Add / Update Daily Production Data
+        api_response = api_instance.production_add_update_daily(daily_production_input)
         pprint(api_response)
     except openapi_client.ApiException as e:
-        print("Exception when calling DailyProductionApi->production_add_daily: %s\n" % e)
+        print("Exception when calling DailyProductionApi->production_add_update_daily: %s\n" % e)
 ```
 
 ### Parameters
@@ -90,7 +91,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
+ - **Accept**: application/json, application/x-ndjson
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -100,9 +101,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **production_delete_daily**
-> bool production_delete_daily(xid)
+> production_delete_daily(xid)
 
-
+Delete Daily Production Record
 
 ### Example
 
@@ -112,10 +113,10 @@ import time
 import openapi_client
 from openapi_client.api import daily_production_api
 from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://data-sandbox.onxecta.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost"
+    host = "https://data-sandbox.onxecta.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -136,8 +137,8 @@ with openapi_client.ApiClient(configuration) as api_client:
 
     # example passing only required values which don't have defaults set
     try:
-        api_response = api_instance.production_delete_daily(xid)
-        pprint(api_response)
+        # Delete Daily Production Record
+        api_instance.production_delete_daily(xid)
     except openapi_client.ApiException as e:
         print("Exception when calling DailyProductionApi->production_delete_daily: %s\n" % e)
 ```
@@ -150,7 +151,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**bool**
+void (empty response body)
 
 ### Authorization
 
@@ -159,19 +160,19 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**0** | default response |  -  |
+**200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **production_get_daily**
 > [DailyProduction] production_get_daily(uwi)
 
-
+Fetch Daily Production Records
 
 ### Example
 
@@ -182,10 +183,10 @@ import openapi_client
 from openapi_client.api import daily_production_api
 from openapi_client.model.daily_production import DailyProduction
 from pprint import pprint
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://data-sandbox.onxecta.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost"
+    host = "https://data-sandbox.onxecta.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -203,13 +204,14 @@ with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = daily_production_api.DailyProductionApi(api_client)
     uwi = "uwi_example" # str | 
-    start_date = dateutil_parser('1000-01-01T00:00:00Z') # datetime |  (optional) if omitted the server will use the default value of dateutil_parser('1000-01-01T00:00:00Z')
-    end_date = dateutil_parser('3000-12-31T00:00:00Z') # datetime |  (optional) if omitted the server will use the default value of dateutil_parser('3000-12-31T00:00:00Z')
+    start_date = dateutil_parser('1970-01-01T00:00:00.00Z') # datetime |  (optional)
+    end_date = dateutil_parser('1970-01-01T00:00:00.00Z') # datetime |  (optional)
     page = 1 # int |  (optional)
     limit = 1 # int |  (optional)
 
     # example passing only required values which don't have defaults set
     try:
+        # Fetch Daily Production Records
         api_response = api_instance.production_get_daily(uwi)
         pprint(api_response)
     except openapi_client.ApiException as e:
@@ -218,6 +220,7 @@ with openapi_client.ApiClient(configuration) as api_client:
     # example passing only required values which don't have defaults set
     # and optional values
     try:
+        # Fetch Daily Production Records
         api_response = api_instance.production_get_daily(uwi, start_date=start_date, end_date=end_date, page=page, limit=limit)
         pprint(api_response)
     except openapi_client.ApiException as e:
@@ -229,8 +232,8 @@ with openapi_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uwi** | **str**|  |
- **start_date** | **datetime**|  | [optional] if omitted the server will use the default value of dateutil_parser('1000-01-01T00:00:00Z')
- **end_date** | **datetime**|  | [optional] if omitted the server will use the default value of dateutil_parser('3000-12-31T00:00:00Z')
+ **start_date** | **datetime**|  | [optional]
+ **end_date** | **datetime**|  | [optional]
  **page** | **int**|  | [optional]
  **limit** | **int**|  | [optional]
 
@@ -245,7 +248,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: application/json, application/x-ndjson
 
 ### HTTP response details
 | Status code | Description | Response headers |

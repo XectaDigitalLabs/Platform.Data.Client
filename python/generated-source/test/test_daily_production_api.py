@@ -23,21 +23,24 @@ class TestDailyProductionApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_production_add_daily(self):
-        """Test case for production_add_daily
+    def test_production_add_update_daily(self):
+        """Test case for production_add_update_daily
 
+        Bulk Add / Update Daily Production Data  # noqa: E501
         """
         pass
 
     def test_production_delete_daily(self):
         """Test case for production_delete_daily
 
+        Delete Daily Production Record  # noqa: E501
         """
         pass
 
     def test_production_get_daily(self):
         """Test case for production_get_daily
 
+        Fetch Daily Production Records  # noqa: E501
         """
         pass
 

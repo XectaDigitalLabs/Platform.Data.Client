@@ -3,7 +3,6 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**version** | **int** |  | 
 **uwi** | **str** |  | 
 **datetime** | **datetime** |  | 
 **liquid_rate** | **float** |  | 
@@ -20,7 +19,12 @@ Name | Type | Description | Notes
 **strokes_per_minute** | **float** |  | 
 **downtime_hours** | **float** |  | 
 **downtime_code** | **int** |  | 
+**version** | **int** |  | [readonly] 
 **xid** | **str** |  | [optional] 
+**created_at** | **datetime** |  | [optional] [readonly] 
+**created_by** | **str** |  | [optional] [readonly] 
+**updated_at** | **datetime** |  | [optional] [readonly] 
+**updated_by** | **str** |  | [optional] [readonly] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

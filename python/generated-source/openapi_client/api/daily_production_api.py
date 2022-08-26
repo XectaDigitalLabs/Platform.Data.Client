@@ -37,17 +37,17 @@ class DailyProductionApi(object):
             api_client = ApiClient()
         self.api_client = api_client
 
-        def __production_add_daily(
+        def __production_add_update_daily(
             self,
             daily_production_input,
             **kwargs
         ):
-            """production_add_daily  # noqa: E501
+            """Bulk Add / Update Daily Production Data  # noqa: E501
 
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
 
-            >>> thread = api.production_add_daily(daily_production_input, async_req=True)
+            >>> thread = api.production_add_update_daily(daily_production_input, async_req=True)
             >>> result = thread.get()
 
             Args:
@@ -102,15 +102,15 @@ class DailyProductionApi(object):
                 daily_production_input
             return self.call_with_http_info(**kwargs)
 
-        self.production_add_daily = Endpoint(
+        self.production_add_update_daily = Endpoint(
             settings={
                 'response_type': ([DailyProduction],),
                 'auth': [
                     'bearerAuth'
                 ],
                 'endpoint_path': '/api/production/daily',
-                'operation_id': 'production_add_daily',
-                'http_method': 'PUT',
+                'operation_id': 'production_add_update_daily',
+                'http_method': 'POST',
                 'servers': None,
             },
             params_map={
@@ -146,14 +146,15 @@ class DailyProductionApi(object):
             },
             headers_map={
                 'accept': [
-                    '*/*'
+                    'application/json',
+                    'application/x-ndjson'
                 ],
                 'content_type': [
                     'application/json'
                 ]
             },
             api_client=api_client,
-            callable=__production_add_daily
+            callable=__production_add_update_daily
         )
 
         def __production_delete_daily(
@@ -161,7 +162,7 @@ class DailyProductionApi(object):
             xid,
             **kwargs
         ):
-            """production_delete_daily  # noqa: E501
+            """Delete Daily Production Record  # noqa: E501
 
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
@@ -194,7 +195,7 @@ class DailyProductionApi(object):
                 async_req (bool): execute request asynchronously
 
             Returns:
-                bool
+                None
                     If the method is called asynchronously, returns the request
                     thread.
             """
@@ -223,7 +224,7 @@ class DailyProductionApi(object):
 
         self.production_delete_daily = Endpoint(
             settings={
-                'response_type': (bool,),
+                'response_type': None,
                 'auth': [
                     'bearerAuth'
                 ],
@@ -265,9 +266,7 @@ class DailyProductionApi(object):
                 }
             },
             headers_map={
-                'accept': [
-                    'application/json'
-                ],
+                'accept': [],
                 'content_type': [],
             },
             api_client=api_client,
@@ -279,7 +278,7 @@ class DailyProductionApi(object):
             uwi,
             **kwargs
         ):
-            """production_get_daily  # noqa: E501
+            """Fetch Daily Production Records  # noqa: E501
 
             This method makes a synchronous HTTP request by default. To make an
             asynchronous HTTP request, please pass async_req=True
@@ -291,8 +290,8 @@ class DailyProductionApi(object):
                 uwi (str):
 
             Keyword Args:
-                start_date (datetime): [optional] if omitted the server will use the default value of dateutil_parser('1000-01-01T00:00:00Z')
-                end_date (datetime): [optional] if omitted the server will use the default value of dateutil_parser('3000-12-31T00:00:00Z')
+                start_date (datetime): [optional]
+                end_date (datetime): [optional]
                 page (int): [optional]
                 limit (int): [optional]
                 _return_http_data_only (bool): response data without head status
@@ -408,7 +407,8 @@ class DailyProductionApi(object):
             },
             headers_map={
                 'accept': [
-                    '*/*'
+                    'application/json',
+                    'application/x-ndjson'
                 ],
                 'content_type': [],
             },

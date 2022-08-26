@@ -1,22 +1,20 @@
 # Org.OpenAPITools.Api.WellHeaderApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://data-sandbox.onxecta.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ProductionAddWellHeader**](WellHeaderApi.md#productionaddwellheader) | **PUT** /api/production/wellheader | 
-[**ProductionAddWellHeaders**](WellHeaderApi.md#productionaddwellheaders) | **PUT** /api/production/wellheaders | 
-[**ProductionDeleteWellHeader**](WellHeaderApi.md#productiondeletewellheader) | **DELETE** /api/production/wellheader/{uwi} | 
-[**ProductionGetWellHeader**](WellHeaderApi.md#productiongetwellheader) | **GET** /api/production/wellheader/{uwi} | 
-[**ProductionGetWellHeaders**](WellHeaderApi.md#productiongetwellheaders) | **GET** /api/production/wellheaders | 
-[**ProductionUpdateWellHeader**](WellHeaderApi.md#productionupdatewellheader) | **PATCH** /api/production/wellheader | 
+[**ProductionAddUpdateWellHeaders**](WellHeaderApi.md#productionaddupdatewellheaders) | **POST** /api/production/wellheaders | Bulk Add / Update WellHeader Data
+[**ProductionDeleteWellHeader**](WellHeaderApi.md#productiondeletewellheader) | **DELETE** /api/production/wellheader/{uwi} | Delete Single Well Header
+[**ProductionGetWellHeader**](WellHeaderApi.md#productiongetwellheader) | **GET** /api/production/wellheader/{uwi} | Fetch Single Well Header
+[**ProductionGetWellHeaders**](WellHeaderApi.md#productiongetwellheaders) | **GET** /api/production/wellheaders | Fetch Multiple Well Headers
 
 
-<a name="productionaddwellheader"></a>
-# **ProductionAddWellHeader**
-> WellHeader ProductionAddWellHeader (WellHeaderInput wellHeaderInput)
+<a name="productionaddupdatewellheaders"></a>
+# **ProductionAddUpdateWellHeaders**
+> List&lt;WellHeader&gt; ProductionAddUpdateWellHeaders (List<WellHeaderInput> wellHeaderInput)
 
-
+Bulk Add / Update WellHeader Data
 
 ### Example
 ```csharp
@@ -28,82 +26,12 @@ using Org.OpenAPITools.Model;
 
 namespace Example
 {
-    public class ProductionAddWellHeaderExample
+    public class ProductionAddUpdateWellHeadersExample
     {
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
-            // Configure Bearer token for authorization: bearerAuth
-            config.AccessToken = "YOUR_BEARER_TOKEN";
-
-            var apiInstance = new WellHeaderApi(config);
-            var wellHeaderInput = new WellHeaderInput(); // WellHeaderInput | 
-
-            try
-            {
-                WellHeader result = apiInstance.ProductionAddWellHeader(wellHeaderInput);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling WellHeaderApi.ProductionAddWellHeader: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **wellHeaderInput** | [**WellHeaderInput**](WellHeaderInput.md)|  | 
-
-### Return type
-
-[**WellHeader**](WellHeader.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **0** | default response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="productionaddwellheaders"></a>
-# **ProductionAddWellHeaders**
-> List&lt;WellHeader&gt; ProductionAddWellHeaders (List<WellHeaderInput> wellHeaderInput)
-
-
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using Org.OpenAPITools.Api;
-using Org.OpenAPITools.Client;
-using Org.OpenAPITools.Model;
-
-namespace Example
-{
-    public class ProductionAddWellHeadersExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -112,12 +40,13 @@ namespace Example
 
             try
             {
-                List<WellHeader> result = apiInstance.ProductionAddWellHeaders(wellHeaderInput);
+                // Bulk Add / Update WellHeader Data
+                List<WellHeader> result = apiInstance.ProductionAddUpdateWellHeaders(wellHeaderInput);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling WellHeaderApi.ProductionAddWellHeaders: " + e.Message );
+                Debug.Print("Exception when calling WellHeaderApi.ProductionAddUpdateWellHeaders: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -154,9 +83,9 @@ Name | Type | Description  | Notes
 
 <a name="productiondeletewellheader"></a>
 # **ProductionDeleteWellHeader**
-> bool ProductionDeleteWellHeader (string uwi)
+> void ProductionDeleteWellHeader (string uwi)
 
-
+Delete Single Well Header
 
 ### Example
 ```csharp
@@ -173,7 +102,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -182,8 +111,8 @@ namespace Example
 
             try
             {
-                bool result = apiInstance.ProductionDeleteWellHeader(uwi);
-                Debug.WriteLine(result);
+                // Delete Single Well Header
+                apiInstance.ProductionDeleteWellHeader(uwi);
             }
             catch (ApiException  e)
             {
@@ -204,7 +133,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**bool**
+void (empty response body)
 
 ### Authorization
 
@@ -213,12 +142,12 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** | default response |  -  |
+| **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -226,7 +155,7 @@ Name | Type | Description  | Notes
 # **ProductionGetWellHeader**
 > WellHeader ProductionGetWellHeader (string uwi)
 
-
+Fetch Single Well Header
 
 ### Example
 ```csharp
@@ -243,7 +172,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -252,6 +181,7 @@ namespace Example
 
             try
             {
+                // Fetch Single Well Header
                 WellHeader result = apiInstance.ProductionGetWellHeader(uwi);
                 Debug.WriteLine(result);
             }
@@ -296,7 +226,9 @@ Name | Type | Description  | Notes
 # **ProductionGetWellHeaders**
 > List&lt;WellHeader&gt; ProductionGetWellHeaders (int? offset = null, int? limit = null)
 
+Fetch Multiple Well Headers
 
+This operation offers an optional paging facility if desired.
 
 ### Example
 ```csharp
@@ -313,7 +245,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -323,6 +255,7 @@ namespace Example
 
             try
             {
+                // Fetch Multiple Well Headers
                 List<WellHeader> result = apiInstance.ProductionGetWellHeaders(offset, limit);
                 Debug.WriteLine(result);
             }
@@ -361,76 +294,6 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **0** | default response |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-<a name="productionupdatewellheader"></a>
-# **ProductionUpdateWellHeader**
-> WellHeader ProductionUpdateWellHeader (WellHeader wellHeader)
-
-
-
-### Example
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using Org.OpenAPITools.Api;
-using Org.OpenAPITools.Client;
-using Org.OpenAPITools.Model;
-
-namespace Example
-{
-    public class ProductionUpdateWellHeaderExample
-    {
-        public static void Main()
-        {
-            Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
-            // Configure Bearer token for authorization: bearerAuth
-            config.AccessToken = "YOUR_BEARER_TOKEN";
-
-            var apiInstance = new WellHeaderApi(config);
-            var wellHeader = new WellHeader(); // WellHeader | 
-
-            try
-            {
-                WellHeader result = apiInstance.ProductionUpdateWellHeader(wellHeader);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException  e)
-            {
-                Debug.Print("Exception when calling WellHeaderApi.ProductionUpdateWellHeader: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **wellHeader** | [**WellHeader**](WellHeader.md)|  | 
-
-### Return type
-
-[**WellHeader**](WellHeader.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

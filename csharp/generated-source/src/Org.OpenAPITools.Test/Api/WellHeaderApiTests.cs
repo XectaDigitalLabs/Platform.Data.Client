@@ -55,26 +55,14 @@ namespace Org.OpenAPITools.Test.Api
         }
 
         /// <summary>
-        /// Test ProductionAddWellHeader
+        /// Test ProductionAddUpdateWellHeaders
         /// </summary>
         [Fact]
-        public void ProductionAddWellHeaderTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //WellHeaderInput wellHeaderInput = null;
-            //var response = instance.ProductionAddWellHeader(wellHeaderInput);
-            //Assert.IsType<WellHeader>(response);
-        }
-
-        /// <summary>
-        /// Test ProductionAddWellHeaders
-        /// </summary>
-        [Fact]
-        public void ProductionAddWellHeadersTest()
+        public void ProductionAddUpdateWellHeadersTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
             //List<WellHeaderInput> wellHeaderInput = null;
-            //var response = instance.ProductionAddWellHeaders(wellHeaderInput);
+            //var response = instance.ProductionAddUpdateWellHeaders(wellHeaderInput);
             //Assert.IsType<List<WellHeader>>(response);
         }
 
@@ -86,8 +74,7 @@ namespace Org.OpenAPITools.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string uwi = null;
-            //var response = instance.ProductionDeleteWellHeader(uwi);
-            //Assert.IsType<bool>(response);
+            //instance.ProductionDeleteWellHeader(uwi);
         }
 
         /// <summary>
@@ -113,18 +100,6 @@ namespace Org.OpenAPITools.Test.Api
             //int? limit = null;
             //var response = instance.ProductionGetWellHeaders(offset, limit);
             //Assert.IsType<List<WellHeader>>(response);
-        }
-
-        /// <summary>
-        /// Test ProductionUpdateWellHeader
-        /// </summary>
-        [Fact]
-        public void ProductionUpdateWellHeaderTest()
-        {
-            // TODO uncomment below to test the method and replace null with proper value
-            //WellHeader wellHeader = null;
-            //var response = instance.ProductionUpdateWellHeader(wellHeader);
-            //Assert.IsType<WellHeader>(response);
         }
     }
 }

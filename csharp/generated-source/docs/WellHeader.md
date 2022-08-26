@@ -14,7 +14,11 @@ Name | Type | Description | Notes
 **LiftType** | **string** |  | 
 **Lat** | **double** |  | 
 **Lon** | **double** |  | 
-**Version** | **int** |  | 
+**CreatedAt** | **DateTime** |  | [optional] [readonly] 
+**CreatedBy** | **string** |  | [optional] [readonly] 
+**UpdatedAt** | **DateTime** |  | [optional] [readonly] 
+**UpdatedBy** | **string** |  | [optional] [readonly] 
+**Version** | **int** |  | [readonly] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

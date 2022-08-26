@@ -52,10 +52,10 @@ from pprint import pprint
 from openapi_client.api import daily_production_api
 from openapi_client.model.daily_production import DailyProduction
 from openapi_client.model.daily_production_input import DailyProductionInput
-# Defining the host is optional and defaults to http://localhost
+# Defining the host is optional and defaults to https://data-sandbox.onxecta.com
 # See configuration.py for a list of all supported configuration parameters.
 configuration = openapi_client.Configuration(
-    host = "http://localhost"
+    host = "https://data-sandbox.onxecta.com"
 )
 
 # The client must configure the authentication and authorization parameters
@@ -95,27 +95,26 @@ with openapi_client.ApiClient(configuration) as api_client:
     ] # [DailyProductionInput] | 
 
     try:
-        api_response = api_instance.production_add_daily(daily_production_input)
+        # Bulk Add / Update Daily Production Data
+        api_response = api_instance.production_add_update_daily(daily_production_input)
         pprint(api_response)
     except openapi_client.ApiException as e:
-        print("Exception when calling DailyProductionApi->production_add_daily: %s\n" % e)
+        print("Exception when calling DailyProductionApi->production_add_update_daily: %s\n" % e)
 ```
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://data-sandbox.onxecta.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DailyProductionApi* | [**production_add_daily**](docs/DailyProductionApi.md#production_add_daily) | **PUT** /api/production/daily | 
-*DailyProductionApi* | [**production_delete_daily**](docs/DailyProductionApi.md#production_delete_daily) | **DELETE** /api/production/daily/{xid} | 
-*DailyProductionApi* | [**production_get_daily**](docs/DailyProductionApi.md#production_get_daily) | **GET** /api/production/daily/{uwi} | 
-*WellHeaderApi* | [**production_add_well_header**](docs/WellHeaderApi.md#production_add_well_header) | **PUT** /api/production/wellheader | 
-*WellHeaderApi* | [**production_add_well_headers**](docs/WellHeaderApi.md#production_add_well_headers) | **PUT** /api/production/wellheaders | 
-*WellHeaderApi* | [**production_delete_well_header**](docs/WellHeaderApi.md#production_delete_well_header) | **DELETE** /api/production/wellheader/{uwi} | 
-*WellHeaderApi* | [**production_get_well_header**](docs/WellHeaderApi.md#production_get_well_header) | **GET** /api/production/wellheader/{uwi} | 
-*WellHeaderApi* | [**production_get_well_headers**](docs/WellHeaderApi.md#production_get_well_headers) | **GET** /api/production/wellheaders | 
-*WellHeaderApi* | [**production_update_well_header**](docs/WellHeaderApi.md#production_update_well_header) | **PATCH** /api/production/wellheader | 
+*DailyProductionApi* | [**production_add_update_daily**](docs/DailyProductionApi.md#production_add_update_daily) | **POST** /api/production/daily | Bulk Add / Update Daily Production Data
+*DailyProductionApi* | [**production_delete_daily**](docs/DailyProductionApi.md#production_delete_daily) | **DELETE** /api/production/daily/{xid} | Delete Daily Production Record
+*DailyProductionApi* | [**production_get_daily**](docs/DailyProductionApi.md#production_get_daily) | **GET** /api/production/daily/{uwi} | Fetch Daily Production Records
+*WellHeaderApi* | [**production_add_update_well_headers**](docs/WellHeaderApi.md#production_add_update_well_headers) | **POST** /api/production/wellheaders | Bulk Add / Update WellHeader Data
+*WellHeaderApi* | [**production_delete_well_header**](docs/WellHeaderApi.md#production_delete_well_header) | **DELETE** /api/production/wellheader/{uwi} | Delete Single Well Header
+*WellHeaderApi* | [**production_get_well_header**](docs/WellHeaderApi.md#production_get_well_header) | **GET** /api/production/wellheader/{uwi} | Fetch Single Well Header
+*WellHeaderApi* | [**production_get_well_headers**](docs/WellHeaderApi.md#production_get_well_headers) | **GET** /api/production/wellheaders | Fetch Multiple Well Headers
 
 
 ## Documentation For Models

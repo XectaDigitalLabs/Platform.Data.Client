@@ -1,19 +1,19 @@
 # Org.OpenAPITools.Api.DailyProductionApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://data-sandbox.onxecta.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**ProductionAddDaily**](DailyProductionApi.md#productionadddaily) | **PUT** /api/production/daily | 
-[**ProductionDeleteDaily**](DailyProductionApi.md#productiondeletedaily) | **DELETE** /api/production/daily/{xid} | 
-[**ProductionGetDaily**](DailyProductionApi.md#productiongetdaily) | **GET** /api/production/daily/{uwi} | 
+[**ProductionAddUpdateDaily**](DailyProductionApi.md#productionaddupdatedaily) | **POST** /api/production/daily | Bulk Add / Update Daily Production Data
+[**ProductionDeleteDaily**](DailyProductionApi.md#productiondeletedaily) | **DELETE** /api/production/daily/{xid} | Delete Daily Production Record
+[**ProductionGetDaily**](DailyProductionApi.md#productiongetdaily) | **GET** /api/production/daily/{uwi} | Fetch Daily Production Records
 
 
-<a name="productionadddaily"></a>
-# **ProductionAddDaily**
-> List&lt;DailyProduction&gt; ProductionAddDaily (List<DailyProductionInput> dailyProductionInput)
+<a name="productionaddupdatedaily"></a>
+# **ProductionAddUpdateDaily**
+> List&lt;DailyProduction&gt; ProductionAddUpdateDaily (List<DailyProductionInput> dailyProductionInput)
 
-
+Bulk Add / Update Daily Production Data
 
 ### Example
 ```csharp
@@ -25,12 +25,12 @@ using Org.OpenAPITools.Model;
 
 namespace Example
 {
-    public class ProductionAddDailyExample
+    public class ProductionAddUpdateDailyExample
     {
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -39,12 +39,13 @@ namespace Example
 
             try
             {
-                List<DailyProduction> result = apiInstance.ProductionAddDaily(dailyProductionInput);
+                // Bulk Add / Update Daily Production Data
+                List<DailyProduction> result = apiInstance.ProductionAddUpdateDaily(dailyProductionInput);
                 Debug.WriteLine(result);
             }
             catch (ApiException  e)
             {
-                Debug.Print("Exception when calling DailyProductionApi.ProductionAddDaily: " + e.Message );
+                Debug.Print("Exception when calling DailyProductionApi.ProductionAddUpdateDaily: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -70,7 +71,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: */*
+ - **Accept**: application/json, application/x-ndjson
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -81,9 +82,9 @@ Name | Type | Description  | Notes
 
 <a name="productiondeletedaily"></a>
 # **ProductionDeleteDaily**
-> bool ProductionDeleteDaily (string xid)
+> void ProductionDeleteDaily (string xid)
 
-
+Delete Daily Production Record
 
 ### Example
 ```csharp
@@ -100,7 +101,7 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -109,8 +110,8 @@ namespace Example
 
             try
             {
-                bool result = apiInstance.ProductionDeleteDaily(xid);
-                Debug.WriteLine(result);
+                // Delete Daily Production Record
+                apiInstance.ProductionDeleteDaily(xid);
             }
             catch (ApiException  e)
             {
@@ -131,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**bool**
+void (empty response body)
 
 ### Authorization
 
@@ -140,12 +141,12 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **0** | default response |  -  |
+| **200** | OK |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -153,7 +154,7 @@ Name | Type | Description  | Notes
 # **ProductionGetDaily**
 > List&lt;DailyProduction&gt; ProductionGetDaily (string uwi, DateTime? startDate = null, DateTime? endDate = null, int? page = null, int? limit = null)
 
-
+Fetch Daily Production Records
 
 ### Example
 ```csharp
@@ -170,19 +171,20 @@ namespace Example
         public static void Main()
         {
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
             var apiInstance = new DailyProductionApi(config);
             var uwi = uwi_example;  // string | 
-            var startDate = 2013-10-20T19:20:30+01:00;  // DateTime? |  (optional)  (default to "1000-01-01T00:00Z")
-            var endDate = 2013-10-20T19:20:30+01:00;  // DateTime? |  (optional)  (default to "3000-12-31T00:00Z")
+            var startDate = 2013-10-20T19:20:30+01:00;  // DateTime? |  (optional) 
+            var endDate = 2013-10-20T19:20:30+01:00;  // DateTime? |  (optional) 
             var page = 56;  // int? |  (optional) 
             var limit = 56;  // int? |  (optional) 
 
             try
             {
+                // Fetch Daily Production Records
                 List<DailyProduction> result = apiInstance.ProductionGetDaily(uwi, startDate, endDate, page, limit);
                 Debug.WriteLine(result);
             }
@@ -202,8 +204,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **uwi** | **string**|  | 
- **startDate** | **DateTime?**|  | [optional] [default to &quot;1000-01-01T00:00Z&quot;]
- **endDate** | **DateTime?**|  | [optional] [default to &quot;3000-12-31T00:00Z&quot;]
+ **startDate** | **DateTime?**|  | [optional] 
+ **endDate** | **DateTime?**|  | [optional] 
  **page** | **int?**|  | [optional] 
  **limit** | **int?**|  | [optional] 
 
@@ -218,7 +220,7 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: */*
+ - **Accept**: application/json, application/x-ndjson
 
 ### HTTP response details
 | Status code | Description | Response headers |

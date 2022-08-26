@@ -4,7 +4,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Xid** | **Guid** |  | [optional] 
-**Version** | **int** |  | 
 **Uwi** | **string** |  | 
 **Datetime** | **DateTime** |  | 
 **LiquidRate** | **double** |  | 
@@ -21,6 +20,11 @@ Name | Type | Description | Notes
 **StrokesPerMinute** | **double** |  | 
 **DowntimeHours** | **double** |  | 
 **DowntimeCode** | **int** |  | 
+**CreatedAt** | **DateTime** |  | [optional] [readonly] 
+**CreatedBy** | **string** |  | [optional] [readonly] 
+**UpdatedAt** | **DateTime** |  | [optional] [readonly] 
+**UpdatedBy** | **string** |  | [optional] [readonly] 
+**Version** | **int** |  | [readonly] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -55,14 +55,14 @@ namespace Org.OpenAPITools.Test.Api
         }
 
         /// <summary>
-        /// Test ProductionAddDaily
+        /// Test ProductionAddUpdateDaily
         /// </summary>
         [Fact]
-        public void ProductionAddDailyTest()
+        public void ProductionAddUpdateDailyTest()
         {
             // TODO uncomment below to test the method and replace null with proper value
             //List<DailyProductionInput> dailyProductionInput = null;
-            //var response = instance.ProductionAddDaily(dailyProductionInput);
+            //var response = instance.ProductionAddUpdateDaily(dailyProductionInput);
             //Assert.IsType<List<DailyProduction>>(response);
         }
 
@@ -74,8 +74,7 @@ namespace Org.OpenAPITools.Test.Api
         {
             // TODO uncomment below to test the method and replace null with proper value
             //string xid = null;
-            //var response = instance.ProductionDeleteDaily(xid);
-            //Assert.IsType<bool>(response);
+            //instance.ProductionDeleteDaily(xid);
         }
 
         /// <summary>

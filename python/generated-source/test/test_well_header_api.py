@@ -23,39 +23,31 @@ class TestWellHeaderApi(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def test_production_add_well_header(self):
-        """Test case for production_add_well_header
+    def test_production_add_update_well_headers(self):
+        """Test case for production_add_update_well_headers
 
-        """
-        pass
-
-    def test_production_add_well_headers(self):
-        """Test case for production_add_well_headers
-
+        Bulk Add / Update WellHeader Data  # noqa: E501
         """
         pass
 
     def test_production_delete_well_header(self):
         """Test case for production_delete_well_header
 
+        Delete Single Well Header  # noqa: E501
         """
         pass
 
     def test_production_get_well_header(self):
         """Test case for production_get_well_header
 
+        Fetch Single Well Header  # noqa: E501
         """
         pass
 
     def test_production_get_well_headers(self):
         """Test case for production_get_well_headers
 
-        """
-        pass
-
-    def test_production_update_well_header(self):
-        """Test case for production_update_well_header
-
+        Fetch Multiple Well Headers  # noqa: E501
         """
         pass
 

@@ -145,6 +145,38 @@ namespace Org.OpenAPITools.Test.Model
             // TODO unit test for the property 'Lon'
         }
         /// <summary>
+        /// Test the property 'CreatedAt'
+        /// </summary>
+        [Fact]
+        public void CreatedAtTest()
+        {
+            // TODO unit test for the property 'CreatedAt'
+        }
+        /// <summary>
+        /// Test the property 'CreatedBy'
+        /// </summary>
+        [Fact]
+        public void CreatedByTest()
+        {
+            // TODO unit test for the property 'CreatedBy'
+        }
+        /// <summary>
+        /// Test the property 'UpdatedAt'
+        /// </summary>
+        [Fact]
+        public void UpdatedAtTest()
+        {
+            // TODO unit test for the property 'UpdatedAt'
+        }
+        /// <summary>
+        /// Test the property 'UpdatedBy'
+        /// </summary>
+        [Fact]
+        public void UpdatedByTest()
+        {
+            // TODO unit test for the property 'UpdatedBy'
+        }
+        /// <summary>
         /// Test the property 'Version'
         /// </summary>
         [Fact]

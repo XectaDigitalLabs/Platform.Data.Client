@@ -40,7 +40,6 @@ namespace Org.OpenAPITools.Model
         /// Initializes a new instance of the <see cref="DailyProduction" /> class.
         /// </summary>
         /// <param name="xid">xid.</param>
-        /// <param name="version">version (required).</param>
         /// <param name="uwi">uwi (required).</param>
         /// <param name="datetime">datetime (required).</param>
         /// <param name="liquidRate">liquidRate (required).</param>
@@ -57,9 +56,8 @@ namespace Org.OpenAPITools.Model
         /// <param name="strokesPerMinute">strokesPerMinute (required).</param>
         /// <param name="downtimeHours">downtimeHours (required).</param>
         /// <param name="downtimeCode">downtimeCode (required).</param>
-        public DailyProduction(Guid xid = default(Guid), int version = default(int), string uwi = default(string), DateTime datetime = default(DateTime), double liquidRate = default(double), double oilProductionRate = default(double), double gasProductionRate = default(double), double waterProductionRate = default(double), double choke = default(double), double gasOilRatio = default(double), double waterCut = default(double), double tubingPressure = default(double), double casingPressure = default(double), double gasInjectionRate = default(double), double operatingFrequency = default(double), double strokesPerMinute = default(double), double downtimeHours = default(double), int downtimeCode = default(int))
+        public DailyProduction(Guid xid = default(Guid), string uwi = default(string), DateTime datetime = default(DateTime), double liquidRate = default(double), double oilProductionRate = default(double), double gasProductionRate = default(double), double waterProductionRate = default(double), double choke = default(double), double gasOilRatio = default(double), double waterCut = default(double), double tubingPressure = default(double), double casingPressure = default(double), double gasInjectionRate = default(double), double operatingFrequency = default(double), double strokesPerMinute = default(double), double downtimeHours = default(double), int downtimeCode = default(int))
         {
-            this.Version = version;
             // to ensure "uwi" is required (not null)
             this.Uwi = uwi ?? throw new ArgumentNullException("uwi is a required property for DailyProduction and cannot be null");
             this.Datetime = datetime;
@@ -85,12 +83,6 @@ namespace Org.OpenAPITools.Model
         /// </summary>
         [DataMember(Name = "xid", EmitDefaultValue = false)]
         public Guid Xid { get; set; }
-
-        /// <summary>
-        /// Gets or Sets Version
-        /// </summary>
-        [DataMember(Name = "version", IsRequired = true, EmitDefaultValue = false)]
-        public int Version { get; set; }
 
         /// <summary>
         /// Gets or Sets Uwi
@@ -189,6 +181,81 @@ namespace Org.OpenAPITools.Model
         public int DowntimeCode { get; set; }
 
         /// <summary>
+        /// Gets or Sets CreatedAt
+        /// </summary>
+        [DataMember(Name = "createdAt", EmitDefaultValue = false)]
+        public DateTime CreatedAt { get; private set; }
+
+        /// <summary>
+        /// Returns false as CreatedAt should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeCreatedAt()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets CreatedBy
+        /// </summary>
+        [DataMember(Name = "createdBy", EmitDefaultValue = false)]
+        public string CreatedBy { get; private set; }
+
+        /// <summary>
+        /// Returns false as CreatedBy should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeCreatedBy()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets UpdatedAt
+        /// </summary>
+        [DataMember(Name = "updatedAt", EmitDefaultValue = false)]
+        public DateTime UpdatedAt { get; private set; }
+
+        /// <summary>
+        /// Returns false as UpdatedAt should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeUpdatedAt()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets UpdatedBy
+        /// </summary>
+        [DataMember(Name = "updatedBy", EmitDefaultValue = false)]
+        public string UpdatedBy { get; private set; }
+
+        /// <summary>
+        /// Returns false as UpdatedBy should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeUpdatedBy()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets Version
+        /// </summary>
+        [DataMember(Name = "version", IsRequired = true, EmitDefaultValue = false)]
+        public int Version { get; private set; }
+
+        /// <summary>
+        /// Returns false as Version should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeVersion()
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Returns the string presentation of the object
         /// </summary>
         /// <returns>String presentation of the object</returns>
@@ -197,7 +264,6 @@ namespace Org.OpenAPITools.Model
             var sb = new StringBuilder();
             sb.Append("class DailyProduction {\n");
             sb.Append("  Xid: ").Append(Xid).Append("\n");
-            sb.Append("  Version: ").Append(Version).Append("\n");
             sb.Append("  Uwi: ").Append(Uwi).Append("\n");
             sb.Append("  Datetime: ").Append(Datetime).Append("\n");
             sb.Append("  LiquidRate: ").Append(LiquidRate).Append("\n");
@@ -214,6 +280,11 @@ namespace Org.OpenAPITools.Model
             sb.Append("  StrokesPerMinute: ").Append(StrokesPerMinute).Append("\n");
             sb.Append("  DowntimeHours: ").Append(DowntimeHours).Append("\n");
             sb.Append("  DowntimeCode: ").Append(DowntimeCode).Append("\n");
+            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+            sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
+            sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
+            sb.Append("  UpdatedBy: ").Append(UpdatedBy).Append("\n");
+            sb.Append("  Version: ").Append(Version).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
         }
@@ -252,10 +323,6 @@ namespace Org.OpenAPITools.Model
                     this.Xid == input.Xid ||
                     (this.Xid != null &&
                     this.Xid.Equals(input.Xid))
-                ) && 
-                (
-                    this.Version == input.Version ||
-                    this.Version.Equals(input.Version)
                 ) && 
                 (
                     this.Uwi == input.Uwi ||
@@ -322,6 +389,30 @@ namespace Org.OpenAPITools.Model
                 (
                     this.DowntimeCode == input.DowntimeCode ||
                     this.DowntimeCode.Equals(input.DowntimeCode)
+                ) && 
+                (
+                    this.CreatedAt == input.CreatedAt ||
+                    (this.CreatedAt != null &&
+                    this.CreatedAt.Equals(input.CreatedAt))
+                ) && 
+                (
+                    this.CreatedBy == input.CreatedBy ||
+                    (this.CreatedBy != null &&
+                    this.CreatedBy.Equals(input.CreatedBy))
+                ) && 
+                (
+                    this.UpdatedAt == input.UpdatedAt ||
+                    (this.UpdatedAt != null &&
+                    this.UpdatedAt.Equals(input.UpdatedAt))
+                ) && 
+                (
+                    this.UpdatedBy == input.UpdatedBy ||
+                    (this.UpdatedBy != null &&
+                    this.UpdatedBy.Equals(input.UpdatedBy))
+                ) && 
+                (
+                    this.Version == input.Version ||
+                    this.Version.Equals(input.Version)
                 );
         }
 
@@ -336,7 +427,6 @@ namespace Org.OpenAPITools.Model
                 int hashCode = 41;
                 if (this.Xid != null)
                     hashCode = hashCode * 59 + this.Xid.GetHashCode();
-                hashCode = hashCode * 59 + this.Version.GetHashCode();
                 if (this.Uwi != null)
                     hashCode = hashCode * 59 + this.Uwi.GetHashCode();
                 if (this.Datetime != null)
@@ -355,6 +445,15 @@ namespace Org.OpenAPITools.Model
                 hashCode = hashCode * 59 + this.StrokesPerMinute.GetHashCode();
                 hashCode = hashCode * 59 + this.DowntimeHours.GetHashCode();
                 hashCode = hashCode * 59 + this.DowntimeCode.GetHashCode();
+                if (this.CreatedAt != null)
+                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                if (this.CreatedBy != null)
+                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                if (this.UpdatedAt != null)
+                    hashCode = hashCode * 59 + this.UpdatedAt.GetHashCode();
+                if (this.UpdatedBy != null)
+                    hashCode = hashCode * 59 + this.UpdatedBy.GetHashCode();
+                hashCode = hashCode * 59 + this.Version.GetHashCode();
                 return hashCode;
             }
         }

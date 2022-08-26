@@ -12,8 +12,8 @@
   },
   "servers": [
     {
-      "url": "http://localhost",
-      "description": "Generated server url"
+      "url": "https://data-sandbox.onxecta.com",
+      "description": "AWS Cloud API Endpoint"
     }
   ],
   "security": [
@@ -32,69 +32,13 @@
     }
   ],
   "paths": {
-    "/api/production/wellheader": {
-      "put": {
-        "tags": [
-          "Well Header"
-        ],
-        "operationId": "productionAddWellHeader",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WellHeaderInput"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "default": {
-            "description": "default response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WellHeader"
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Well Header"
-        ],
-        "operationId": "productionUpdateWellHeader",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/WellHeader"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/WellHeader"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/production/wellheaders": {
       "get": {
         "tags": [
           "Well Header"
         ],
+        "summary": "Fetch Multiple Well Headers",
+        "description": "This operation offers an optional paging facility if desired.",
         "operationId": "productionGetWellHeaders",
         "parameters": [
           {
@@ -132,11 +76,12 @@
           }
         }
       },
-      "put": {
+      "post": {
         "tags": [
           "Well Header"
         ],
-        "operationId": "productionAddWellHeaders",
+        "summary": "Bulk Add / Update WellHeader Data",
+        "operationId": "productionAddUpdateWellHeaders",
         "requestBody": {
           "content": {
             "application/json": {
@@ -168,11 +113,12 @@
       }
     },
     "/api/production/daily": {
-      "put": {
+      "post": {
         "tags": [
           "Daily Production"
         ],
-        "operationId": "productionAddDaily",
+        "summary": "Bulk Add / Update Daily Production Data",
+        "operationId": "productionAddUpdateDaily",
         "requestBody": {
           "content": {
             "application/json": {
@@ -190,7 +136,15 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyProduction"
+                  }
+                }
+              },
+              "application/x-ndjson": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -208,6 +162,7 @@
         "tags": [
           "Well Header"
         ],
+        "summary": "Fetch Single Well Header",
         "operationId": "productionGetWellHeader",
         "parameters": [
           {
@@ -236,6 +191,7 @@
         "tags": [
           "Well Header"
         ],
+        "summary": "Delete Single Well Header",
         "operationId": "productionDeleteWellHeader",
         "parameters": [
           {
@@ -248,15 +204,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "default response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -266,6 +215,7 @@
         "tags": [
           "Daily Production"
         ],
+        "summary": "Fetch Daily Production Records",
         "operationId": "productionGetDaily",
         "parameters": [
           {
@@ -282,8 +232,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date-time",
-              "default": "1000-01-01T00:00:00Z"
+              "format": "date-time"
             }
           },
           {
@@ -292,8 +241,7 @@
             "required": false,
             "schema": {
               "type": "string",
-              "format": "date-time",
-              "default": "3000-12-31T00:00:00Z"
+              "format": "date-time"
             }
           },
           {
@@ -319,7 +267,15 @@
           "200": {
             "description": "OK",
             "content": {
-              "*/*": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyProduction"
+                  }
+                }
+              },
+              "application/x-ndjson": {
                 "schema": {
                   "type": "array",
                   "items": {
@@ -337,6 +293,7 @@
         "tags": [
           "Daily Production"
         ],
+        "summary": "Delete Daily Production Record",
         "operationId": "productionDeleteDaily",
         "parameters": [
           {
@@ -349,15 +306,8 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "default response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -481,7 +431,7 @@
             "type": "string"
           },
           "route": {
-            "maxLength": 5,
+            "maxLength": 50,
             "minLength": 0,
             "type": "string"
           },
@@ -518,9 +468,28 @@
             "type": "number",
             "format": "double"
           },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "createdBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "readOnly": true
+          },
           "version": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "readOnly": true
           }
         }
       },
@@ -636,10 +605,6 @@
             "type": "string",
             "format": "uuid"
           },
-          "version": {
-            "type": "integer",
-            "format": "int32"
-          },
           "uwi": {
             "type": "string"
           },
@@ -702,6 +667,29 @@
           "downtimeCode": {
             "type": "integer",
             "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "createdBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           }
         }
       }
@@ -713,5 +701,8 @@
         "bearerFormat": "JWT"
       }
     }
+  },
+  "x-readme": {
+    "explorer-enabled": false
   }
 }

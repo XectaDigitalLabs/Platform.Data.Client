@@ -71,7 +71,7 @@ namespace Example
         {
 
             Configuration config = new Configuration();
-            config.BasePath = "http://localhost";
+            config.BasePath = "https://data-sandbox.onxecta.com";
             // Configure Bearer token for authorization: bearerAuth
             config.AccessToken = "YOUR_BEARER_TOKEN";
 
@@ -80,12 +80,13 @@ namespace Example
 
             try
             {
-                List<DailyProduction> result = apiInstance.ProductionAddDaily(dailyProductionInput);
+                // Bulk Add / Update Daily Production Data
+                List<DailyProduction> result = apiInstance.ProductionAddUpdateDaily(dailyProductionInput);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling DailyProductionApi.ProductionAddDaily: " + e.Message );
+                Debug.Print("Exception when calling DailyProductionApi.ProductionAddUpdateDaily: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -98,19 +99,17 @@ namespace Example
 <a name="documentation-for-api-endpoints"></a>
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://data-sandbox.onxecta.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DailyProductionApi* | [**ProductionAddDaily**](docs/DailyProductionApi.md#productionadddaily) | **PUT** /api/production/daily | 
-*DailyProductionApi* | [**ProductionDeleteDaily**](docs/DailyProductionApi.md#productiondeletedaily) | **DELETE** /api/production/daily/{xid} | 
-*DailyProductionApi* | [**ProductionGetDaily**](docs/DailyProductionApi.md#productiongetdaily) | **GET** /api/production/daily/{uwi} | 
-*WellHeaderApi* | [**ProductionAddWellHeader**](docs/WellHeaderApi.md#productionaddwellheader) | **PUT** /api/production/wellheader | 
-*WellHeaderApi* | [**ProductionAddWellHeaders**](docs/WellHeaderApi.md#productionaddwellheaders) | **PUT** /api/production/wellheaders | 
-*WellHeaderApi* | [**ProductionDeleteWellHeader**](docs/WellHeaderApi.md#productiondeletewellheader) | **DELETE** /api/production/wellheader/{uwi} | 
-*WellHeaderApi* | [**ProductionGetWellHeader**](docs/WellHeaderApi.md#productiongetwellheader) | **GET** /api/production/wellheader/{uwi} | 
-*WellHeaderApi* | [**ProductionGetWellHeaders**](docs/WellHeaderApi.md#productiongetwellheaders) | **GET** /api/production/wellheaders | 
-*WellHeaderApi* | [**ProductionUpdateWellHeader**](docs/WellHeaderApi.md#productionupdatewellheader) | **PATCH** /api/production/wellheader | 
+*DailyProductionApi* | [**ProductionAddUpdateDaily**](docs/DailyProductionApi.md#productionaddupdatedaily) | **POST** /api/production/daily | Bulk Add / Update Daily Production Data
+*DailyProductionApi* | [**ProductionDeleteDaily**](docs/DailyProductionApi.md#productiondeletedaily) | **DELETE** /api/production/daily/{xid} | Delete Daily Production Record
+*DailyProductionApi* | [**ProductionGetDaily**](docs/DailyProductionApi.md#productiongetdaily) | **GET** /api/production/daily/{uwi} | Fetch Daily Production Records
+*WellHeaderApi* | [**ProductionAddUpdateWellHeaders**](docs/WellHeaderApi.md#productionaddupdatewellheaders) | **POST** /api/production/wellheaders | Bulk Add / Update WellHeader Data
+*WellHeaderApi* | [**ProductionDeleteWellHeader**](docs/WellHeaderApi.md#productiondeletewellheader) | **DELETE** /api/production/wellheader/{uwi} | Delete Single Well Header
+*WellHeaderApi* | [**ProductionGetWellHeader**](docs/WellHeaderApi.md#productiongetwellheader) | **GET** /api/production/wellheader/{uwi} | Fetch Single Well Header
+*WellHeaderApi* | [**ProductionGetWellHeaders**](docs/WellHeaderApi.md#productiongetwellheaders) | **GET** /api/production/wellheaders | Fetch Multiple Well Headers
 
 
 <a name="documentation-for-models"></a>

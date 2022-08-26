@@ -27,33 +27,15 @@ namespace Org.OpenAPITools.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <returns>WellHeader</returns>
-        WellHeader ProductionAddWellHeader(WellHeaderInput wellHeaderInput);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <returns>ApiResponse of WellHeader</returns>
-        ApiResponse<WellHeader> ProductionAddWellHeaderWithHttpInfo(WellHeaderInput wellHeaderInput);
-        /// <summary>
-        /// 
+        /// Bulk Add / Update WellHeader Data
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="wellHeaderInput"></param>
         /// <returns>List&lt;WellHeader&gt;</returns>
-        List<WellHeader> ProductionAddWellHeaders(List<WellHeaderInput> wellHeaderInput);
+        List<WellHeader> ProductionAddUpdateWellHeaders(List<WellHeaderInput> wellHeaderInput);
 
         /// <summary>
-        /// 
+        /// Bulk Add / Update WellHeader Data
         /// </summary>
         /// <remarks>
         /// 
@@ -61,27 +43,27 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="wellHeaderInput"></param>
         /// <returns>ApiResponse of List&lt;WellHeader&gt;</returns>
-        ApiResponse<List<WellHeader>> ProductionAddWellHeadersWithHttpInfo(List<WellHeaderInput> wellHeaderInput);
+        ApiResponse<List<WellHeader>> ProductionAddUpdateWellHeadersWithHttpInfo(List<WellHeaderInput> wellHeaderInput);
         /// <summary>
-        /// 
+        /// Delete Single Well Header
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <returns>bool</returns>
-        bool ProductionDeleteWellHeader(string uwi);
+        /// <returns></returns>
+        void ProductionDeleteWellHeader(string uwi);
 
         /// <summary>
-        /// 
+        /// Delete Single Well Header
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <returns>ApiResponse of bool</returns>
-        ApiResponse<bool> ProductionDeleteWellHeaderWithHttpInfo(string uwi);
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> ProductionDeleteWellHeaderWithHttpInfo(string uwi);
         /// <summary>
-        /// 
+        /// Fetch Single Well Header
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
@@ -89,7 +71,7 @@ namespace Org.OpenAPITools.Api
         WellHeader ProductionGetWellHeader(string uwi);
 
         /// <summary>
-        /// 
+        /// Fetch Single Well Header
         /// </summary>
         /// <remarks>
         /// 
@@ -99,8 +81,11 @@ namespace Org.OpenAPITools.Api
         /// <returns>ApiResponse of WellHeader</returns>
         ApiResponse<WellHeader> ProductionGetWellHeaderWithHttpInfo(string uwi);
         /// <summary>
-        /// 
+        /// Fetch Multiple Well Headers
         /// </summary>
+        /// <remarks>
+        /// This operation offers an optional paging facility if desired.
+        /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
         /// <param name="limit"> (optional)</param>
@@ -108,34 +93,16 @@ namespace Org.OpenAPITools.Api
         List<WellHeader> ProductionGetWellHeaders(int? offset = default(int?), int? limit = default(int?));
 
         /// <summary>
-        /// 
+        /// Fetch Multiple Well Headers
         /// </summary>
         /// <remarks>
-        /// 
+        /// This operation offers an optional paging facility if desired.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <returns>ApiResponse of List&lt;WellHeader&gt;</returns>
         ApiResponse<List<WellHeader>> ProductionGetWellHeadersWithHttpInfo(int? offset = default(int?), int? limit = default(int?));
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <returns>WellHeader</returns>
-        WellHeader ProductionUpdateWellHeader(WellHeader wellHeader);
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <returns>ApiResponse of WellHeader</returns>
-        ApiResponse<WellHeader> ProductionUpdateWellHeaderWithHttpInfo(WellHeader wellHeader);
         #endregion Synchronous Operations
     }
 
@@ -146,30 +113,7 @@ namespace Org.OpenAPITools.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of WellHeader</returns>
-        System.Threading.Tasks.Task<WellHeader> ProductionAddWellHeaderAsync(WellHeaderInput wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (WellHeader)</returns>
-        System.Threading.Tasks.Task<ApiResponse<WellHeader>> ProductionAddWellHeaderWithHttpInfoAsync(WellHeaderInput wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// 
+        /// Bulk Add / Update WellHeader Data
         /// </summary>
         /// <remarks>
         /// 
@@ -178,10 +122,10 @@ namespace Org.OpenAPITools.Api
         /// <param name="wellHeaderInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;WellHeader&gt;</returns>
-        System.Threading.Tasks.Task<List<WellHeader>> ProductionAddWellHeadersAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<List<WellHeader>> ProductionAddUpdateWellHeadersAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Bulk Add / Update WellHeader Data
         /// </summary>
         /// <remarks>
         /// 
@@ -190,9 +134,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="wellHeaderInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;WellHeader&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<WellHeader>>> ProductionAddWellHeadersWithHttpInfoAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<List<WellHeader>>> ProductionAddUpdateWellHeadersWithHttpInfoAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// 
+        /// Delete Single Well Header
         /// </summary>
         /// <remarks>
         /// 
@@ -200,11 +144,11 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of bool</returns>
-        System.Threading.Tasks.Task<bool> ProductionDeleteWellHeaderAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task ProductionDeleteWellHeaderAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Delete Single Well Header
         /// </summary>
         /// <remarks>
         /// 
@@ -212,10 +156,10 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (bool)</returns>
-        System.Threading.Tasks.Task<ApiResponse<bool>> ProductionDeleteWellHeaderWithHttpInfoAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> ProductionDeleteWellHeaderWithHttpInfoAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// 
+        /// Fetch Single Well Header
         /// </summary>
         /// <remarks>
         /// 
@@ -227,7 +171,7 @@ namespace Org.OpenAPITools.Api
         System.Threading.Tasks.Task<WellHeader> ProductionGetWellHeaderAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Fetch Single Well Header
         /// </summary>
         /// <remarks>
         /// 
@@ -238,10 +182,10 @@ namespace Org.OpenAPITools.Api
         /// <returns>Task of ApiResponse (WellHeader)</returns>
         System.Threading.Tasks.Task<ApiResponse<WellHeader>> ProductionGetWellHeaderWithHttpInfoAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// 
+        /// Fetch Multiple Well Headers
         /// </summary>
         /// <remarks>
-        /// 
+        /// This operation offers an optional paging facility if desired.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
@@ -251,10 +195,10 @@ namespace Org.OpenAPITools.Api
         System.Threading.Tasks.Task<List<WellHeader>> ProductionGetWellHeadersAsync(int? offset = default(int?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Fetch Multiple Well Headers
         /// </summary>
         /// <remarks>
-        /// 
+        /// This operation offers an optional paging facility if desired.
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
@@ -262,29 +206,6 @@ namespace Org.OpenAPITools.Api
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;WellHeader&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<WellHeader>>> ProductionGetWellHeadersWithHttpInfoAsync(int? offset = default(int?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of WellHeader</returns>
-        System.Threading.Tasks.Task<WellHeader> ProductionUpdateWellHeaderAsync(WellHeader wellHeader, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>
-        /// 
-        /// </remarks>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (WellHeader)</returns>
-        System.Threading.Tasks.Task<ApiResponse<WellHeader>> ProductionUpdateWellHeaderWithHttpInfoAsync(WellHeader wellHeader, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -406,157 +327,28 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <returns>WellHeader</returns>
-        public WellHeader ProductionAddWellHeader(WellHeaderInput wellHeaderInput)
-        {
-            Org.OpenAPITools.Client.ApiResponse<WellHeader> localVarResponse = ProductionAddWellHeaderWithHttpInfo(wellHeaderInput);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <returns>ApiResponse of WellHeader</returns>
-        public Org.OpenAPITools.Client.ApiResponse<WellHeader> ProductionAddWellHeaderWithHttpInfo(WellHeaderInput wellHeaderInput)
-        {
-            // verify the required parameter 'wellHeaderInput' is set
-            if (wellHeaderInput == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeaderInput' when calling WellHeaderApi->ProductionAddWellHeader");
-
-            Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
-            };
-
-            var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.Data = wellHeaderInput;
-
-            // authentication (bearerAuth) required
-            // bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Put<WellHeader>("/api/production/wellheader", localVarRequestOptions, this.Configuration);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("ProductionAddWellHeader", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of WellHeader</returns>
-        public async System.Threading.Tasks.Task<WellHeader> ProductionAddWellHeaderAsync(WellHeaderInput wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Org.OpenAPITools.Client.ApiResponse<WellHeader> localVarResponse = await ProductionAddWellHeaderWithHttpInfoAsync(wellHeaderInput, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeaderInput"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (WellHeader)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<WellHeader>> ProductionAddWellHeaderWithHttpInfoAsync(WellHeaderInput wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'wellHeaderInput' is set
-            if (wellHeaderInput == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeaderInput' when calling WellHeaderApi->ProductionAddWellHeader");
-
-
-            Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "application/json"
-            };
-
-
-            var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.Data = wellHeaderInput;
-
-            // authentication (bearerAuth) required
-            // bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.PutAsync<WellHeader>("/api/production/wellheader", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("ProductionAddWellHeader", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  
+        /// Bulk Add / Update WellHeader Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="wellHeaderInput"></param>
         /// <returns>List&lt;WellHeader&gt;</returns>
-        public List<WellHeader> ProductionAddWellHeaders(List<WellHeaderInput> wellHeaderInput)
+        public List<WellHeader> ProductionAddUpdateWellHeaders(List<WellHeaderInput> wellHeaderInput)
         {
-            Org.OpenAPITools.Client.ApiResponse<List<WellHeader>> localVarResponse = ProductionAddWellHeadersWithHttpInfo(wellHeaderInput);
+            Org.OpenAPITools.Client.ApiResponse<List<WellHeader>> localVarResponse = ProductionAddUpdateWellHeadersWithHttpInfo(wellHeaderInput);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update WellHeader Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="wellHeaderInput"></param>
         /// <returns>ApiResponse of List&lt;WellHeader&gt;</returns>
-        public Org.OpenAPITools.Client.ApiResponse<List<WellHeader>> ProductionAddWellHeadersWithHttpInfo(List<WellHeaderInput> wellHeaderInput)
+        public Org.OpenAPITools.Client.ApiResponse<List<WellHeader>> ProductionAddUpdateWellHeadersWithHttpInfo(List<WellHeaderInput> wellHeaderInput)
         {
             // verify the required parameter 'wellHeaderInput' is set
             if (wellHeaderInput == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeaderInput' when calling WellHeaderApi->ProductionAddWellHeaders");
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeaderInput' when calling WellHeaderApi->ProductionAddUpdateWellHeaders");
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -585,11 +377,11 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<List<WellHeader>>("/api/production/wellheaders", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<List<WellHeader>>("/api/production/wellheaders", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("ProductionAddWellHeaders", localVarResponse);
+                Exception _exception = this.ExceptionFactory("ProductionAddUpdateWellHeaders", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -597,30 +389,30 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update WellHeader Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="wellHeaderInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;WellHeader&gt;</returns>
-        public async System.Threading.Tasks.Task<List<WellHeader>> ProductionAddWellHeadersAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<List<WellHeader>> ProductionAddUpdateWellHeadersAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<List<WellHeader>> localVarResponse = await ProductionAddWellHeadersWithHttpInfoAsync(wellHeaderInput, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<List<WellHeader>> localVarResponse = await ProductionAddUpdateWellHeadersWithHttpInfoAsync(wellHeaderInput, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update WellHeader Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="wellHeaderInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;WellHeader&gt;)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<List<WellHeader>>> ProductionAddWellHeadersWithHttpInfoAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<List<WellHeader>>> ProductionAddUpdateWellHeadersWithHttpInfoAsync(List<WellHeaderInput> wellHeaderInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'wellHeaderInput' is set
             if (wellHeaderInput == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeaderInput' when calling WellHeaderApi->ProductionAddWellHeaders");
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeaderInput' when calling WellHeaderApi->ProductionAddUpdateWellHeaders");
 
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -652,11 +444,11 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<List<WellHeader>>("/api/production/wellheaders", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<List<WellHeader>>("/api/production/wellheaders", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("ProductionAddWellHeaders", localVarResponse);
+                Exception _exception = this.ExceptionFactory("ProductionAddUpdateWellHeaders", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -664,24 +456,23 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Delete Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <returns>bool</returns>
-        public bool ProductionDeleteWellHeader(string uwi)
+        /// <returns></returns>
+        public void ProductionDeleteWellHeader(string uwi)
         {
-            Org.OpenAPITools.Client.ApiResponse<bool> localVarResponse = ProductionDeleteWellHeaderWithHttpInfo(uwi);
-            return localVarResponse.Data;
+            ProductionDeleteWellHeaderWithHttpInfo(uwi);
         }
 
         /// <summary>
-        ///  
+        /// Delete Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <returns>ApiResponse of bool</returns>
-        public Org.OpenAPITools.Client.ApiResponse<bool> ProductionDeleteWellHeaderWithHttpInfo(string uwi)
+        /// <returns>ApiResponse of Object(void)</returns>
+        public Org.OpenAPITools.Client.ApiResponse<Object> ProductionDeleteWellHeaderWithHttpInfo(string uwi)
         {
             // verify the required parameter 'uwi' is set
             if (uwi == null)
@@ -694,7 +485,6 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "application/json"
             };
 
             var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -713,7 +503,7 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<bool>("/api/production/wellheader/{uwi}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<Object>("/api/production/wellheader/{uwi}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -725,26 +515,25 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Delete Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of bool</returns>
-        public async System.Threading.Tasks.Task<bool> ProductionDeleteWellHeaderAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task ProductionDeleteWellHeaderAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<bool> localVarResponse = await ProductionDeleteWellHeaderWithHttpInfoAsync(uwi, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
+            await ProductionDeleteWellHeaderWithHttpInfoAsync(uwi, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///  
+        /// Delete Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (bool)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<bool>> ProductionDeleteWellHeaderWithHttpInfoAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> ProductionDeleteWellHeaderWithHttpInfoAsync(string uwi, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'uwi' is set
             if (uwi == null)
@@ -758,7 +547,6 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "application/json"
             };
 
 
@@ -779,7 +567,7 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<bool>("/api/production/wellheader/{uwi}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/api/production/wellheader/{uwi}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -791,7 +579,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
@@ -803,7 +591,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
@@ -852,7 +640,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
@@ -865,7 +653,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Single Well Header 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
@@ -918,7 +706,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Multiple Well Headers This operation offers an optional paging facility if desired.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
@@ -931,7 +719,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Multiple Well Headers This operation offers an optional paging facility if desired.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
@@ -984,7 +772,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Multiple Well Headers This operation offers an optional paging facility if desired.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
@@ -998,7 +786,7 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Multiple Well Headers This operation offers an optional paging facility if desired.
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="offset"> (optional)</param>
@@ -1048,135 +836,6 @@ namespace Org.OpenAPITools.Api
             if (this.ExceptionFactory != null)
             {
                 Exception _exception = this.ExceptionFactory("ProductionGetWellHeaders", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <returns>WellHeader</returns>
-        public WellHeader ProductionUpdateWellHeader(WellHeader wellHeader)
-        {
-            Org.OpenAPITools.Client.ApiResponse<WellHeader> localVarResponse = ProductionUpdateWellHeaderWithHttpInfo(wellHeader);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <returns>ApiResponse of WellHeader</returns>
-        public Org.OpenAPITools.Client.ApiResponse<WellHeader> ProductionUpdateWellHeaderWithHttpInfo(WellHeader wellHeader)
-        {
-            // verify the required parameter 'wellHeader' is set
-            if (wellHeader == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeader' when calling WellHeaderApi->ProductionUpdateWellHeader");
-
-            Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "*/*"
-            };
-
-            var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.Data = wellHeader;
-
-            // authentication (bearerAuth) required
-            // bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-            var localVarResponse = this.Client.Patch<WellHeader>("/api/production/wellheader", localVarRequestOptions, this.Configuration);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("ProductionUpdateWellHeader", localVarResponse);
-                if (_exception != null) throw _exception;
-            }
-
-            return localVarResponse;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of WellHeader</returns>
-        public async System.Threading.Tasks.Task<WellHeader> ProductionUpdateWellHeaderAsync(WellHeader wellHeader, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            Org.OpenAPITools.Client.ApiResponse<WellHeader> localVarResponse = await ProductionUpdateWellHeaderWithHttpInfoAsync(wellHeader, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
-        }
-
-        /// <summary>
-        ///  
-        /// </summary>
-        /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="wellHeader"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (WellHeader)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<WellHeader>> ProductionUpdateWellHeaderWithHttpInfoAsync(WellHeader wellHeader, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-        {
-            // verify the required parameter 'wellHeader' is set
-            if (wellHeader == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'wellHeader' when calling WellHeaderApi->ProductionUpdateWellHeader");
-
-
-            Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
-
-            String[] _contentTypes = new String[] {
-                "application/json"
-            };
-
-            // to determine the Accept header
-            String[] _accepts = new String[] {
-                "*/*"
-            };
-
-
-            var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
-            if (localVarContentType != null) localVarRequestOptions.HeaderParameters.Add("Content-Type", localVarContentType);
-
-            var localVarAccept = Org.OpenAPITools.Client.ClientUtils.SelectHeaderAccept(_accepts);
-            if (localVarAccept != null) localVarRequestOptions.HeaderParameters.Add("Accept", localVarAccept);
-
-            localVarRequestOptions.Data = wellHeader;
-
-            // authentication (bearerAuth) required
-            // bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarRequestOptions.HeaderParameters.Add("Authorization", "Bearer " + this.Configuration.AccessToken);
-            }
-
-            // make the HTTP request
-
-            var localVarResponse = await this.AsynchronousClient.PatchAsync<WellHeader>("/api/production/wellheader", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
-
-            if (this.ExceptionFactory != null)
-            {
-                Exception _exception = this.ExceptionFactory("ProductionUpdateWellHeader", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 

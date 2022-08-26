@@ -754,10 +754,10 @@ class Endpoint(object):
         Example:
 
         api_instance = DailyProductionApi()
-        api_instance.production_add_daily  # this is an instance of the class Endpoint
-        api_instance.production_add_daily()  # this invokes api_instance.production_add_daily.__call__()
+        api_instance.production_add_update_daily  # this is an instance of the class Endpoint
+        api_instance.production_add_update_daily()  # this invokes api_instance.production_add_update_daily.__call__()
         which then invokes the callable functions stored in that endpoint at
-        api_instance.production_add_daily.callable or self.callable in this class
+        api_instance.production_add_update_daily.callable or self.callable in this class
 
         """
         return self.callable(self, *args, **kwargs)

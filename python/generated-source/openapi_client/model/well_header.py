@@ -90,7 +90,7 @@ class WellHeader(ModelNormal):
             'min_length': 0,
         },
         ('route',): {
-            'max_length': 5,
+            'max_length': 50,
             'min_length': 0,
         },
     }
@@ -122,6 +122,10 @@ class WellHeader(ModelNormal):
             'lon': (float,),  # noqa: E501
             'version': (int,),  # noqa: E501
             'xid': (str,),  # noqa: E501
+            'created_at': (datetime,),  # noqa: E501
+            'created_by': (str,),  # noqa: E501
+            'updated_at': (datetime,),  # noqa: E501
+            'updated_by': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -142,6 +146,10 @@ class WellHeader(ModelNormal):
         'lon': 'lon',  # noqa: E501
         'version': 'version',  # noqa: E501
         'xid': 'xid',  # noqa: E501
+        'created_at': 'createdAt',  # noqa: E501
+        'created_by': 'createdBy',  # noqa: E501
+        'updated_at': 'updatedAt',  # noqa: E501
+        'updated_by': 'updatedBy',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -204,6 +212,10 @@ class WellHeader(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             xid (str): [optional]  # noqa: E501
+            created_at (datetime): [optional]  # noqa: E501
+            created_by (str): [optional]  # noqa: E501
+            updated_at (datetime): [optional]  # noqa: E501
+            updated_by (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)

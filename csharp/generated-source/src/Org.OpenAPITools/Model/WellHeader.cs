@@ -149,8 +149,7 @@ namespace Org.OpenAPITools.Model
         /// <param name="liftType">liftType (required).</param>
         /// <param name="lat">lat (required).</param>
         /// <param name="lon">lon (required).</param>
-        /// <param name="version">version (required).</param>
-        public WellHeader(Guid xid = default(Guid), string uwi = default(string), string name = default(string), string group = default(string), string field = default(string), string route = default(string), TypeEnum type = default(TypeEnum), FluidEnum fluid = default(FluidEnum), LiftTypeEnum liftType = default(LiftTypeEnum), double lat = default(double), double lon = default(double), int version = default(int))
+        public WellHeader(Guid xid = default(Guid), string uwi = default(string), string name = default(string), string group = default(string), string field = default(string), string route = default(string), TypeEnum type = default(TypeEnum), FluidEnum fluid = default(FluidEnum), LiftTypeEnum liftType = default(LiftTypeEnum), double lat = default(double), double lon = default(double))
         {
             // to ensure "uwi" is required (not null)
             this.Uwi = uwi ?? throw new ArgumentNullException("uwi is a required property for WellHeader and cannot be null");
@@ -167,7 +166,6 @@ namespace Org.OpenAPITools.Model
             this.LiftType = liftType;
             this.Lat = lat;
             this.Lon = lon;
-            this.Version = version;
             this.Xid = xid;
         }
 
@@ -220,10 +218,79 @@ namespace Org.OpenAPITools.Model
         public double Lon { get; set; }
 
         /// <summary>
+        /// Gets or Sets CreatedAt
+        /// </summary>
+        [DataMember(Name = "createdAt", EmitDefaultValue = false)]
+        public DateTime CreatedAt { get; private set; }
+
+        /// <summary>
+        /// Returns false as CreatedAt should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeCreatedAt()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets CreatedBy
+        /// </summary>
+        [DataMember(Name = "createdBy", EmitDefaultValue = false)]
+        public string CreatedBy { get; private set; }
+
+        /// <summary>
+        /// Returns false as CreatedBy should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeCreatedBy()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets UpdatedAt
+        /// </summary>
+        [DataMember(Name = "updatedAt", EmitDefaultValue = false)]
+        public DateTime UpdatedAt { get; private set; }
+
+        /// <summary>
+        /// Returns false as UpdatedAt should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeUpdatedAt()
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Gets or Sets UpdatedBy
+        /// </summary>
+        [DataMember(Name = "updatedBy", EmitDefaultValue = false)]
+        public string UpdatedBy { get; private set; }
+
+        /// <summary>
+        /// Returns false as UpdatedBy should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeUpdatedBy()
+        {
+            return false;
+        }
+
+        /// <summary>
         /// Gets or Sets Version
         /// </summary>
         [DataMember(Name = "version", IsRequired = true, EmitDefaultValue = false)]
-        public int Version { get; set; }
+        public int Version { get; private set; }
+
+        /// <summary>
+        /// Returns false as Version should not be serialized given that it's read-only.
+        /// </summary>
+        /// <returns>false (boolean)</returns>
+        public bool ShouldSerializeVersion()
+        {
+            return false;
+        }
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -244,6 +311,10 @@ namespace Org.OpenAPITools.Model
             sb.Append("  LiftType: ").Append(LiftType).Append("\n");
             sb.Append("  Lat: ").Append(Lat).Append("\n");
             sb.Append("  Lon: ").Append(Lon).Append("\n");
+            sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+            sb.Append("  CreatedBy: ").Append(CreatedBy).Append("\n");
+            sb.Append("  UpdatedAt: ").Append(UpdatedAt).Append("\n");
+            sb.Append("  UpdatedBy: ").Append(UpdatedBy).Append("\n");
             sb.Append("  Version: ").Append(Version).Append("\n");
             sb.Append("}\n");
             return sb.ToString();
@@ -330,6 +401,26 @@ namespace Org.OpenAPITools.Model
                     this.Lon.Equals(input.Lon)
                 ) && 
                 (
+                    this.CreatedAt == input.CreatedAt ||
+                    (this.CreatedAt != null &&
+                    this.CreatedAt.Equals(input.CreatedAt))
+                ) && 
+                (
+                    this.CreatedBy == input.CreatedBy ||
+                    (this.CreatedBy != null &&
+                    this.CreatedBy.Equals(input.CreatedBy))
+                ) && 
+                (
+                    this.UpdatedAt == input.UpdatedAt ||
+                    (this.UpdatedAt != null &&
+                    this.UpdatedAt.Equals(input.UpdatedAt))
+                ) && 
+                (
+                    this.UpdatedBy == input.UpdatedBy ||
+                    (this.UpdatedBy != null &&
+                    this.UpdatedBy.Equals(input.UpdatedBy))
+                ) && 
+                (
                     this.Version == input.Version ||
                     this.Version.Equals(input.Version)
                 );
@@ -361,6 +452,14 @@ namespace Org.OpenAPITools.Model
                 hashCode = hashCode * 59 + this.LiftType.GetHashCode();
                 hashCode = hashCode * 59 + this.Lat.GetHashCode();
                 hashCode = hashCode * 59 + this.Lon.GetHashCode();
+                if (this.CreatedAt != null)
+                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
+                if (this.CreatedBy != null)
+                    hashCode = hashCode * 59 + this.CreatedBy.GetHashCode();
+                if (this.UpdatedAt != null)
+                    hashCode = hashCode * 59 + this.UpdatedAt.GetHashCode();
+                if (this.UpdatedBy != null)
+                    hashCode = hashCode * 59 + this.UpdatedBy.GetHashCode();
                 hashCode = hashCode * 59 + this.Version.GetHashCode();
                 return hashCode;
             }
@@ -422,9 +521,9 @@ namespace Org.OpenAPITools.Model
             }
 
             // Route (string) maxLength
-            if(this.Route != null && this.Route.Length > 5)
+            if(this.Route != null && this.Route.Length > 50)
             {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Route, length must be less than 5.", new [] { "Route" });
+                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Route, length must be less than 50.", new [] { "Route" });
             }
 
             // Route (string) minLength

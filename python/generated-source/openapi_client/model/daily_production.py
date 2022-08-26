@@ -74,7 +74,6 @@ class DailyProduction(ModelNormal):
                 and the value is attribute type.
         """
         return {
-            'version': (int,),  # noqa: E501
             'uwi': (str,),  # noqa: E501
             'datetime': (datetime,),  # noqa: E501
             'liquid_rate': (float,),  # noqa: E501
@@ -91,7 +90,12 @@ class DailyProduction(ModelNormal):
             'strokes_per_minute': (float,),  # noqa: E501
             'downtime_hours': (float,),  # noqa: E501
             'downtime_code': (int,),  # noqa: E501
+            'version': (int,),  # noqa: E501
             'xid': (str,),  # noqa: E501
+            'created_at': (datetime,),  # noqa: E501
+            'created_by': (str,),  # noqa: E501
+            'updated_at': (datetime,),  # noqa: E501
+            'updated_by': (str,),  # noqa: E501
         }
 
     @cached_property
@@ -100,7 +104,6 @@ class DailyProduction(ModelNormal):
 
 
     attribute_map = {
-        'version': 'version',  # noqa: E501
         'uwi': 'uwi',  # noqa: E501
         'datetime': 'datetime',  # noqa: E501
         'liquid_rate': 'liquidRate',  # noqa: E501
@@ -117,7 +120,12 @@ class DailyProduction(ModelNormal):
         'strokes_per_minute': 'strokesPerMinute',  # noqa: E501
         'downtime_hours': 'downtimeHours',  # noqa: E501
         'downtime_code': 'downtimeCode',  # noqa: E501
+        'version': 'version',  # noqa: E501
         'xid': 'xid',  # noqa: E501
+        'created_at': 'createdAt',  # noqa: E501
+        'created_by': 'createdBy',  # noqa: E501
+        'updated_at': 'updatedAt',  # noqa: E501
+        'updated_by': 'updatedBy',  # noqa: E501
     }
 
     _composed_schemas = {}
@@ -132,11 +140,10 @@ class DailyProduction(ModelNormal):
     ])
 
     @convert_js_args_to_python_args
-    def __init__(self, version, uwi, datetime, liquid_rate, oil_production_rate, gas_production_rate, water_production_rate, choke, gas_oil_ratio, water_cut, tubing_pressure, casing_pressure, gas_injection_rate, operating_frequency, strokes_per_minute, downtime_hours, downtime_code, *args, **kwargs):  # noqa: E501
+    def __init__(self, uwi, datetime, liquid_rate, oil_production_rate, gas_production_rate, water_production_rate, choke, gas_oil_ratio, water_cut, tubing_pressure, casing_pressure, gas_injection_rate, operating_frequency, strokes_per_minute, downtime_hours, downtime_code, version, *args, **kwargs):  # noqa: E501
         """DailyProduction - a model defined in OpenAPI
 
         Args:
-            version (int):
             uwi (str):
             datetime (datetime):
             liquid_rate (float):
@@ -153,6 +160,7 @@ class DailyProduction(ModelNormal):
             strokes_per_minute (float):
             downtime_hours (float):
             downtime_code (int):
+            version (int):
 
         Keyword Args:
             _check_type (bool): if True, values for parameters in openapi_types
@@ -186,6 +194,10 @@ class DailyProduction(ModelNormal):
                                 through its discriminator because we passed in
                                 _visited_composed_classes = (Animal,)
             xid (str): [optional]  # noqa: E501
+            created_at (datetime): [optional]  # noqa: E501
+            created_by (str): [optional]  # noqa: E501
+            updated_at (datetime): [optional]  # noqa: E501
+            updated_by (str): [optional]  # noqa: E501
         """
 
         _check_type = kwargs.pop('_check_type', True)
@@ -211,7 +223,6 @@ class DailyProduction(ModelNormal):
         self._configuration = _configuration
         self._visited_composed_classes = _visited_composed_classes + (self.__class__,)
 
-        self.version = version
         self.uwi = uwi
         self.datetime = datetime
         self.liquid_rate = liquid_rate
@@ -228,6 +239,7 @@ class DailyProduction(ModelNormal):
         self.strokes_per_minute = strokes_per_minute
         self.downtime_hours = downtime_hours
         self.downtime_code = downtime_code
+        self.version = version
         for var_name, var_value in kwargs.items():
             if var_name not in self.attribute_map and \
                         self._configuration is not None and \

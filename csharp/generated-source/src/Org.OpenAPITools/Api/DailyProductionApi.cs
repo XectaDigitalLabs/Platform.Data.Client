@@ -27,15 +27,15 @@ namespace Org.OpenAPITools.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// 
+        /// Bulk Add / Update Daily Production Data
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="dailyProductionInput"></param>
         /// <returns>List&lt;DailyProduction&gt;</returns>
-        List<DailyProduction> ProductionAddDaily(List<DailyProductionInput> dailyProductionInput);
+        List<DailyProduction> ProductionAddUpdateDaily(List<DailyProductionInput> dailyProductionInput);
 
         /// <summary>
-        /// 
+        /// Bulk Add / Update Daily Production Data
         /// </summary>
         /// <remarks>
         /// 
@@ -43,47 +43,47 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="dailyProductionInput"></param>
         /// <returns>ApiResponse of List&lt;DailyProduction&gt;</returns>
-        ApiResponse<List<DailyProduction>> ProductionAddDailyWithHttpInfo(List<DailyProductionInput> dailyProductionInput);
+        ApiResponse<List<DailyProduction>> ProductionAddUpdateDailyWithHttpInfo(List<DailyProductionInput> dailyProductionInput);
         /// <summary>
-        /// 
+        /// Delete Daily Production Record
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
-        /// <returns>bool</returns>
-        bool ProductionDeleteDaily(string xid);
+        /// <returns></returns>
+        void ProductionDeleteDaily(string xid);
 
         /// <summary>
-        /// 
+        /// Delete Daily Production Record
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
-        /// <returns>ApiResponse of bool</returns>
-        ApiResponse<bool> ProductionDeleteDailyWithHttpInfo(string xid);
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> ProductionDeleteDailyWithHttpInfo(string xid);
         /// <summary>
-        /// 
+        /// Fetch Daily Production Records
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <returns>List&lt;DailyProduction&gt;</returns>
         List<DailyProduction> ProductionGetDaily(string uwi, DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?), int? page = default(int?), int? limit = default(int?));
 
         /// <summary>
-        /// 
+        /// Fetch Daily Production Records
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <returns>ApiResponse of List&lt;DailyProduction&gt;</returns>
@@ -98,7 +98,7 @@ namespace Org.OpenAPITools.Api
     {
         #region Asynchronous Operations
         /// <summary>
-        /// 
+        /// Bulk Add / Update Daily Production Data
         /// </summary>
         /// <remarks>
         /// 
@@ -107,10 +107,10 @@ namespace Org.OpenAPITools.Api
         /// <param name="dailyProductionInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;DailyProduction&gt;</returns>
-        System.Threading.Tasks.Task<List<DailyProduction>> ProductionAddDailyAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<List<DailyProduction>> ProductionAddUpdateDailyAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Bulk Add / Update Daily Production Data
         /// </summary>
         /// <remarks>
         /// 
@@ -119,9 +119,9 @@ namespace Org.OpenAPITools.Api
         /// <param name="dailyProductionInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;DailyProduction&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<DailyProduction>>> ProductionAddDailyWithHttpInfoAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<List<DailyProduction>>> ProductionAddUpdateDailyWithHttpInfoAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// 
+        /// Delete Daily Production Record
         /// </summary>
         /// <remarks>
         /// 
@@ -129,11 +129,11 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of bool</returns>
-        System.Threading.Tasks.Task<bool> ProductionDeleteDailyAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task ProductionDeleteDailyAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Delete Daily Production Record
         /// </summary>
         /// <remarks>
         /// 
@@ -141,18 +141,18 @@ namespace Org.OpenAPITools.Api
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (bool)</returns>
-        System.Threading.Tasks.Task<ApiResponse<bool>> ProductionDeleteDailyWithHttpInfoAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> ProductionDeleteDailyWithHttpInfoAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// 
+        /// Fetch Daily Production Records
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -160,15 +160,15 @@ namespace Org.OpenAPITools.Api
         System.Threading.Tasks.Task<List<DailyProduction>> ProductionGetDailyAsync(string uwi, DateTime? startDate = default(DateTime?), DateTime? endDate = default(DateTime?), int? page = default(int?), int? limit = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
 
         /// <summary>
-        /// 
+        /// Fetch Daily Production Records
         /// </summary>
         /// <remarks>
         /// 
         /// </remarks>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -295,28 +295,28 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update Daily Production Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="dailyProductionInput"></param>
         /// <returns>List&lt;DailyProduction&gt;</returns>
-        public List<DailyProduction> ProductionAddDaily(List<DailyProductionInput> dailyProductionInput)
+        public List<DailyProduction> ProductionAddUpdateDaily(List<DailyProductionInput> dailyProductionInput)
         {
-            Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>> localVarResponse = ProductionAddDailyWithHttpInfo(dailyProductionInput);
+            Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>> localVarResponse = ProductionAddUpdateDailyWithHttpInfo(dailyProductionInput);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update Daily Production Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="dailyProductionInput"></param>
         /// <returns>ApiResponse of List&lt;DailyProduction&gt;</returns>
-        public Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>> ProductionAddDailyWithHttpInfo(List<DailyProductionInput> dailyProductionInput)
+        public Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>> ProductionAddUpdateDailyWithHttpInfo(List<DailyProductionInput> dailyProductionInput)
         {
             // verify the required parameter 'dailyProductionInput' is set
             if (dailyProductionInput == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dailyProductionInput' when calling DailyProductionApi->ProductionAddDaily");
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dailyProductionInput' when calling DailyProductionApi->ProductionAddUpdateDaily");
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
 
@@ -326,7 +326,8 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "*/*"
+                "application/json",
+                "application/x-ndjson"
             };
 
             var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -345,11 +346,11 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Put<List<DailyProduction>>("/api/production/daily", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Post<List<DailyProduction>>("/api/production/daily", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("ProductionAddDaily", localVarResponse);
+                Exception _exception = this.ExceptionFactory("ProductionAddUpdateDaily", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -357,30 +358,30 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update Daily Production Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="dailyProductionInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of List&lt;DailyProduction&gt;</returns>
-        public async System.Threading.Tasks.Task<List<DailyProduction>> ProductionAddDailyAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<List<DailyProduction>> ProductionAddUpdateDailyAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>> localVarResponse = await ProductionAddDailyWithHttpInfoAsync(dailyProductionInput, cancellationToken).ConfigureAwait(false);
+            Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>> localVarResponse = await ProductionAddUpdateDailyWithHttpInfoAsync(dailyProductionInput, cancellationToken).ConfigureAwait(false);
             return localVarResponse.Data;
         }
 
         /// <summary>
-        ///  
+        /// Bulk Add / Update Daily Production Data 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="dailyProductionInput"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
         /// <returns>Task of ApiResponse (List&lt;DailyProduction&gt;)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>>> ProductionAddDailyWithHttpInfoAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<List<DailyProduction>>> ProductionAddUpdateDailyWithHttpInfoAsync(List<DailyProductionInput> dailyProductionInput, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'dailyProductionInput' is set
             if (dailyProductionInput == null)
-                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dailyProductionInput' when calling DailyProductionApi->ProductionAddDaily");
+                throw new Org.OpenAPITools.Client.ApiException(400, "Missing required parameter 'dailyProductionInput' when calling DailyProductionApi->ProductionAddUpdateDaily");
 
 
             Org.OpenAPITools.Client.RequestOptions localVarRequestOptions = new Org.OpenAPITools.Client.RequestOptions();
@@ -391,7 +392,8 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "*/*"
+                "application/json",
+                "application/x-ndjson"
             };
 
 
@@ -412,11 +414,11 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.PutAsync<List<DailyProduction>>("/api/production/daily", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.PostAsync<List<DailyProduction>>("/api/production/daily", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
-                Exception _exception = this.ExceptionFactory("ProductionAddDaily", localVarResponse);
+                Exception _exception = this.ExceptionFactory("ProductionAddUpdateDaily", localVarResponse);
                 if (_exception != null) throw _exception;
             }
 
@@ -424,24 +426,23 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Delete Daily Production Record 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
-        /// <returns>bool</returns>
-        public bool ProductionDeleteDaily(string xid)
+        /// <returns></returns>
+        public void ProductionDeleteDaily(string xid)
         {
-            Org.OpenAPITools.Client.ApiResponse<bool> localVarResponse = ProductionDeleteDailyWithHttpInfo(xid);
-            return localVarResponse.Data;
+            ProductionDeleteDailyWithHttpInfo(xid);
         }
 
         /// <summary>
-        ///  
+        /// Delete Daily Production Record 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
-        /// <returns>ApiResponse of bool</returns>
-        public Org.OpenAPITools.Client.ApiResponse<bool> ProductionDeleteDailyWithHttpInfo(string xid)
+        /// <returns>ApiResponse of Object(void)</returns>
+        public Org.OpenAPITools.Client.ApiResponse<Object> ProductionDeleteDailyWithHttpInfo(string xid)
         {
             // verify the required parameter 'xid' is set
             if (xid == null)
@@ -454,7 +455,6 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "application/json"
             };
 
             var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -473,7 +473,7 @@ namespace Org.OpenAPITools.Api
             }
 
             // make the HTTP request
-            var localVarResponse = this.Client.Delete<bool>("/api/production/daily/{xid}", localVarRequestOptions, this.Configuration);
+            var localVarResponse = this.Client.Delete<Object>("/api/production/daily/{xid}", localVarRequestOptions, this.Configuration);
 
             if (this.ExceptionFactory != null)
             {
@@ -485,26 +485,25 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Delete Daily Production Record 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of bool</returns>
-        public async System.Threading.Tasks.Task<bool> ProductionDeleteDailyAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task ProductionDeleteDailyAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            Org.OpenAPITools.Client.ApiResponse<bool> localVarResponse = await ProductionDeleteDailyWithHttpInfoAsync(xid, cancellationToken).ConfigureAwait(false);
-            return localVarResponse.Data;
+            await ProductionDeleteDailyWithHttpInfoAsync(xid, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        ///  
+        /// Delete Daily Production Record 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="xid"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
-        /// <returns>Task of ApiResponse (bool)</returns>
-        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<bool>> ProductionDeleteDailyWithHttpInfoAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<Org.OpenAPITools.Client.ApiResponse<Object>> ProductionDeleteDailyWithHttpInfoAsync(string xid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // verify the required parameter 'xid' is set
             if (xid == null)
@@ -518,7 +517,6 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "application/json"
             };
 
 
@@ -539,7 +537,7 @@ namespace Org.OpenAPITools.Api
 
             // make the HTTP request
 
-            var localVarResponse = await this.AsynchronousClient.DeleteAsync<bool>("/api/production/daily/{xid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
+            var localVarResponse = await this.AsynchronousClient.DeleteAsync<Object>("/api/production/daily/{xid}", localVarRequestOptions, this.Configuration, cancellationToken).ConfigureAwait(false);
 
             if (this.ExceptionFactory != null)
             {
@@ -551,12 +549,12 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Daily Production Records 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <returns>List&lt;DailyProduction&gt;</returns>
@@ -567,12 +565,12 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Daily Production Records 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <returns>ApiResponse of List&lt;DailyProduction&gt;</returns>
@@ -589,7 +587,8 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "*/*"
+                "application/json",
+                "application/x-ndjson"
             };
 
             var localVarContentType = Org.OpenAPITools.Client.ClientUtils.SelectHeaderContentType(_contentTypes);
@@ -636,12 +635,12 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Daily Production Records 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -653,12 +652,12 @@ namespace Org.OpenAPITools.Api
         }
 
         /// <summary>
-        ///  
+        /// Fetch Daily Production Records 
         /// </summary>
         /// <exception cref="Org.OpenAPITools.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="uwi"></param>
-        /// <param name="startDate"> (optional, default to &quot;1000-01-01T00:00Z&quot;)</param>
-        /// <param name="endDate"> (optional, default to &quot;3000-12-31T00:00Z&quot;)</param>
+        /// <param name="startDate"> (optional)</param>
+        /// <param name="endDate"> (optional)</param>
         /// <param name="page"> (optional)</param>
         /// <param name="limit"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel the request.</param>
@@ -677,7 +676,8 @@ namespace Org.OpenAPITools.Api
 
             // to determine the Accept header
             String[] _accepts = new String[] {
-                "*/*"
+                "application/json",
+                "application/x-ndjson"
             };
 
 

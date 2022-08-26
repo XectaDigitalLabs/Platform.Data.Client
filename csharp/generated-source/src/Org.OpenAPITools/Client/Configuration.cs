@@ -102,7 +102,7 @@ namespace Org.OpenAPITools.Client
         {
             Proxy = null;
             UserAgent = "OpenAPI-Generator/1.0.0/csharp";
-            BasePath = "http://localhost";
+            BasePath = "https://data-sandbox.onxecta.com";
             DefaultHeaders = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
@@ -110,8 +110,8 @@ namespace Org.OpenAPITools.Client
             {
                 {
                     new Dictionary<string, object> {
-                        {"url", "http://localhost"},
-                        {"description", "Generated server url"},
+                        {"url", "https://data-sandbox.onxecta.com"},
+                        {"description", "AWS Cloud API Endpoint"},
                     }
                 }
             };
@@ -128,7 +128,7 @@ namespace Org.OpenAPITools.Client
             IDictionary<string, string> defaultHeaders,
             IDictionary<string, string> apiKey,
             IDictionary<string, string> apiKeyPrefix,
-            string basePath = "http://localhost") : this()
+            string basePath = "https://data-sandbox.onxecta.com") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");
@@ -507,7 +507,6 @@ namespace Org.OpenAPITools.Client
                 AccessToken = second.AccessToken ?? first.AccessToken,
                 TempFolderPath = second.TempFolderPath ?? first.TempFolderPath,
                 DateTimeFormat = second.DateTimeFormat ?? first.DateTimeFormat
-                
             };
             return config;
         }
