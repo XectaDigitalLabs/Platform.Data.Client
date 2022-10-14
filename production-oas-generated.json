@@ -1,0 +1,3342 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Production API",
+    "description": "API exposing endpoints for managing well  and daily production.",
+    "termsOfService": "http://swagger.io/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://springdoc.org"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://data-sandbox.onxecta.com",
+      "description": "AWS Cloud API Endpoint"
+    },
+    {
+      "url": "http://localhost",
+      "description": "Local Testing API Endpoint"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Wellbore",
+      "description": "Query or Mutate Wellbore Data",
+      "externalDocs": {
+        "url": "https://dash.readme.com/project/xecta/v2.0/docs/wellbore-header-schema"
+      }
+    },
+    {
+      "name": "Tubing",
+      "description": "Query or mutation tubing data",
+      "externalDocs": {
+        "url": "https://docs.onxecta.com/docs/tubing-schema"
+      }
+    },
+    {
+      "name": "Well",
+      "description": "Query or mutation well  data",
+      "externalDocs": {
+        "url": "https://docs.onxecta.com/docs/well-header-schema"
+      }
+    },
+    {
+      "name": "Formation Property",
+      "description": "Query or Update formation property Data"
+    },
+    {
+      "name": "Deviation Survey",
+      "description": "Query or mutation deviation survey data"
+    },
+    {
+      "name": "Casing",
+      "description": "Query or mutation casing data"
+    },
+    {
+      "name": "Daily Production",
+      "description": "Query or mutation daily production data"
+    }
+  ],
+  "paths": {
+    "/api/production/wells": {
+      "get": {
+        "tags": [
+          "Well"
+        ],
+        "summary": "Get Multiple Wells",
+        "description": "This operation offers an optional paging facility if desired.",
+        "operationId": "getWells",
+        "parameters": [
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Well"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Well"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Well"
+        ],
+        "summary": "Bulk Add / Update Well Data",
+        "operationId": "upsertWells",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WellInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Well"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Well"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/wellbore": {
+      "post": {
+        "tags": [
+          "Wellbore"
+        ],
+        "summary": "Bulk Add / Update Wellbore Data",
+        "description": "This operation will add or update multiple wellbores using batching for efficiency",
+        "operationId": "upsertWellbores",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/WellboreInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Wellbore"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Wellbore"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/tubing": {
+      "post": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Bulk Add / Update Tubing Data",
+        "operationId": "upsertTubing",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TubingInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/formation": {
+      "post": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Bulk Add / Update Formation Property Data",
+        "operationId": "upsertFormations",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FormationInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/deviationSurvey": {
+      "post": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Bulk Add / Update Deviation Survey Data",
+        "operationId": "upsertSurveys",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DeviationSurveyInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/daily": {
+      "post": {
+        "tags": [
+          "Daily Production"
+        ],
+        "summary": "Bulk Add / Update Daily Production Data",
+        "operationId": "upsertDaily",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DailyProductionInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyProduction"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyProduction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/casing": {
+      "post": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Bulk Add / Update Casing Data",
+        "operationId": "upsertCasing",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CasingInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/wellbore/{sourceWellboreId}/formation": {
+      "get": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Fetch formation by welbore ",
+        "operationId": "getFormationsByWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/wellbore/{sourceWellId}": {
+      "get": {
+        "tags": [
+          "Wellbore"
+        ],
+        "summary": "Get wellbores by well source id",
+        "operationId": "getWellbores",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Wellbore"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Wellbore"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/tubing": {
+      "get": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Fetch tubing records by source well id",
+        "operationId": "getTubingForWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/casing": {
+      "get": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Fetch casing records by source well id",
+        "operationId": "getCasingForWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceId}": {
+      "get": {
+        "tags": [
+          "Well"
+        ],
+        "summary": "Retrieve a single well by its source id",
+        "operationId": "getWell",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/Well"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Well"
+        ],
+        "summary": "Delete Single Well ",
+        "operationId": "deleteWell",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/tubing/{sourceId}": {
+      "get": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Fetch tubing records by source well id",
+        "operationId": "getTubingBySourceId",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tubing"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tubing"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Bulk Add / Update Tubing Data by Well and Wellbore",
+        "operationId": "deleteTubing",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/formation/{sourceId}": {
+      "get": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Fetch formation by source id",
+        "operationId": "getFormationBySource",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Formation"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Formation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Delete a single formation",
+        "operationId": "deleteFormation",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/deviationSurvey/{uwi}/{wellboreIndex}": {
+      "get": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Fetch Deviation Survey Records by Well and Wellbore",
+        "operationId": "getSurvey",
+        "parameters": [
+          {
+            "name": "uwi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "wellboreIndex",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviationSurvey"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviationSurvey"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/deviationSurvey/{sourceId}": {
+      "get": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Fetch deviation survey records by source well id",
+        "operationId": "getDeviationSurveyBySourceId",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviationSurvey"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviationSurvey"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Delete a single survey ",
+        "operationId": "deleteSurvey",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/daily/{uwi}": {
+      "get": {
+        "tags": [
+          "Daily Production"
+        ],
+        "summary": "Fetch Daily Production Records",
+        "operationId": "getDaily",
+        "parameters": [
+          {
+            "name": "uwi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyProduction"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DailyProduction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Daily Production"
+        ],
+        "summary": "Delete Daily Production",
+        "operationId": "deleteDaily",
+        "parameters": [
+          {
+            "name": "uwi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/casing/{sourceId}": {
+      "get": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Fetch casing records by source well id",
+        "operationId": "getCasingBySourceId",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Casing"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Casing"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Bulk Add / Update Casing Data",
+        "operationId": "deleteCasing",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/wellbore/{sourceId}": {
+      "delete": {
+        "tags": [
+          "Wellbore"
+        ],
+        "summary": "Delete a single wellbore",
+        "description": "This operation will delete a single wellbore by its uwi and wellbore index. \n            This operation will also cascade delete all dependent wellbore entities that have been added\n            to the system.\n            ",
+        "operationId": "deleteWellbore",
+        "parameters": [
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "WellInput": {
+        "required": [
+          "fluid",
+          "liftType",
+          "name",
+          "sourceId",
+          "type",
+          "uwi"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "uwi": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "group1": {
+            "type": "string",
+            "nullable": true
+          },
+          "group2": {
+            "type": "string",
+            "nullable": true
+          },
+          "group3": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "default": "PRODUCER",
+            "enum": [
+              "PRODUCER",
+              "INJECTOR"
+            ]
+          },
+          "fluid": {
+            "type": "string",
+            "default": "OIL",
+            "enum": [
+              "OIL",
+              "GAS",
+              "WATER"
+            ]
+          },
+          "liftType": {
+            "type": "string",
+            "default": "NATURAL_FLOW",
+            "enum": [
+              "NATURAL_FLOW",
+              "GAS_LIFT",
+              "ROD_PUMP",
+              "ESP",
+              "PLUNGER_LIFT",
+              "GAS_ASSISTED_PLUNGER_LIFT"
+            ]
+          },
+          "lat": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "mudLine": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "DEFAULT",
+              "ACT",
+              "AET",
+              "AFRICA_ABIDJAN",
+              "AFRICA_ACCRA",
+              "AFRICA_ADDIS_ABABA",
+              "AFRICA_ALGIERS",
+              "AFRICA_ASMERA",
+              "AFRICA_BAMAKO",
+              "AFRICA_BANGUI",
+              "AFRICA_BANJUL",
+              "AFRICA_BISSAU",
+              "AFRICA_BLANTYRE",
+              "AFRICA_BRAZZAVILLE",
+              "AFRICA_BUJUMBURA",
+              "AFRICA_CAIRO",
+              "AFRICA_CASABLANCA",
+              "AFRICA_CEUTA",
+              "AFRICA_CONAKRY",
+              "AFRICA_DAKAR",
+              "AFRICA_DAR_ES_SALAAM",
+              "AFRICA_DJIBOUTI",
+              "AFRICA_DOUALA",
+              "AFRICA_EL_AAIUN",
+              "AFRICA_FREETOWN",
+              "AFRICA_GABORONE",
+              "AFRICA_HARARE",
+              "AFRICA_JOHANNESBURG",
+              "AFRICA_KAMPALA",
+              "AFRICA_KHARTOUM",
+              "AFRICA_KIGALI",
+              "AFRICA_KINSHASA",
+              "AFRICA_LAGOS",
+              "AFRICA_LIBREVILLE",
+              "AFRICA_LOME",
+              "AFRICA_LUANDA",
+              "AFRICA_LUBUMBASHI",
+              "AFRICA_LUSAKA",
+              "AFRICA_MALABO",
+              "AFRICA_MAPUTO",
+              "AFRICA_MASERU",
+              "AFRICA_MBABANE",
+              "AFRICA_MOGADISHU",
+              "AFRICA_MONROVIA",
+              "AFRICA_NAIROBI",
+              "AFRICA_NDJAMENA",
+              "AFRICA_NIAMEY",
+              "AFRICA_NOUAKCHOTT",
+              "AFRICA_OUAGADOUGOU",
+              "AFRICA_PORTO_NOVO",
+              "AFRICA_SAO_TOME",
+              "AFRICA_TIMBUKTU",
+              "AFRICA_TRIPOLI",
+              "AFRICA_TUNIS",
+              "AFRICA_WINDHOEK",
+              "AGT",
+              "AMERICA_ADAK",
+              "AMERICA_ANCHORAGE",
+              "AMERICA_ANGUILLA",
+              "AMERICA_ANTIGUA",
+              "AMERICA_ARAGUAINA",
+              "AMERICA_ARUBA",
+              "AMERICA_ASUNCION",
+              "AMERICA_ATKA",
+              "AMERICA_BARBADOS",
+              "AMERICA_BELEM",
+              "AMERICA_BELIZE",
+              "AMERICA_BOA_VISTA",
+              "AMERICA_BOGOTA",
+              "AMERICA_BOISE",
+              "AMERICA_BUENOS_AIRES",
+              "AMERICA_CAMBRIDGE_BAY",
+              "AMERICA_CANCUN",
+              "AMERICA_CARACAS",
+              "AMERICA_CATAMARCA",
+              "AMERICA_CAYENNE",
+              "AMERICA_CAYMAN",
+              "AMERICA_CHICAGO",
+              "AMERICA_CHIHUAHUA",
+              "AMERICA_CORDOBA",
+              "AMERICA_COSTA_RICA",
+              "AMERICA_CUIABA",
+              "AMERICA_CURACAO",
+              "AMERICA_DANMARKSHAVN",
+              "AMERICA_DAWSON",
+              "AMERICA_DAWSON_CREEK",
+              "AMERICA_DENVER",
+              "AMERICA_DETROIT",
+              "AMERICA_DOMINICA",
+              "AMERICA_EDMONTON",
+              "AMERICA_EIRUNEPE",
+              "AMERICA_EL_SALVADOR",
+              "AMERICA_ENSENADA",
+              "AMERICA_FORT_WAYNE",
+              "AMERICA_FORTALEZA",
+              "AMERICA_GLACE_BAY",
+              "AMERICA_GODTHAB",
+              "AMERICA_GOOSE_BAY",
+              "AMERICA_GRAND_TURK",
+              "AMERICA_GRENADA",
+              "AMERICA_GUADELOUPE",
+              "AMERICA_GUATEMALA",
+              "AMERICA_GUAYAQUIL",
+              "AMERICA_GUYANA",
+              "AMERICA_HALIFAX",
+              "AMERICA_HAVANA",
+              "AMERICA_HERMOSILLO",
+              "AMERICA_INDIANA_INDIANAPOLIS",
+              "AMERICA_INDIANA_KNOX",
+              "AMERICA_INDIANA_MARENGO",
+              "AMERICA_INDIANA_VEVAY",
+              "AMERICA_INDIANAPOLIS",
+              "AMERICA_INUVIK",
+              "AMERICA_IQALUIT",
+              "AMERICA_JAMAICA",
+              "AMERICA_JUJUY",
+              "AMERICA_JUNEAU",
+              "AMERICA_KENTUCKY_LOUISVILLE",
+              "AMERICA_KENTUCKY_MONTICELLO",
+              "AMERICA_KNOX_IN",
+              "AMERICA_LA_PAZ",
+              "AMERICA_LIMA",
+              "AMERICA_LOS_ANGELES",
+              "AMERICA_LOUISVILLE",
+              "AMERICA_MACEIO",
+              "AMERICA_MANAGUA",
+              "AMERICA_MANAUS",
+              "AMERICA_MARTINIQUE",
+              "AMERICA_MAZATLAN",
+              "AMERICA_MENDOZA",
+              "AMERICA_MENOMINEE",
+              "AMERICA_MERIDA",
+              "AMERICA_MEXICO_CITY",
+              "AMERICA_MIQUELON",
+              "AMERICA_MONTERREY",
+              "AMERICA_MONTEVIDEO",
+              "AMERICA_MONTREAL",
+              "AMERICA_MONTSERRAT",
+              "AMERICA_NASSAU",
+              "AMERICA_NEW_YORK",
+              "AMERICA_NIPIGON",
+              "AMERICA_NOME",
+              "AMERICA_NORONHA",
+              "AMERICA_NORTH_DAKOTA_CENTER",
+              "AMERICA_PANAMA",
+              "AMERICA_PANGNIRTUNG",
+              "AMERICA_PARAMARIBO",
+              "AMERICA_PHOENIX",
+              "AMERICA_PORT_AU_PRINCE",
+              "AMERICA_PORT_OF_SPAIN",
+              "AMERICA_PORTO_ACRE",
+              "AMERICA_PORTO_VELHO",
+              "AMERICA_PUERTO_RICO",
+              "AMERICA_RAINY_RIVER",
+              "AMERICA_RANKIN_INLET",
+              "AMERICA_RECIFE",
+              "AMERICA_REGINA",
+              "AMERICA_RIO_BRANCO",
+              "AMERICA_ROSARIO",
+              "AMERICA_SANTIAGO",
+              "AMERICA_SANTO_DOMINGO",
+              "AMERICA_SAO_PAULO",
+              "AMERICA_SCORESBYSUND",
+              "AMERICA_SHIPROCK",
+              "AMERICA_ST_JOHNS",
+              "AMERICA_ST_KITTS",
+              "AMERICA_ST_LUCIA",
+              "AMERICA_ST_THOMAS",
+              "AMERICA_ST_VINCENT",
+              "AMERICA_SWIFT_CURRENT",
+              "AMERICA_TEGUCIGALPA",
+              "AMERICA_THULE",
+              "AMERICA_THUNDER_BAY",
+              "AMERICA_TIJUANA",
+              "AMERICA_TORTOLA",
+              "AMERICA_VANCOUVER",
+              "AMERICA_VIRGIN",
+              "AMERICA_WHITEHORSE",
+              "AMERICA_WINNIPEG",
+              "AMERICA_YAKUTAT",
+              "AMERICA_YELLOWKNIFE",
+              "ANTARCTICA_CASEY",
+              "ANTARCTICA_DAVIS",
+              "ANTARCTICA_DUMONTDURVILLE",
+              "ANTARCTICA_MAWSON",
+              "ANTARCTICA_MCMURDO",
+              "ANTARCTICA_PALMER",
+              "ANTARCTICA_ROTHERA",
+              "ANTARCTICA_SOUTH_POLE",
+              "ANTARCTICA_SYOWA",
+              "ANTARCTICA_VOSTOK",
+              "ARCTIC_LONGYEARBYEN",
+              "ART",
+              "ASIA_ADEN",
+              "ASIA_ALMATY",
+              "ASIA_AMMAN",
+              "ASIA_ANADYR",
+              "ASIA_AQTAU",
+              "ASIA_AQTOBE",
+              "ASIA_ASHGABAT",
+              "ASIA_ASHKHABAD",
+              "ASIA_BAGHDAD",
+              "ASIA_BAHRAIN",
+              "ASIA_BAKU",
+              "ASIA_BANGKOK",
+              "ASIA_BEIRUT",
+              "ASIA_BISHKEK",
+              "ASIA_BRUNEI",
+              "ASIA_CALCUTTA",
+              "ASIA_CHOIBALSAN",
+              "ASIA_CHONGQING",
+              "ASIA_CHUNGKING",
+              "ASIA_COLOMBO",
+              "ASIA_DACCA",
+              "ASIA_DAMASCUS",
+              "ASIA_DHAKA",
+              "ASIA_DILI",
+              "ASIA_DUBAI",
+              "ASIA_DUSHANBE",
+              "ASIA_GAZA",
+              "ASIA_HARBIN",
+              "ASIA_HONG_KONG",
+              "ASIA_HOVD",
+              "ASIA_IRKUTSK",
+              "ASIA_ISTANBUL",
+              "ASIA_JAKARTA",
+              "ASIA_JAYAPURA",
+              "ASIA_JERUSALEM",
+              "ASIA_KABUL",
+              "ASIA_KAMCHATKA",
+              "ASIA_KARACHI",
+              "ASIA_KASHGAR",
+              "ASIA_KATMANDU",
+              "ASIA_KRASNOYARSK",
+              "ASIA_KUALA_LUMPUR",
+              "ASIA_KUCHING",
+              "ASIA_KUWAIT",
+              "ASIA_MACAO",
+              "ASIA_MACAU",
+              "ASIA_MAGADAN",
+              "ASIA_MAKASSAR",
+              "ASIA_MANILA",
+              "ASIA_MUSCAT",
+              "ASIA_NICOSIA",
+              "ASIA_NOVOSIBIRSK",
+              "ASIA_OMSK",
+              "ASIA_ORAL",
+              "ASIA_PHNOM_PENH",
+              "ASIA_PONTIANAK",
+              "ASIA_PYONGYANG",
+              "ASIA_QATAR",
+              "ASIA_QYZYLORDA",
+              "ASIA_RANGOON",
+              "ASIA_RIYADH",
+              "ASIA_RIYADH87",
+              "ASIA_RIYADH88",
+              "ASIA_RIYADH89",
+              "ASIA_SAIGON",
+              "ASIA_SAKHALIN",
+              "ASIA_SAMARKAND",
+              "ASIA_SEOUL",
+              "ASIA_SHANGHAI",
+              "ASIA_SINGAPORE",
+              "ASIA_TAIPEI",
+              "ASIA_TASHKENT",
+              "ASIA_TBILISI",
+              "ASIA_TEHRAN",
+              "ASIA_TEL_AVIV",
+              "ASIA_THIMBU",
+              "ASIA_THIMPHU",
+              "ASIA_TOKYO",
+              "ASIA_UJUNG_PANDANG",
+              "ASIA_ULAANBAATAR",
+              "ASIA_ULAN_BATOR",
+              "ASIA_URUMQI",
+              "ASIA_VIENTIANE",
+              "ASIA_VLADIVOSTOK",
+              "ASIA_YAKUTSK",
+              "ASIA_YEKATERINBURG",
+              "ASIA_YEREVAN",
+              "AST",
+              "ATLANTIC_AZORES",
+              "ATLANTIC_BERMUDA",
+              "ATLANTIC_CANARY",
+              "ATLANTIC_CAPE_VERDE",
+              "ATLANTIC_FAEROE",
+              "ATLANTIC_JAN_MAYEN",
+              "ATLANTIC_MADEIRA",
+              "ATLANTIC_REYKJAVIK",
+              "ATLANTIC_SOUTH_GEORGIA",
+              "ATLANTIC_ST_HELENA",
+              "ATLANTIC_STANLEY",
+              "AUSTRALIA_ACT",
+              "AUSTRALIA_ADELAIDE",
+              "AUSTRALIA_BRISBANE",
+              "AUSTRALIA_BROKEN_HILL",
+              "AUSTRALIA_CANBERRA",
+              "AUSTRALIA_DARWIN",
+              "AUSTRALIA_HOBART",
+              "AUSTRALIA_LHI",
+              "AUSTRALIA_LINDEMAN",
+              "AUSTRALIA_LORD_HOWE",
+              "AUSTRALIA_MELBOURNE",
+              "AUSTRALIA_NORTH",
+              "AUSTRALIA_NSW",
+              "AUSTRALIA_PERTH",
+              "AUSTRALIA_QUEENSLAND",
+              "AUSTRALIA_SOUTH",
+              "AUSTRALIA_SYDNEY",
+              "AUSTRALIA_TASMANIA",
+              "AUSTRALIA_VICTORIA",
+              "AUSTRALIA_WEST",
+              "AUSTRALIA_YANCOWINNA",
+              "BET",
+              "BRAZIL_ACRE",
+              "BRAZIL_DENORONHA",
+              "BRAZIL_EAST",
+              "BRAZIL_WEST",
+              "BST",
+              "CANADA_ATLANTIC",
+              "CANADA_CENTRAL",
+              "CANADA_EAST_SASKATCHEWAN",
+              "CANADA_EASTERN",
+              "CANADA_MOUNTAIN",
+              "CANADA_NEWFOUNDLAND",
+              "CANADA_PACIFIC",
+              "CANADA_SASKATCHEWAN",
+              "CANADA_YUKON",
+              "CAT",
+              "CET",
+              "CHILE_CONTINENTAL",
+              "CHILE_EASTERISLAND",
+              "CNT",
+              "CST",
+              "CST6CDT",
+              "CTT",
+              "CUBA",
+              "EAT",
+              "ECT",
+              "EET",
+              "EGYPT",
+              "EIRE",
+              "EST",
+              "EST5EDT",
+              "ETC_GMT",
+              "ETC_GMT_PLUS_0",
+              "ETC_GMT_PLUS_1",
+              "ETC_GMT_PLUS_10",
+              "ETC_GMT_PLUS_11",
+              "ETC_GMT_PLUS_12",
+              "ETC_GMT_PLUS_2",
+              "ETC_GMT_PLUS_3",
+              "ETC_GMT_PLUS_4",
+              "ETC_GMT_PLUS_5",
+              "ETC_GMT_PLUS_6",
+              "ETC_GMT_PLUS_7",
+              "ETC_GMT_PLUS_8",
+              "ETC_GMT_PLUS_9",
+              "ETC_GMT_MINUS_0",
+              "ETC_GMT_MINUS_1",
+              "ETC_GMT_MINUS_10",
+              "ETC_GMT_MINUS_11",
+              "ETC_GMT_MINUS_12",
+              "ETC_GMT_MINUS_13",
+              "ETC_GMT_MINUS_14",
+              "ETC_GMT_MINUS_2",
+              "ETC_GMT_MINUS_3",
+              "ETC_GMT_MINUS_4",
+              "ETC_GMT_MINUS_5",
+              "ETC_GMT_MINUS_6",
+              "ETC_GMT_MINUS_7",
+              "ETC_GMT_MINUS_8",
+              "ETC_GMT_MINUS_9",
+              "ETC_GMT0",
+              "ETC_GREENWICH",
+              "ETC_UCT",
+              "ETC_UNIVERSAL",
+              "ETC_UTC",
+              "ETC_ZULU",
+              "EUROPE_AMSTERDAM",
+              "EUROPE_ANDORRA",
+              "EUROPE_ATHENS",
+              "EUROPE_BELFAST",
+              "EUROPE_BELGRADE",
+              "EUROPE_BERLIN",
+              "EUROPE_BRATISLAVA",
+              "EUROPE_BRUSSELS",
+              "EUROPE_BUCHAREST",
+              "EUROPE_BUDAPEST",
+              "EUROPE_CHISINAU",
+              "EUROPE_COPENHAGEN",
+              "EUROPE_DUBLIN",
+              "EUROPE_GIBRALTAR",
+              "EUROPE_HELSINKI",
+              "EUROPE_ISTANBUL",
+              "EUROPE_KALININGRAD",
+              "EUROPE_KIEV",
+              "EUROPE_LISBON",
+              "EUROPE_LJUBLJANA",
+              "EUROPE_LONDON",
+              "EUROPE_LUXEMBOURG",
+              "EUROPE_MADRID",
+              "EUROPE_MALTA",
+              "EUROPE_MINSK",
+              "EUROPE_MONACO",
+              "EUROPE_MOSCOW",
+              "EUROPE_NICOSIA",
+              "EUROPE_OSLO",
+              "EUROPE_PARIS",
+              "EUROPE_PRAGUE",
+              "EUROPE_RIGA",
+              "EUROPE_ROME",
+              "EUROPE_SAMARA",
+              "EUROPE_SAN_MARINO",
+              "EUROPE_SARAJEVO",
+              "EUROPE_SIMFEROPOL",
+              "EUROPE_SKOPJE",
+              "EUROPE_SOFIA",
+              "EUROPE_STOCKHOLM",
+              "EUROPE_TALLINN",
+              "EUROPE_TIRANE",
+              "EUROPE_TIRASPOL",
+              "EUROPE_UZHGOROD",
+              "EUROPE_VADUZ",
+              "EUROPE_VATICAN",
+              "EUROPE_VIENNA",
+              "EUROPE_VILNIUS",
+              "EUROPE_WARSAW",
+              "EUROPE_ZAGREB",
+              "EUROPE_ZAPOROZHYE",
+              "EUROPE_ZURICH",
+              "GB",
+              "GB_EIRE",
+              "GMT",
+              "GMT0",
+              "GREENWICH",
+              "HONGKONG",
+              "HST",
+              "ICELAND",
+              "IET",
+              "INDIAN_ANTANANARIVO",
+              "INDIAN_CHAGOS",
+              "INDIAN_CHRISTMAS",
+              "INDIAN_COCOS",
+              "INDIAN_COMORO",
+              "INDIAN_KERGUELEN",
+              "INDIAN_MAHE",
+              "INDIAN_MALDIVES",
+              "INDIAN_MAURITIUS",
+              "INDIAN_MAYOTTE",
+              "INDIAN_REUNION",
+              "IRAN",
+              "ISRAEL",
+              "IST",
+              "JAMAICA",
+              "JAPAN",
+              "JST",
+              "KWAJALEIN",
+              "LIBYA",
+              "MET",
+              "MEXICO_BAJANORTE",
+              "MEXICO_BAJASUR",
+              "MEXICO_GENERAL",
+              "MIDEAST_RIYADH87",
+              "MIDEAST_RIYADH88",
+              "MIDEAST_RIYADH89",
+              "MIT",
+              "MST",
+              "MST7MDT",
+              "NAVAJO",
+              "NET",
+              "NST",
+              "NZ",
+              "NZ_CHAT",
+              "PACIFIC_APIA",
+              "PACIFIC_AUCKLAND",
+              "PACIFIC_CHATHAM",
+              "PACIFIC_EASTER",
+              "PACIFIC_EFATE",
+              "PACIFIC_ENDERBURY",
+              "PACIFIC_FAKAOFO",
+              "PACIFIC_FIJI",
+              "PACIFIC_FUNAFUTI",
+              "PACIFIC_GALAPAGOS",
+              "PACIFIC_GAMBIER",
+              "PACIFIC_GUADALCANAL",
+              "PACIFIC_GUAM",
+              "PACIFIC_HONOLULU",
+              "PACIFIC_JOHNSTON",
+              "PACIFIC_KIRITIMATI",
+              "PACIFIC_KOSRAE",
+              "PACIFIC_KWAJALEIN",
+              "PACIFIC_MAJURO",
+              "PACIFIC_MARQUESAS",
+              "PACIFIC_MIDWAY",
+              "PACIFIC_NAURU",
+              "PACIFIC_NIUE",
+              "PACIFIC_NORFOLK",
+              "PACIFIC_NOUMEA",
+              "PACIFIC_PAGO_PAGO",
+              "PACIFIC_PALAU",
+              "PACIFIC_PITCAIRN",
+              "PACIFIC_PONAPE",
+              "PACIFIC_PORT_MORESBY",
+              "PACIFIC_RAROTONGA",
+              "PACIFIC_SAIPAN",
+              "PACIFIC_SAMOA",
+              "PACIFIC_TAHITI",
+              "PACIFIC_TARAWA",
+              "PACIFIC_TONGATAPU",
+              "PACIFIC_TRUK",
+              "PACIFIC_WAKE",
+              "PACIFIC_WALLIS",
+              "PACIFIC_YAP",
+              "PLT",
+              "PNT",
+              "POLAND",
+              "PORTUGAL",
+              "PRC",
+              "PRT",
+              "PST",
+              "PST8PDT",
+              "ROK",
+              "SINGAPORE",
+              "SST",
+              "SYSTEMV_AST4",
+              "SYSTEMV_AST4ADT",
+              "SYSTEMV_CST6",
+              "SYSTEMV_CST6CDT",
+              "SYSTEMV_EST5",
+              "SYSTEMV_EST5EDT",
+              "SYSTEMV_HST10",
+              "SYSTEMV_MST7",
+              "SYSTEMV_MST7MDT",
+              "SYSTEMV_PST8",
+              "SYSTEMV_PST8PDT",
+              "SYSTEMV_YST9",
+              "SYSTEMV_YST9YDT",
+              "TURKEY",
+              "UCT",
+              "UNIVERSAL",
+              "US_ALASKA",
+              "US_ALEUTIAN",
+              "US_ARIZONA",
+              "US_CENTRAL",
+              "US_EAST_INDIANA",
+              "US_EASTERN",
+              "US_HAWAII",
+              "US_INDIANA_STARKE",
+              "US_MICHIGAN",
+              "US_MOUNTAIN",
+              "US_PACIFIC",
+              "US_PACIFIC_NEW",
+              "US_SAMOA",
+              "UTC",
+              "VST",
+              "W_SU",
+              "WET",
+              "ZULU"
+            ]
+          }
+        }
+      },
+      "Well": {
+        "required": [
+          "fluid",
+          "liftType",
+          "name",
+          "sourceId",
+          "type",
+          "uwi",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "uwi": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "group1": {
+            "type": "string",
+            "nullable": true
+          },
+          "group2": {
+            "type": "string",
+            "nullable": true
+          },
+          "group3": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "default": "PRODUCER",
+            "enum": [
+              "PRODUCER",
+              "INJECTOR"
+            ]
+          },
+          "fluid": {
+            "type": "string",
+            "default": "OIL",
+            "enum": [
+              "OIL",
+              "GAS",
+              "WATER"
+            ]
+          },
+          "liftType": {
+            "type": "string",
+            "default": "NATURAL_FLOW",
+            "enum": [
+              "NATURAL_FLOW",
+              "GAS_LIFT",
+              "ROD_PUMP",
+              "ESP",
+              "PLUNGER_LIFT",
+              "GAS_ASSISTED_PLUNGER_LIFT"
+            ]
+          },
+          "lat": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "lon": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "mudLine": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "string",
+            "nullable": true,
+            "enum": [
+              "DEFAULT",
+              "ACT",
+              "AET",
+              "AFRICA_ABIDJAN",
+              "AFRICA_ACCRA",
+              "AFRICA_ADDIS_ABABA",
+              "AFRICA_ALGIERS",
+              "AFRICA_ASMERA",
+              "AFRICA_BAMAKO",
+              "AFRICA_BANGUI",
+              "AFRICA_BANJUL",
+              "AFRICA_BISSAU",
+              "AFRICA_BLANTYRE",
+              "AFRICA_BRAZZAVILLE",
+              "AFRICA_BUJUMBURA",
+              "AFRICA_CAIRO",
+              "AFRICA_CASABLANCA",
+              "AFRICA_CEUTA",
+              "AFRICA_CONAKRY",
+              "AFRICA_DAKAR",
+              "AFRICA_DAR_ES_SALAAM",
+              "AFRICA_DJIBOUTI",
+              "AFRICA_DOUALA",
+              "AFRICA_EL_AAIUN",
+              "AFRICA_FREETOWN",
+              "AFRICA_GABORONE",
+              "AFRICA_HARARE",
+              "AFRICA_JOHANNESBURG",
+              "AFRICA_KAMPALA",
+              "AFRICA_KHARTOUM",
+              "AFRICA_KIGALI",
+              "AFRICA_KINSHASA",
+              "AFRICA_LAGOS",
+              "AFRICA_LIBREVILLE",
+              "AFRICA_LOME",
+              "AFRICA_LUANDA",
+              "AFRICA_LUBUMBASHI",
+              "AFRICA_LUSAKA",
+              "AFRICA_MALABO",
+              "AFRICA_MAPUTO",
+              "AFRICA_MASERU",
+              "AFRICA_MBABANE",
+              "AFRICA_MOGADISHU",
+              "AFRICA_MONROVIA",
+              "AFRICA_NAIROBI",
+              "AFRICA_NDJAMENA",
+              "AFRICA_NIAMEY",
+              "AFRICA_NOUAKCHOTT",
+              "AFRICA_OUAGADOUGOU",
+              "AFRICA_PORTO_NOVO",
+              "AFRICA_SAO_TOME",
+              "AFRICA_TIMBUKTU",
+              "AFRICA_TRIPOLI",
+              "AFRICA_TUNIS",
+              "AFRICA_WINDHOEK",
+              "AGT",
+              "AMERICA_ADAK",
+              "AMERICA_ANCHORAGE",
+              "AMERICA_ANGUILLA",
+              "AMERICA_ANTIGUA",
+              "AMERICA_ARAGUAINA",
+              "AMERICA_ARUBA",
+              "AMERICA_ASUNCION",
+              "AMERICA_ATKA",
+              "AMERICA_BARBADOS",
+              "AMERICA_BELEM",
+              "AMERICA_BELIZE",
+              "AMERICA_BOA_VISTA",
+              "AMERICA_BOGOTA",
+              "AMERICA_BOISE",
+              "AMERICA_BUENOS_AIRES",
+              "AMERICA_CAMBRIDGE_BAY",
+              "AMERICA_CANCUN",
+              "AMERICA_CARACAS",
+              "AMERICA_CATAMARCA",
+              "AMERICA_CAYENNE",
+              "AMERICA_CAYMAN",
+              "AMERICA_CHICAGO",
+              "AMERICA_CHIHUAHUA",
+              "AMERICA_CORDOBA",
+              "AMERICA_COSTA_RICA",
+              "AMERICA_CUIABA",
+              "AMERICA_CURACAO",
+              "AMERICA_DANMARKSHAVN",
+              "AMERICA_DAWSON",
+              "AMERICA_DAWSON_CREEK",
+              "AMERICA_DENVER",
+              "AMERICA_DETROIT",
+              "AMERICA_DOMINICA",
+              "AMERICA_EDMONTON",
+              "AMERICA_EIRUNEPE",
+              "AMERICA_EL_SALVADOR",
+              "AMERICA_ENSENADA",
+              "AMERICA_FORT_WAYNE",
+              "AMERICA_FORTALEZA",
+              "AMERICA_GLACE_BAY",
+              "AMERICA_GODTHAB",
+              "AMERICA_GOOSE_BAY",
+              "AMERICA_GRAND_TURK",
+              "AMERICA_GRENADA",
+              "AMERICA_GUADELOUPE",
+              "AMERICA_GUATEMALA",
+              "AMERICA_GUAYAQUIL",
+              "AMERICA_GUYANA",
+              "AMERICA_HALIFAX",
+              "AMERICA_HAVANA",
+              "AMERICA_HERMOSILLO",
+              "AMERICA_INDIANA_INDIANAPOLIS",
+              "AMERICA_INDIANA_KNOX",
+              "AMERICA_INDIANA_MARENGO",
+              "AMERICA_INDIANA_VEVAY",
+              "AMERICA_INDIANAPOLIS",
+              "AMERICA_INUVIK",
+              "AMERICA_IQALUIT",
+              "AMERICA_JAMAICA",
+              "AMERICA_JUJUY",
+              "AMERICA_JUNEAU",
+              "AMERICA_KENTUCKY_LOUISVILLE",
+              "AMERICA_KENTUCKY_MONTICELLO",
+              "AMERICA_KNOX_IN",
+              "AMERICA_LA_PAZ",
+              "AMERICA_LIMA",
+              "AMERICA_LOS_ANGELES",
+              "AMERICA_LOUISVILLE",
+              "AMERICA_MACEIO",
+              "AMERICA_MANAGUA",
+              "AMERICA_MANAUS",
+              "AMERICA_MARTINIQUE",
+              "AMERICA_MAZATLAN",
+              "AMERICA_MENDOZA",
+              "AMERICA_MENOMINEE",
+              "AMERICA_MERIDA",
+              "AMERICA_MEXICO_CITY",
+              "AMERICA_MIQUELON",
+              "AMERICA_MONTERREY",
+              "AMERICA_MONTEVIDEO",
+              "AMERICA_MONTREAL",
+              "AMERICA_MONTSERRAT",
+              "AMERICA_NASSAU",
+              "AMERICA_NEW_YORK",
+              "AMERICA_NIPIGON",
+              "AMERICA_NOME",
+              "AMERICA_NORONHA",
+              "AMERICA_NORTH_DAKOTA_CENTER",
+              "AMERICA_PANAMA",
+              "AMERICA_PANGNIRTUNG",
+              "AMERICA_PARAMARIBO",
+              "AMERICA_PHOENIX",
+              "AMERICA_PORT_AU_PRINCE",
+              "AMERICA_PORT_OF_SPAIN",
+              "AMERICA_PORTO_ACRE",
+              "AMERICA_PORTO_VELHO",
+              "AMERICA_PUERTO_RICO",
+              "AMERICA_RAINY_RIVER",
+              "AMERICA_RANKIN_INLET",
+              "AMERICA_RECIFE",
+              "AMERICA_REGINA",
+              "AMERICA_RIO_BRANCO",
+              "AMERICA_ROSARIO",
+              "AMERICA_SANTIAGO",
+              "AMERICA_SANTO_DOMINGO",
+              "AMERICA_SAO_PAULO",
+              "AMERICA_SCORESBYSUND",
+              "AMERICA_SHIPROCK",
+              "AMERICA_ST_JOHNS",
+              "AMERICA_ST_KITTS",
+              "AMERICA_ST_LUCIA",
+              "AMERICA_ST_THOMAS",
+              "AMERICA_ST_VINCENT",
+              "AMERICA_SWIFT_CURRENT",
+              "AMERICA_TEGUCIGALPA",
+              "AMERICA_THULE",
+              "AMERICA_THUNDER_BAY",
+              "AMERICA_TIJUANA",
+              "AMERICA_TORTOLA",
+              "AMERICA_VANCOUVER",
+              "AMERICA_VIRGIN",
+              "AMERICA_WHITEHORSE",
+              "AMERICA_WINNIPEG",
+              "AMERICA_YAKUTAT",
+              "AMERICA_YELLOWKNIFE",
+              "ANTARCTICA_CASEY",
+              "ANTARCTICA_DAVIS",
+              "ANTARCTICA_DUMONTDURVILLE",
+              "ANTARCTICA_MAWSON",
+              "ANTARCTICA_MCMURDO",
+              "ANTARCTICA_PALMER",
+              "ANTARCTICA_ROTHERA",
+              "ANTARCTICA_SOUTH_POLE",
+              "ANTARCTICA_SYOWA",
+              "ANTARCTICA_VOSTOK",
+              "ARCTIC_LONGYEARBYEN",
+              "ART",
+              "ASIA_ADEN",
+              "ASIA_ALMATY",
+              "ASIA_AMMAN",
+              "ASIA_ANADYR",
+              "ASIA_AQTAU",
+              "ASIA_AQTOBE",
+              "ASIA_ASHGABAT",
+              "ASIA_ASHKHABAD",
+              "ASIA_BAGHDAD",
+              "ASIA_BAHRAIN",
+              "ASIA_BAKU",
+              "ASIA_BANGKOK",
+              "ASIA_BEIRUT",
+              "ASIA_BISHKEK",
+              "ASIA_BRUNEI",
+              "ASIA_CALCUTTA",
+              "ASIA_CHOIBALSAN",
+              "ASIA_CHONGQING",
+              "ASIA_CHUNGKING",
+              "ASIA_COLOMBO",
+              "ASIA_DACCA",
+              "ASIA_DAMASCUS",
+              "ASIA_DHAKA",
+              "ASIA_DILI",
+              "ASIA_DUBAI",
+              "ASIA_DUSHANBE",
+              "ASIA_GAZA",
+              "ASIA_HARBIN",
+              "ASIA_HONG_KONG",
+              "ASIA_HOVD",
+              "ASIA_IRKUTSK",
+              "ASIA_ISTANBUL",
+              "ASIA_JAKARTA",
+              "ASIA_JAYAPURA",
+              "ASIA_JERUSALEM",
+              "ASIA_KABUL",
+              "ASIA_KAMCHATKA",
+              "ASIA_KARACHI",
+              "ASIA_KASHGAR",
+              "ASIA_KATMANDU",
+              "ASIA_KRASNOYARSK",
+              "ASIA_KUALA_LUMPUR",
+              "ASIA_KUCHING",
+              "ASIA_KUWAIT",
+              "ASIA_MACAO",
+              "ASIA_MACAU",
+              "ASIA_MAGADAN",
+              "ASIA_MAKASSAR",
+              "ASIA_MANILA",
+              "ASIA_MUSCAT",
+              "ASIA_NICOSIA",
+              "ASIA_NOVOSIBIRSK",
+              "ASIA_OMSK",
+              "ASIA_ORAL",
+              "ASIA_PHNOM_PENH",
+              "ASIA_PONTIANAK",
+              "ASIA_PYONGYANG",
+              "ASIA_QATAR",
+              "ASIA_QYZYLORDA",
+              "ASIA_RANGOON",
+              "ASIA_RIYADH",
+              "ASIA_RIYADH87",
+              "ASIA_RIYADH88",
+              "ASIA_RIYADH89",
+              "ASIA_SAIGON",
+              "ASIA_SAKHALIN",
+              "ASIA_SAMARKAND",
+              "ASIA_SEOUL",
+              "ASIA_SHANGHAI",
+              "ASIA_SINGAPORE",
+              "ASIA_TAIPEI",
+              "ASIA_TASHKENT",
+              "ASIA_TBILISI",
+              "ASIA_TEHRAN",
+              "ASIA_TEL_AVIV",
+              "ASIA_THIMBU",
+              "ASIA_THIMPHU",
+              "ASIA_TOKYO",
+              "ASIA_UJUNG_PANDANG",
+              "ASIA_ULAANBAATAR",
+              "ASIA_ULAN_BATOR",
+              "ASIA_URUMQI",
+              "ASIA_VIENTIANE",
+              "ASIA_VLADIVOSTOK",
+              "ASIA_YAKUTSK",
+              "ASIA_YEKATERINBURG",
+              "ASIA_YEREVAN",
+              "AST",
+              "ATLANTIC_AZORES",
+              "ATLANTIC_BERMUDA",
+              "ATLANTIC_CANARY",
+              "ATLANTIC_CAPE_VERDE",
+              "ATLANTIC_FAEROE",
+              "ATLANTIC_JAN_MAYEN",
+              "ATLANTIC_MADEIRA",
+              "ATLANTIC_REYKJAVIK",
+              "ATLANTIC_SOUTH_GEORGIA",
+              "ATLANTIC_ST_HELENA",
+              "ATLANTIC_STANLEY",
+              "AUSTRALIA_ACT",
+              "AUSTRALIA_ADELAIDE",
+              "AUSTRALIA_BRISBANE",
+              "AUSTRALIA_BROKEN_HILL",
+              "AUSTRALIA_CANBERRA",
+              "AUSTRALIA_DARWIN",
+              "AUSTRALIA_HOBART",
+              "AUSTRALIA_LHI",
+              "AUSTRALIA_LINDEMAN",
+              "AUSTRALIA_LORD_HOWE",
+              "AUSTRALIA_MELBOURNE",
+              "AUSTRALIA_NORTH",
+              "AUSTRALIA_NSW",
+              "AUSTRALIA_PERTH",
+              "AUSTRALIA_QUEENSLAND",
+              "AUSTRALIA_SOUTH",
+              "AUSTRALIA_SYDNEY",
+              "AUSTRALIA_TASMANIA",
+              "AUSTRALIA_VICTORIA",
+              "AUSTRALIA_WEST",
+              "AUSTRALIA_YANCOWINNA",
+              "BET",
+              "BRAZIL_ACRE",
+              "BRAZIL_DENORONHA",
+              "BRAZIL_EAST",
+              "BRAZIL_WEST",
+              "BST",
+              "CANADA_ATLANTIC",
+              "CANADA_CENTRAL",
+              "CANADA_EAST_SASKATCHEWAN",
+              "CANADA_EASTERN",
+              "CANADA_MOUNTAIN",
+              "CANADA_NEWFOUNDLAND",
+              "CANADA_PACIFIC",
+              "CANADA_SASKATCHEWAN",
+              "CANADA_YUKON",
+              "CAT",
+              "CET",
+              "CHILE_CONTINENTAL",
+              "CHILE_EASTERISLAND",
+              "CNT",
+              "CST",
+              "CST6CDT",
+              "CTT",
+              "CUBA",
+              "EAT",
+              "ECT",
+              "EET",
+              "EGYPT",
+              "EIRE",
+              "EST",
+              "EST5EDT",
+              "ETC_GMT",
+              "ETC_GMT_PLUS_0",
+              "ETC_GMT_PLUS_1",
+              "ETC_GMT_PLUS_10",
+              "ETC_GMT_PLUS_11",
+              "ETC_GMT_PLUS_12",
+              "ETC_GMT_PLUS_2",
+              "ETC_GMT_PLUS_3",
+              "ETC_GMT_PLUS_4",
+              "ETC_GMT_PLUS_5",
+              "ETC_GMT_PLUS_6",
+              "ETC_GMT_PLUS_7",
+              "ETC_GMT_PLUS_8",
+              "ETC_GMT_PLUS_9",
+              "ETC_GMT_MINUS_0",
+              "ETC_GMT_MINUS_1",
+              "ETC_GMT_MINUS_10",
+              "ETC_GMT_MINUS_11",
+              "ETC_GMT_MINUS_12",
+              "ETC_GMT_MINUS_13",
+              "ETC_GMT_MINUS_14",
+              "ETC_GMT_MINUS_2",
+              "ETC_GMT_MINUS_3",
+              "ETC_GMT_MINUS_4",
+              "ETC_GMT_MINUS_5",
+              "ETC_GMT_MINUS_6",
+              "ETC_GMT_MINUS_7",
+              "ETC_GMT_MINUS_8",
+              "ETC_GMT_MINUS_9",
+              "ETC_GMT0",
+              "ETC_GREENWICH",
+              "ETC_UCT",
+              "ETC_UNIVERSAL",
+              "ETC_UTC",
+              "ETC_ZULU",
+              "EUROPE_AMSTERDAM",
+              "EUROPE_ANDORRA",
+              "EUROPE_ATHENS",
+              "EUROPE_BELFAST",
+              "EUROPE_BELGRADE",
+              "EUROPE_BERLIN",
+              "EUROPE_BRATISLAVA",
+              "EUROPE_BRUSSELS",
+              "EUROPE_BUCHAREST",
+              "EUROPE_BUDAPEST",
+              "EUROPE_CHISINAU",
+              "EUROPE_COPENHAGEN",
+              "EUROPE_DUBLIN",
+              "EUROPE_GIBRALTAR",
+              "EUROPE_HELSINKI",
+              "EUROPE_ISTANBUL",
+              "EUROPE_KALININGRAD",
+              "EUROPE_KIEV",
+              "EUROPE_LISBON",
+              "EUROPE_LJUBLJANA",
+              "EUROPE_LONDON",
+              "EUROPE_LUXEMBOURG",
+              "EUROPE_MADRID",
+              "EUROPE_MALTA",
+              "EUROPE_MINSK",
+              "EUROPE_MONACO",
+              "EUROPE_MOSCOW",
+              "EUROPE_NICOSIA",
+              "EUROPE_OSLO",
+              "EUROPE_PARIS",
+              "EUROPE_PRAGUE",
+              "EUROPE_RIGA",
+              "EUROPE_ROME",
+              "EUROPE_SAMARA",
+              "EUROPE_SAN_MARINO",
+              "EUROPE_SARAJEVO",
+              "EUROPE_SIMFEROPOL",
+              "EUROPE_SKOPJE",
+              "EUROPE_SOFIA",
+              "EUROPE_STOCKHOLM",
+              "EUROPE_TALLINN",
+              "EUROPE_TIRANE",
+              "EUROPE_TIRASPOL",
+              "EUROPE_UZHGOROD",
+              "EUROPE_VADUZ",
+              "EUROPE_VATICAN",
+              "EUROPE_VIENNA",
+              "EUROPE_VILNIUS",
+              "EUROPE_WARSAW",
+              "EUROPE_ZAGREB",
+              "EUROPE_ZAPOROZHYE",
+              "EUROPE_ZURICH",
+              "GB",
+              "GB_EIRE",
+              "GMT",
+              "GMT0",
+              "GREENWICH",
+              "HONGKONG",
+              "HST",
+              "ICELAND",
+              "IET",
+              "INDIAN_ANTANANARIVO",
+              "INDIAN_CHAGOS",
+              "INDIAN_CHRISTMAS",
+              "INDIAN_COCOS",
+              "INDIAN_COMORO",
+              "INDIAN_KERGUELEN",
+              "INDIAN_MAHE",
+              "INDIAN_MALDIVES",
+              "INDIAN_MAURITIUS",
+              "INDIAN_MAYOTTE",
+              "INDIAN_REUNION",
+              "IRAN",
+              "ISRAEL",
+              "IST",
+              "JAMAICA",
+              "JAPAN",
+              "JST",
+              "KWAJALEIN",
+              "LIBYA",
+              "MET",
+              "MEXICO_BAJANORTE",
+              "MEXICO_BAJASUR",
+              "MEXICO_GENERAL",
+              "MIDEAST_RIYADH87",
+              "MIDEAST_RIYADH88",
+              "MIDEAST_RIYADH89",
+              "MIT",
+              "MST",
+              "MST7MDT",
+              "NAVAJO",
+              "NET",
+              "NST",
+              "NZ",
+              "NZ_CHAT",
+              "PACIFIC_APIA",
+              "PACIFIC_AUCKLAND",
+              "PACIFIC_CHATHAM",
+              "PACIFIC_EASTER",
+              "PACIFIC_EFATE",
+              "PACIFIC_ENDERBURY",
+              "PACIFIC_FAKAOFO",
+              "PACIFIC_FIJI",
+              "PACIFIC_FUNAFUTI",
+              "PACIFIC_GALAPAGOS",
+              "PACIFIC_GAMBIER",
+              "PACIFIC_GUADALCANAL",
+              "PACIFIC_GUAM",
+              "PACIFIC_HONOLULU",
+              "PACIFIC_JOHNSTON",
+              "PACIFIC_KIRITIMATI",
+              "PACIFIC_KOSRAE",
+              "PACIFIC_KWAJALEIN",
+              "PACIFIC_MAJURO",
+              "PACIFIC_MARQUESAS",
+              "PACIFIC_MIDWAY",
+              "PACIFIC_NAURU",
+              "PACIFIC_NIUE",
+              "PACIFIC_NORFOLK",
+              "PACIFIC_NOUMEA",
+              "PACIFIC_PAGO_PAGO",
+              "PACIFIC_PALAU",
+              "PACIFIC_PITCAIRN",
+              "PACIFIC_PONAPE",
+              "PACIFIC_PORT_MORESBY",
+              "PACIFIC_RAROTONGA",
+              "PACIFIC_SAIPAN",
+              "PACIFIC_SAMOA",
+              "PACIFIC_TAHITI",
+              "PACIFIC_TARAWA",
+              "PACIFIC_TONGATAPU",
+              "PACIFIC_TRUK",
+              "PACIFIC_WAKE",
+              "PACIFIC_WALLIS",
+              "PACIFIC_YAP",
+              "PLT",
+              "PNT",
+              "POLAND",
+              "PORTUGAL",
+              "PRC",
+              "PRT",
+              "PST",
+              "PST8PDT",
+              "ROK",
+              "SINGAPORE",
+              "SST",
+              "SYSTEMV_AST4",
+              "SYSTEMV_AST4ADT",
+              "SYSTEMV_CST6",
+              "SYSTEMV_CST6CDT",
+              "SYSTEMV_EST5",
+              "SYSTEMV_EST5EDT",
+              "SYSTEMV_HST10",
+              "SYSTEMV_MST7",
+              "SYSTEMV_MST7MDT",
+              "SYSTEMV_PST8",
+              "SYSTEMV_PST8PDT",
+              "SYSTEMV_YST9",
+              "SYSTEMV_YST9YDT",
+              "TURKEY",
+              "UCT",
+              "UNIVERSAL",
+              "US_ALASKA",
+              "US_ALEUTIAN",
+              "US_ARIZONA",
+              "US_CENTRAL",
+              "US_EAST_INDIANA",
+              "US_EASTERN",
+              "US_HAWAII",
+              "US_INDIANA_STARKE",
+              "US_MICHIGAN",
+              "US_MOUNTAIN",
+              "US_PACIFIC",
+              "US_PACIFIC_NEW",
+              "US_SAMOA",
+              "UTC",
+              "VST",
+              "W_SU",
+              "WET",
+              "ZULU"
+            ]
+          }
+        }
+      },
+      "WellboreInput": {
+        "required": [
+          "index",
+          "sourceId",
+          "sourceWellId",
+          "uwi"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellId": {
+            "type": "string"
+          },
+          "uwi": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "junctionMd": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "Wellbore": {
+        "required": [
+          "index",
+          "sourceId",
+          "sourceWellId",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellId": {
+            "type": "string"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "junctionMd": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "TubingInput": {
+        "required": [
+          "bottomMd",
+          "id",
+          "od",
+          "souceWellId",
+          "sourceId",
+          "sourceWellboreId"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "souceWellId": {
+            "type": "string"
+          },
+          "topMd": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bottomMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "od": {
+            "type": "number",
+            "format": "double"
+          },
+          "roughness": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "Tubing": {
+        "required": [
+          "bottomMd",
+          "id",
+          "od",
+          "souceWellId",
+          "sourceId",
+          "sourceWellboreId",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "souceWellId": {
+            "type": "string"
+          },
+          "topMd": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bottomMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "od": {
+            "type": "number",
+            "format": "double"
+          },
+          "roughness": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "FormationInput": {
+        "required": [
+          "depth",
+          "fluidGravityApi",
+          "fluidGravityGas",
+          "fluidSalinityWater",
+          "name",
+          "pressureFormationInitialDatum",
+          "primaryFluidType",
+          "rsi",
+          "sourceId",
+          "sourceWellboreId",
+          "temperatureFormationDatum",
+          "uwi"
+        ],
+        "type": "object",
+        "properties": {
+          "uwi": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "allocationFactor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 1.0
+          },
+          "compressibilityRock": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "pressureFormationInitialDatum": {
+            "type": "number",
+            "format": "double"
+          },
+          "temperatureFormationDatum": {
+            "type": "number",
+            "format": "double"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "thicknessFormation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "porosity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saturationWaterInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saturationGasInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saturationOilInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "primaryFluidType": {
+            "type": "string",
+            "default": "OIL",
+            "enum": [
+              "OIL",
+              "GAS",
+              "WATER"
+            ]
+          },
+          "rsi": {
+            "type": "number",
+            "format": "double"
+          },
+          "volumeAcquiferInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fluidGravityApi": {
+            "type": "number",
+            "format": "double"
+          },
+          "fluidGravityGas": {
+            "type": "number",
+            "format": "double"
+          },
+          "fluidSalinityWater": {
+            "type": "number",
+            "format": "double"
+          },
+          "fluidComingledGOR": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fluidMolarFracN2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          },
+          "fluidMolarFracCO2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          },
+          "fluidMolarFracH2S": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          }
+        }
+      },
+      "Formation": {
+        "required": [
+          "depth",
+          "fluidGravityApi",
+          "fluidGravityGas",
+          "fluidSalinityWater",
+          "name",
+          "pressureFormationInitialDatum",
+          "primaryFluidType",
+          "rsi",
+          "sourceId",
+          "temperatureFormationDatum",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "allocationFactor": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 1.0
+          },
+          "compressibilityRock": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "pressureFormationInitialDatum": {
+            "type": "number",
+            "format": "double"
+          },
+          "temperatureFormationDatum": {
+            "type": "number",
+            "format": "double"
+          },
+          "depth": {
+            "type": "number",
+            "format": "double"
+          },
+          "thicknessFormation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "porosity": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saturationWaterInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saturationGasInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "saturationOilInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "primaryFluidType": {
+            "type": "string",
+            "default": "OIL",
+            "enum": [
+              "OIL",
+              "GAS",
+              "WATER"
+            ]
+          },
+          "rsi": {
+            "type": "number",
+            "format": "double"
+          },
+          "volumeAcquiferInitial": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fluidGravityApi": {
+            "type": "number",
+            "format": "double"
+          },
+          "fluidGravityGas": {
+            "type": "number",
+            "format": "double"
+          },
+          "fluidSalinityWater": {
+            "type": "number",
+            "format": "double"
+          },
+          "fluidComingledGOR": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "fluidMolarFracN2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          },
+          "fluidMolarFracCO2": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          },
+          "fluidMolarFracH2S": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          }
+        }
+      },
+      "DeviationSurveyInput": {
+        "required": [
+          "md",
+          "souceWellId",
+          "sourceId",
+          "sourceWellboreId",
+          "tvd"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "souceWellId": {
+            "type": "string"
+          },
+          "md": {
+            "type": "number",
+            "format": "double"
+          },
+          "tvd": {
+            "type": "number",
+            "format": "double"
+          },
+          "inc": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "azi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "DeviationSurvey": {
+        "required": [
+          "md",
+          "souceWellId",
+          "sourceId",
+          "sourceWellboreId",
+          "tvd",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "souceWellId": {
+            "type": "string"
+          },
+          "md": {
+            "type": "number",
+            "format": "double"
+          },
+          "tvd": {
+            "type": "number",
+            "format": "double"
+          },
+          "inc": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "azi": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "DailyProductionInput": {
+        "required": [
+          "date",
+          "gasRate",
+          "oilRate",
+          "tubingPressure",
+          "uwi",
+          "waterRate"
+        ],
+        "type": "object",
+        "properties": {
+          "uwi": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "oilRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "gasRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "waterRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "tubingPressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "choke": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gaugePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "wellheadTemperature": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gaugeTemperature": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "casingPressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gasLiftInjectionRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espFrequency": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espIntakePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espAmps": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espVolts": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espDischargePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espMotorTemperature": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espVibration": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpStrokesPerMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "downtimeHours": {
+            "type": "number",
+            "format": "double",
+            "nullable": true,
+            "default": 0.0
+          },
+          "downtimeCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterInjectionRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gasInjectionRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "DailyProduction": {
+        "required": [
+          "date",
+          "gasRate",
+          "oilRate",
+          "tubingPressure",
+          "waterRate",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "oilRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "gasRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "waterRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "tubingPressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "choke": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "gaugePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "wellheadTemperature": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gaugeTemperature": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "casingPressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gasLiftInjectionRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espFrequency": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espIntakePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espAmps": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espVolts": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espDischargePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espMotorTemperature": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "espVibration": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpStrokesPerMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "downtimeHours": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "downtimeCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "waterInjectionRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "gasInjectionRate": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          }
+        }
+      },
+      "CasingInput": {
+        "required": [
+          "bottomMd",
+          "id",
+          "od",
+          "souceWellId",
+          "sourceId",
+          "sourceWellboreId"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "souceWellId": {
+            "type": "string"
+          },
+          "topMd": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bottomMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "od": {
+            "type": "number",
+            "format": "double"
+          },
+          "roughness": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "Casing": {
+        "required": [
+          "bottomMd",
+          "id",
+          "od",
+          "souceWellId",
+          "sourceId",
+          "sourceWellboreId",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "souceWellId": {
+            "type": "string"
+          },
+          "topMd": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "bottomMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "number",
+            "format": "double"
+          },
+          "od": {
+            "type": "number",
+            "format": "double"
+          },
+          "roughness": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "x-readme": {
+    "explorer-enabled": false
+  }
+}
