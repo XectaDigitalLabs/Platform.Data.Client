@@ -474,6 +474,48 @@
         }
       }
     },
+    "/api/production/wellbore/{sourceWellboreId}/deviationSurveys": {
+      "get": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Fetch deviation surveys by welbore source id",
+        "operationId": "getDeviationSurveysByWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/wellbore/{sourceWellId}": {
       "get": {
         "tags": [
@@ -799,57 +841,12 @@
         }
       }
     },
-    "/api/production/deviationSurvey/{uwi}/{wellboreIndex}": {
-      "get": {
-        "tags": [
-          "Deviation Survey"
-        ],
-        "summary": "Fetch Deviation Survey Records by Well and Wellbore",
-        "operationId": "getSurvey",
-        "parameters": [
-          {
-            "name": "uwi",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "wellboreIndex",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeviationSurvey"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeviationSurvey"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/production/deviationSurvey/{sourceId}": {
       "get": {
         "tags": [
           "Deviation Survey"
         ],
-        "summary": "Fetch deviation survey records by source well id",
+        "summary": "Fetch deviation survey record by source id",
         "operationId": "getDeviationSurveyBySourceId",
         "parameters": [
           {
@@ -1321,8 +1318,7 @@
         "required": [
           "index",
           "sourceId",
-          "sourceWellId",
-          "uwi"
+          "sourceWellId"
         ],
         "type": "object",
         "properties": {
@@ -1330,9 +1326,6 @@
             "type": "string"
           },
           "sourceWellId": {
-            "type": "string"
-          },
-          "uwi": {
             "type": "string"
           },
           "index": {
@@ -1802,8 +1795,6 @@
         "required": [
           "md",
           "sourceId",
-          "sourceWellId",
-          "sourceWellboreId",
           "tvd",
           "xid"
         ],
@@ -1814,12 +1805,6 @@
             "format": "uuid"
           },
           "sourceId": {
-            "type": "string"
-          },
-          "sourceWellboreId": {
-            "type": "string"
-          },
-          "sourceWellId": {
             "type": "string"
           },
           "md": {
@@ -1844,6 +1829,7 @@
       },
       "DailyProductionInput": {
         "required": [
+          "casingPressure",
           "date",
           "gasRate",
           "oilRate",
@@ -1898,8 +1884,7 @@
           },
           "casingPressure": {
             "type": "number",
-            "format": "double",
-            "nullable": true
+            "format": "double"
           },
           "gasLiftInjectionRate": {
             "type": "number",
@@ -1970,6 +1955,7 @@
       },
       "DailyProduction": {
         "required": [
+          "casingPressure",
           "date",
           "gasRate",
           "oilRate",
@@ -2025,8 +2011,7 @@
           },
           "casingPressure": {
             "type": "number",
-            "format": "double",
-            "nullable": true
+            "format": "double"
           },
           "gasLiftInjectionRate": {
             "type": "number",
