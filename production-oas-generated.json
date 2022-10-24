@@ -56,12 +56,12 @@
       "description": "Query or mutation deviation survey data"
     },
     {
-      "name": "Casing",
-      "description": "Query or mutation casing data"
-    },
-    {
       "name": "Daily Production",
       "description": "Query or mutation daily production data"
+    },
+    {
+      "name": "Casing",
+      "description": "Query or mutation casing data"
     }
   ],
   "paths": {
@@ -303,7 +303,7 @@
           "Deviation Survey"
         ],
         "summary": "Bulk Add / Update Deviation Survey Data",
-        "operationId": "upsertSurveys",
+        "operationId": "upsertDeviationSurveys",
         "requestBody": {
           "content": {
             "application/json": {
@@ -468,170 +468,7 @@
         }
       }
     },
-    "/api/production/wellbore/{sourceWellboreId}/deviationSurveys": {
-      "get": {
-        "tags": [
-          "Deviation Survey"
-        ],
-        "summary": "Fetch deviation surveys by welbore source id",
-        "operationId": "getDeviationSurveysByWellbore",
-        "parameters": [
-          {
-            "name": "sourceWellboreId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeviationSurvey"
-                  }
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DeviationSurvey"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/production/wellbore/{sourceWellboreId}/casing": {
-      "get": {
-        "tags": [
-          "Casing"
-        ],
-        "summary": "Fetch casing records by source wellbore id",
-        "operationId": "getCasingBySourceWellboreId",
-        "parameters": [
-          {
-            "name": "sourceWellboreId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Casing"
-                  }
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Casing"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/production/wellbore/{sourceId}": {
-      "get": {
-        "tags": [
-          "Wellbore"
-        ],
-        "summary": "Get wellbores by wellbore source id",
-        "operationId": "getWellboreBySource",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Wellbore"
-                  }
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Wellbore"
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Wellbore"
-        ],
-        "summary": "Delete a single wellbore",
-        "description": "This operation will delete a single wellbore by its uwi and wellbore index. \n            This operation will also cascade delete all dependent wellbore entities that have been added\n            to the system.\n            ",
-        "operationId": "deleteWellbore",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/production/well/{sourceWellId}/wellbore": {
+    "/api/production/well/{sourceWellId}/wellboreaa": {
       "get": {
         "tags": [
           "Wellbore"
@@ -673,13 +510,696 @@
         }
       }
     },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceId}": {
+      "get": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Fetch a tubing record by source id",
+        "operationId": "getTubingForSource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tubing"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tubing"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Delete tubing records by source id",
+        "operationId": "deleteBySourceId",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing": {
+      "get": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Fetch tubing records by source wellbore id",
+        "operationId": "getTubingForSourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Delete tubing records by well source id",
+        "operationId": "deleteBySourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/deviationSurvey/{sourceId}": {
+      "get": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Fetch a single deviation survey record by source id",
+        "operationId": "GetDeviationSurveyBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviationSurvey"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviationSurvey"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Delete a deviation survey by its source id",
+        "operationId": "deleteBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/deviationSurvey": {
+      "get": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Fetch deviation surveys by wellbore source id",
+        "operationId": "GetDeviationSurveyByWellboreSource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Delete deviation surveys by well source id",
+        "operationId": "deleteBySourceWellbore_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/casing/{sourceId}": {
+      "get": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Get a casing record by source id",
+        "operationId": "getCasingForSource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Casing"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Casing"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Delete casing records by source id",
+        "operationId": "deleteBySourceId_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/casing": {
+      "get": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Fetch casing records by source wellbore id",
+        "operationId": "getCasingForSourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Delete casing records by well source id",
+        "operationId": "deleteBySourceWellbore_2",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}": {
+      "get": {
+        "tags": [
+          "Wellbore"
+        ],
+        "summary": "Get wellbores by wellbore source id",
+        "operationId": "getWellboreBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wellbore"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wellbore"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Wellbore"
+        ],
+        "summary": "Delete a single wellbore",
+        "description": "This operation will delete a single wellbore by its uwi and wellbore index. \n            This operation will also cascade delete all dependent wellbore entities that have been added\n            to the system.\n            ",
+        "operationId": "deleteWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/well/{sourceWellId}/tubing": {
       "get": {
         "tags": [
           "Tubing"
         ],
         "summary": "Fetch tubing records by source well id",
-        "operationId": "getTubingForWell",
+        "operationId": "getTubingForSourceWell",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -713,6 +1233,120 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Tubing"
+        ],
+        "summary": "Delete tubing records by well source id",
+        "operationId": "deleteBySourceWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/deviationSurvey": {
+      "get": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Fetch deviation surveys by well source i",
+        "operationId": "GetDeviationSurveyByWellSource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DeviationSurvey"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Deviation Survey"
+        ],
+        "summary": "Delete casing records by well source id",
+        "operationId": "deleteBySourceWell_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/production/well/{sourceWellId}/casing": {
@@ -721,7 +1355,7 @@
           "Casing"
         ],
         "summary": "Fetch casing records by source well id",
-        "operationId": "getCasingForWell",
+        "operationId": "getCasingForSourceWell",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -750,6 +1384,42 @@
                   "items": {
                     "$ref": "#/components/schemas/Casing"
                   }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Casing"
+        ],
+        "summary": "Delete casing records by well source id",
+        "operationId": "deleteBySourceWell_2",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -808,150 +1478,6 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/production/tubing/{sourceId}": {
-      "get": {
-        "tags": [
-          "Tubing"
-        ],
-        "summary": "Fetch tubing records by source well id",
-        "operationId": "getTubingBySourceId",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Tubing"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "$ref": "#/components/schemas/Tubing"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Tubing"
-        ],
-        "summary": "Bulk Add / Update Tubing Data by Well and Wellbore",
-        "operationId": "deleteTubing",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/production/deviationSurvey/{sourceId}": {
-      "get": {
-        "tags": [
-          "Deviation Survey"
-        ],
-        "summary": "Fetch deviation survey record by source id",
-        "operationId": "getDeviationSurveyBySourceId",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeviationSurvey"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "$ref": "#/components/schemas/DeviationSurvey"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Deviation Survey"
-        ],
-        "summary": "Delete a single survey ",
-        "operationId": "deleteSurvey",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/x-ndjson": {
                 "schema": {
                   "type": "integer",
                   "format": "int32"
@@ -1088,50 +1614,16 @@
         }
       }
     },
-    "/api/production/casing/{sourceId}": {
-      "get": {
-        "tags": [
-          "Casing"
-        ],
-        "summary": "Fetch casing records by source well id",
-        "operationId": "getCasingBySourceId",
-        "parameters": [
-          {
-            "name": "sourceId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Casing"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "$ref": "#/components/schemas/Casing"
-                }
-              }
-            }
-          }
-        }
-      },
+    "/api/production/well/{sourceWellId}/wellbore": {
       "delete": {
         "tags": [
-          "Casing"
+          "Wellbore"
         ],
-        "summary": "Bulk Add / Update Casing Data",
-        "operationId": "deleteCasing",
+        "summary": "Delete a single wellbore",
+        "operationId": "deleteByWellSource",
         "parameters": [
           {
-            "name": "sourceId",
+            "name": "sourceWellId",
             "in": "path",
             "required": true,
             "schema": {
@@ -1520,11 +2012,15 @@
           "pressureFormationInitialDatum",
           "primaryFluidType",
           "rsi",
+          "sourceWellId",
           "sourceWellboreId",
           "temperatureFormationDatum"
         ],
         "type": "object",
         "properties": {
+          "sourceWellId": {
+            "type": "string"
+          },
           "sourceWellboreId": {
             "type": "string"
           },
