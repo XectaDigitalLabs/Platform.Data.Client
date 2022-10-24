@@ -432,42 +432,6 @@
         }
       }
     },
-    "/api/production/wellbore/{sourceWellboreId}/formation": {
-      "get": {
-        "tags": [
-          "Formation Property"
-        ],
-        "summary": "Fetch formation by wellbore ",
-        "operationId": "getFormationsByWellbore",
-        "parameters": [
-          {
-            "name": "sourceWellboreId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Formation"
-                }
-              },
-              "application/x-ndjson": {
-                "schema": {
-                  "$ref": "#/components/schemas/Formation"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceId}": {
       "get": {
         "tags": [
@@ -656,6 +620,88 @@
                 }
               },
               "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/formation": {
+      "get": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Fetch formation by wellbore ",
+        "operationId": "getFormationByWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Formation"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Formation"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Delete a single formation by source wellbore",
+        "operationId": "deleteFormationBySourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
                 "schema": {
                   "type": "integer",
                   "format": "int32"
@@ -1307,6 +1353,78 @@
         }
       }
     },
+    "/api/production/well/{sourceWellId}/formation": {
+      "get": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Fetch formation by wellbore ",
+        "operationId": "getFormationsByWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Formation Property"
+        ],
+        "summary": "Delete formations by source well",
+        "operationId": "deleteFormationBySourceWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/well/{sourceWellId}/deviationSurvey": {
       "get": {
         "tags": [
@@ -1640,38 +1758,6 @@
             "description": "OK",
             "content": {
               "*/*": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/production/formation/{sourceWellboreId}": {
-      "delete": {
-        "tags": [
-          "Formation Property"
-        ],
-        "summary": "Delete a single formation",
-        "operationId": "deleteFormationBySourceWellbore",
-        "parameters": [
-          {
-            "name": "sourceWellboreId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
                 "schema": {
                   "type": "integer",
                   "format": "int32"
