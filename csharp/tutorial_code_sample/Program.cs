@@ -2,20 +2,17 @@
 using Xecta.Data.OpenApi.Client.Model; // <-- Reference to Xecta OpenApi DTOs
 XectaApiClient? _client = null; // <--  Declare global variable to hold reference to api client
 
-// Section 2. The connection and authenication process
 try
 {
-    // Setup mTLS - Assign the PEM and KEY file
-    // Note: These files should be stored and referenced from a secure location
-    // Hardcoded this file reference for example purposes
+    // Setup mTLS - Assign PEM and KEY file
+    // These files should be stored and referenced from a secure location
     XectaApi xectaApi = new XectaApi(@"c:\Demo_Keys\xecta-data-api.pem", // <-- Pem file here
                                         @"c:\Demo_Keys\xecta-data-api.key", // <-- Key file here
                                         false); // <-- Use sandbox envrionment
 
     // Authenticate using client and secret credentials
-    // Note: These credentials should come from a key vault or other secure location
-    // Hardcoded credentials for example purposes
-    _client = xectaApi.Authenticate("<id here>", // <-- Client ID here
+    // These credentials should come from a key vault or other secure location
+  _client = xectaApi.Authenticate("<id here>", // <-- Client ID here
                                     "<secret here>"); // <-- Client secret here
 
     Console.WriteLine("Connection Established");
@@ -26,6 +23,7 @@ catch (Exception ex)
     // or a client/secret authentication error
     Console.WriteLine(ex.ToString());
 }
+
 
 // 3. 3.1 Add a new well to the well header table 
 if (_client != null)
@@ -107,7 +105,7 @@ if (_client != null)
     {
         // DELETE well header
         var wellSourceSystemId = "DB-ID-WELL-002";
-        await _client.WellHeaderApi().DeleteWellAsync(wellSourceSystemId);
+        await _client.WellHeaderApi().DeleteWellBySourceAsync(wellSourceSystemId);
         Console.WriteLine("Deleted well: " + wellSourceSystemId);
     }
     catch (Exception ex)
@@ -188,8 +186,9 @@ if (_client != null)
     try
     {
         var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var boresForWell = await _client.WellboreApi().GetWellboresByWellAsync(sourceWellId);
-        Console.WriteLine("Found " + boresForWell.Count + " well bores for well " + sourceWellId);
+        var sourceBoreId = "DB-ID-WELL-001-BORE-0";
+        var boresForWell = await _client.WellboreApi().GetWellborBySourceAsync(sourceWellId, sourceBoreId);
+        Console.WriteLine("Found " + boresForWell.Name + " wellbore for well " + sourceWellId);
     }
     catch (Exception ex)
     {
@@ -204,10 +203,10 @@ if (_client != null)
     try
     {
         // DELETE wellbore
-        var sourceId = "DB-ID-WELL-001-SideTrackA"; //<-- Required. SourceId of Bore being deleted
-
-        await _client.WellboreApi().DeleteWellboreAsync(sourceId);
-        Console.WriteLine("Wellbore deleted: " + sourceId);
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+        var sourceBoreId = "DB-ID-WELL-001-SideTrackA"; //<-- Required. SourceId of Bore being deleted
+        await _client.WellboreApi().DeleteWellboreBySourceAsync(sourceWellId, sourceBoreId);
+        Console.WriteLine("Wellbore deleted: " + sourceBoreId);
     }
     catch (Exception ex)
     {
@@ -266,8 +265,10 @@ if (_client != null)
 {
     try
     {
-        var defaultBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required.  Bore ID/Primary Key from your source database
-        var formationProperties = await _client.WellboreFormationApi().GetFormationsByWellboreAsync(defaultBoreId);
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required.  Bore ID/Primary Key from your source database
+        var formationProperties = await _client.WellboreFormationApi()
+            .GetFormationByWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Found Formation Info for : " + formationProperties.Name);
     }
     catch (Exception ex)
@@ -282,9 +283,10 @@ if (_client != null)
 {
     try
     {
-        var defaultBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Default Bore ID/Primary Key from your source database
-        await _client.WellboreFormationApi().DeleteFormationAsync(defaultBoreId);
-        Console.WriteLine("Deleted Formation Info for : " + defaultBoreId);
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required.  Bore ID/Primary Key from your source database
+        await _client.WellboreFormationApi().DeleteFormationBySourceWellboreAsync(sourceWellId, sourceBoreId);
+        Console.WriteLine("Deleted Formation Info for : " + sourceBoreId);
     }
     catch (Exception ex)
     {
@@ -318,7 +320,7 @@ if (_client != null)
         // UPSERT Deviation survey
         Console.WriteLine("Upserting the deviation survey for : "
             + sourceBoreId + ". This may take a few seconds.");
-        await _client.DeviationSurveyApi().UpsertSurveysAsync(surveyPoints);
+        await _client.DeviationSurveyApi().UpsertDeviationSurveysAsync(surveyPoints);
         Console.WriteLine("Survey created for: " + sourceBoreId);
     }
     catch (Exception ex)
@@ -334,8 +336,10 @@ if (_client != null)
     try
     {
         // GET Deviation survey
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
         var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var survey = await _client.DeviationSurveyApi().GetDeviationSurveysByWellboreAsync(sourceBoreId);
+        var survey = await _client.DeviationSurveyApi()
+            .GetDeviationSurveyBySourceWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Found deviation survey for : " + sourceBoreId + ". Found " + survey.Count + " survey points");
 
     }
@@ -351,9 +355,10 @@ if (_client != null)
 {
     try
     {
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";
-        var sourceSurveyId = "DB-ID-WELL-001-BORE-0-SURV-0"; //<-- Required.
-        await _client.DeviationSurveyApi().DeleteSurveyAsync(sourceSurveyId);
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
+        await _client.DeviationSurveyApi()
+            .DeleteDeviationSurveysBySourceWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Survey Deleted for " + sourceBoreId);
     }
     catch (Exception ex)
@@ -408,8 +413,10 @@ if (_client != null)
     try
     {
         // GET Casing
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
         var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var wellboreCasing = await _client.WellboreCasingApi().GetCasingForSourceWellboreAsync(sourceBoreId);
+        var wellboreCasing = await _client.WellboreCasingApi()
+            .GetCasingBySourceWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Found casing for : " + sourceBoreId + ". Found " + wellboreCasing.Count + " Records");
     }
     catch (Exception ex)
@@ -425,8 +432,10 @@ if (_client != null)
     try
     {
         // DELETE Casing
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
         var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        await _client.WellboreCasingApi().DeleteCasingAsync(sourceBoreId);
+        await _client.WellboreCasingApi()
+            .DeleteCasingBySourceWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Deleted casing for : " + sourceBoreId);
     }
     catch (Exception ex)
@@ -479,8 +488,10 @@ if (_client != null)
     try
     {
         // GET Tubing
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
         var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var wellboreTubing = await _client.WellboreTubingApi().GetTubingForSourceWellboreAsync(sourceBoreId);
+        var wellboreTubing = await _client.WellboreTubingApi()
+            .GetTubingForSourceWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Found tubing for : " + sourceBoreId + ". Found " + wellboreTubing.Count + " Records");
     }
     catch (Exception ex)
@@ -496,8 +507,10 @@ if (_client != null)
     try
     {
         // DELETE Tubing
+        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
         var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        await _client.WellboreTubingApi().DeleteTubingAsync(sourceBoreId);
+        await _client.WellboreTubingApi()
+             .DeleteTubingBySourceWellboreAsync(sourceWellId, sourceBoreId);
         Console.WriteLine("Deleted tubing for : " + sourceBoreId);
     }
     catch (Exception ex)
@@ -643,4 +656,7 @@ if (_client != null)
         // Most likely the UWI did not exist in well header table
         Console.WriteLine(ex.Message);
     }
+
+
+
 }
