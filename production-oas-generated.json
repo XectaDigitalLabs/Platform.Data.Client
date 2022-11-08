@@ -636,7 +636,7 @@
           "Formation Property"
         ],
         "summary": "Fetch formation by wellbore ",
-        "operationId": "getFormationByWellbore",
+        "operationId": "getFormationsByWellbore",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -677,7 +677,7 @@
         "tags": [
           "Formation Property"
         ],
-        "summary": "Delete a single formation by source wellbore",
+        "summary": "Delete a single formation",
         "operationId": "deleteFormationBySourceWellbore",
         "parameters": [
           {
@@ -1358,7 +1358,7 @@
         "tags": [
           "Formation Property"
         ],
-        "summary": "Fetch formation by wellbore ",
+        "summary": "Fetch formations by well ",
         "operationId": "getFormationsByWell",
         "parameters": [
           {
@@ -1398,8 +1398,8 @@
         "tags": [
           "Formation Property"
         ],
-        "summary": "Delete formations by source well",
-        "operationId": "deleteFormationBySourceWell",
+        "summary": "Delete all formations for a given well regardless of wellbore",
+        "operationId": "deleteFormationsBySourceWell",
         "parameters": [
           {
             "name": "sourceWellId",
