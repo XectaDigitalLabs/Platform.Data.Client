@@ -1,6 +1,6 @@
 ﻿using Xecta.Data.Api.Client; // <-- Reference to Xecta api Namespace
 using Xecta.Data.OpenApi.Client.Model; // <-- Reference to Xecta OpenApi DTOs
-XectaApiClient? _client = null; // <--  Declare global variable to hold reference to api client
+XectaApiClient? client = null; // <--  Declare global variable to hold reference to api client
 
 try
 {
@@ -12,7 +12,7 @@ try
 
     // Authenticate using client and secret credentials
     // These credentials should come from a key vault or other secure location
-  _client = xectaApi.Authenticate("<id here>", // <-- Client ID here
+   client = xectaApi.Authenticate("<id here>", // <-- Client ID here
                                     "<secret here>"); // <-- Client secret here
 
     Console.WriteLine("Connection Established");
@@ -25,638 +25,582 @@ catch (Exception ex)
 }
 
 
-// 3. 3.1 Add a new well to the well header table 
-if (_client != null)
+
+
+if (client == null)
 {
-    try
-    {
-        // Create and UPSERT 2 well headers
-        var wells = new List<WellInput>();
-        wells.Add(new WellInput()
-        {
-            SourceId = "DB-ID-WELL-001", //<-- Required The Unique source system ID/Primary Key from your source database
-            Uwi = "00123456789120", // <-- Required - The U.S. API Number or company assigned well ID
-            Name = "Example Producer Well 1", //<-- Required
-            Lat = 0, // <-- Location Co-ordinates Required
-            Lon = 0, // <-- Location Co-ordinates Required
-            Group1 = "Bakken Operations", //<-- Optional
-            Group2 = "Route A", // <-- Optional
-            Group3 = "Example Well Pad", //<-- Optional
-            Fluid = WellInput.FluidEnum.OIL, //<-- Oil, Gas or Water well
-            Type = WellInput.TypeEnum.PRODUCER, // <-- Producing or injecting
-            LiftType = WellInput.LiftTypeEnum.NATURALFLOW //<-- Flowing natruallty or using Artificial Lift (Gas Lift, ESP, RLS)
-
-        });
-        wells.Add(new WellInput()
-        {
-            SourceId = "DB-ID-WELL-002",
-            Uwi = "00123456789121",
-            Name = "Example Producer Well 2",
-            Lat = 0,
-            Lon = 0,
-            Group1 = "Bakken Operations",
-            Group2 = "Route A",
-            Group3 = "Example Well Pad",
-            Fluid = WellInput.FluidEnum.OIL,
-            Type = WellInput.TypeEnum.PRODUCER,
-            LiftType = WellInput.LiftTypeEnum.NATURALFLOW
-        });
-
-        // UPSERT wells
-        var upsertedWells =
-            await _client.WellHeaderApi().UpsertWellsAsync(wells);
-
-        Console.WriteLine("Added: " + wells.Count + " wells");
-        foreach (var well in upsertedWells)
-            Console.WriteLine(well.SourceId + " | " + well.Name);
-    }
-    catch (Exception ex)
-    {
-        // Most likely a requied well object field is NULL
-        // e.g. Parameter 'uwi is a required property for WellInput and cannot be null
-        Console.WriteLine(ex.Message);
-    }
+    // Most likely an authentication error
+    Console.WriteLine("Client was not able to be initialized.");
+    Console.ReadLine();
 }
 
-// 3. 3.2 Get all wells from well header table
-if (_client != null)
-{
-    try
-    {
-        // GET a list of well headers 
-        var wellList =
-            await _client.WellHeaderApi().GetWellsAsync();
+// 3. 3.1 Add a new well to the well header table 
 
-        Console.WriteLine("Found: " + wellList.Count + " wells");
-        foreach (var wellHeader in wellList)
-            Console.WriteLine(wellHeader.Uwi + " | " + wellHeader.Name);
-    }
-    catch (Exception ex)
-    {
-        // Most likely an authentication error
-        Console.WriteLine(ex.Message);
-    }
+// Create and UPSERT 2 well headers
+var wells = new List<WellInput>();
+wells.Add(new WellInput(
+        sourceId: "DB-ID-WELL-001",
+        uwi: "00123456789120",
+        name: "Example Producer Well 1",
+        lat: 0,
+        lon: 0,
+        group1: "Bakken Operations",
+        group2: "Route A",
+        group3: "Example Well Pad",
+        fluid: WellInput.FluidEnum.OIL,
+        type: WellInput.TypeEnum.PRODUCER,
+        liftType: WellInput.LiftTypeEnum.NATURALFLOW
+    )
+);
+
+wells.Add(new WellInput(
+        sourceId: "DB-ID-WELL-002",
+        uwi: "00123456789121",
+        name: "Example Producer Well 2",
+        lat: 0,
+        lon: 0,
+        group1: "Bakken Operations",
+        group2: "Route A",
+        group3: "Example Well Pad",
+        fluid: WellInput.FluidEnum.OIL,
+        type: WellInput.TypeEnum.PRODUCER,
+        liftType: WellInput.LiftTypeEnum.NATURALFLOW
+    )
+);
+
+// UPSERT wells
+var upsertedWells =
+    await client.WellHeaderApi().UpsertWellsAsync(wells);
+
+Console.WriteLine("Added: " + wells.Count + " wells");
+foreach (var well in upsertedWells)
+    Console.WriteLine(well.SourceId + " | " + well.Name);
+
+
+// 3. 3.2 Get all wells from well header table
+try
+{
+    // GET a list of well headers 
+    var wellList =
+        await client.WellHeaderApi().GetWellsAsync();
+
+    Console.WriteLine("Found: " + wellList.Count + " wells");
+    foreach (var wellHeader in wellList)
+        Console.WriteLine(wellHeader.Name);
+}
+catch (Exception ex)
+{
+    // Most likely an authentication error
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
 // 3. 3.3 Delete a well from the well header table
-if (_client != null)
+try
 {
-    try
-    {
-        // DELETE well header
-        var wellSourceSystemId = "DB-ID-WELL-002";
-        await _client.WellHeaderApi().DeleteWellBySourceAsync(wellSourceSystemId);
-        Console.WriteLine("Deleted well: " + wellSourceSystemId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the well with Source System ID "DB-ID-WELL-002" did not exist!
-        //Error calling DeleteWell:
-        //{"status":"BAD_REQUEST","message":"Data integrity violation occurred, check input arguments",
-        //"timestamp":"2022-09-10T18:54:41.165576",
-        //"errors":["ID: "DB-ID-WELL-002" was not found"]}
-        Console.WriteLine(ex.Message);
-    }
+    // DELETE well header
+    const string wellSourceSystemId = "DB-ID-WELL-002";
+    await client.WellHeaderApi().DeleteWellBySourceAsync(wellSourceSystemId);
+    Console.WriteLine("Deleted well: " + wellSourceSystemId);
+}
+catch (Exception ex)
+{
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
-// 3. 3.4 - Delete all well headers
-if (_client != null)
-{
-    //try
-    //{
-    //    // Get a list of well headers 
-    //    var allWells =
-    //        await _client.WellHeaderApi().GetWellsAsync();
-
-    //    // Delete each well (Cascade deletes all associated well header data)
-    //    foreach (Well w in allWells)
-    //    {
-    //        await _client.WellHeaderApi().DeleteWellAsync(w.SourceId);
-    //        Console.WriteLine("Deleted well: " + w.Uwi + " " + w.Name);
-    //    }
-    //}
-    //catch (Exception ex)
-    //{
-    //    Console.WriteLine(ex.Message);
-    //}
-
-}
 
 // 4. 4.1 - Create a wellbore.
-if (_client != null)
+try
 {
-    try
-    {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var defaultBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Main Bore ID/Primary Key from your source database
-        var sideTrackBoreId = "DB-ID-WELL-001-SideTrackA"; //<-- Secondary bore ID/Primary key 
+    var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    var defaultBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Main Bore ID/Primary Key from your source database
+    var sideTrackBoreId = "DB-ID-WELL-001-SideTrackA"; //<-- Secondary bore ID/Primary key 
 
-        // Create 2 well bores for this well
-        var wellBores = new List<WellboreInput>();
-        wellBores.Add(new WellboreInput()
-        {
-            SourceWellId = sourceWellId, // <--Required. well source system ID
-            SourceId = defaultBoreId, // <-- Required. wellbore source system ID
-            JunctionMd = 0, // <-- Required. The wellbore starts at surface
-            Name = "Main Bore" // <-- Required. (use "Main Bore" if no name is available)
-        });
-        wellBores.Add(new WellboreInput()
-        {
-            SourceWellId = sourceWellId, // <--Required. well source system ID
-            SourceId = sideTrackBoreId, // <-- Required. wellbore source system ID
-            JunctionMd = 2000, // <-- Side Track bore attaches to main bore at 2000ft
-            Name = "SideTrack A" // <-- Required. Must specify a name for the side track
+    // Create 2 well bores for this well
+    var wellBores = new List<WellboreInput>();
+    wellBores.Add(new WellboreInput(
+            sourceWellId: sourceWellId, // <--Required. well source system ID
+            sourceId: defaultBoreId, // <-- Required. wellbore source system ID
+            junctionMd: 0, // <-- Required. The wellbore starts at surface
+            name: "Main Bore" // <-- Required. (use "Main Bore" if no name is available)
+        )
+    );
+    wellBores.Add(new WellboreInput(
+            sourceWellId: sourceWellId, // <--Required. well source system ID
+            sourceId: sideTrackBoreId, // <-- Required. wellbore source system ID
+            junctionMd: 2000, // <-- Side Track bore attaches to main bore at 2000ft
+            name: "SideTrack A" // <-- Required. Must specify a name for the side track
+        )
+    );
 
-        });
-
-        // UPSERT well bore(s)
-        await _client.WellboreApi().UpsertWellboresAsync(wellBores);
-        Console.WriteLine("Created " + wellBores.Count + " well bores for well " + sourceWellId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the Well Source system Id did not exist in well header table
-        Console.WriteLine(ex.Message);
-    }
+    // UPSERT well bore(s)
+    await client.WellboreApi().UpsertWellboresAsync(wellBores);
+    Console.WriteLine("Created " + wellBores.Count + " well bores for well " + sourceWellId);
 }
+catch (Exception ex)
+{
+    // Most likely the Well Source system Id did not exist in well header table
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 4. 4.2 - Get wellbore(s)
-if (_client != null)
+try
 {
-    try
-    {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";
-        var boresForWell = await _client.WellboreApi().GetWellborBySourceAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Found " + boresForWell.Name + " wellbore for well " + sourceWellId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the Well Source system Id did not exist in well header table
-        Console.WriteLine(ex.Message);
-    }
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0";
+    var boresForWell = await client.WellboreApi().GetWellborBySourceAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Found " + boresForWell.Name + " wellbore for well " + sourceWellId);
 }
+catch (Exception ex)
+{
+    // Most likely the Well Source system Id did not exist in well header table
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 4. 4.3 - Delete a wellbore
-if (_client != null)
+try
 {
-    try
-    {
-        // DELETE wellbore
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-SideTrackA"; //<-- Required. SourceId of Bore being deleted
-        await _client.WellboreApi().DeleteWellboreBySourceAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Wellbore deleted: " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore SourceId did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // DELETE wellbore
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-SideTrackA"; //<-- Required. SourceId of Bore being deleted
+    await client.WellboreApi().DeleteWellboreBySourceAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Wellbore deleted: " + sourceBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore SourceId did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 5. 5.1 - Create wellbore formation info 
-if (_client != null)
+try
 {
-    try
-    {
-        var defaultBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var formationInput = new FormationInput();
-        var formationProperties = new List<FormationInput>();
-        formationProperties.Add(new FormationInput
-        {
-            SourceWellboreId = defaultBoreId,
-            Name = defaultBoreId,
-            AllocationFactor = 1,
-            CompressibilityRock = 0.000006,
-            Depth = 7200,
-            FluidComingledGOR = 7200,
-            FluidGravityApi = 38,
-            FluidGravityGas = 0.78,
-            FluidMolarFracCO2 = 0.002,
-            FluidMolarFracH2S = 0.01,
-            FluidMolarFracN2 = 0.002,
-            FluidSalinityWater = 50000,
-            Porosity = 0.08,
-            PressureFormationInitialDatum = 5200,
-            PrimaryFluidType = FormationInput.PrimaryFluidTypeEnum.OIL,
-            Rsi = 800,
-            SaturationGasInitial = 0.1,
-            SaturationOilInitial = 0.4,
-            SaturationWaterInitial = 0.5,
-            TemperatureFormationDatum = 218,
-            ThicknessFormation = 180,
-            VolumeAcquiferInitial = 0
-        });
+    const string defaultWellId = "DB-ID-WELL-001";
+    const string defaultBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var formationProperties = new List<FormationInput>();
+    formationProperties.Add(new FormationInput(
 
-        // UPSERT new wellbore formation info
-        await _client.WellboreFormationApi().UpsertFormationsAsync(formationProperties);
-        Console.WriteLine("Wellbore Formation Info Updated: " + defaultBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id did not exist
-        Console.WriteLine(ex.Message);
-    }
+        sourceWellId: defaultWellId,
+        sourceWellboreId: defaultBoreId,
+        name: defaultBoreId,
+        allocationFactor: 1,
+        compressibilityRock: 0.000006,
+        depth: 7200,
+        fluidComingledGOR: 7200,
+        fluidGravityApi: 38,
+        fluidGravityGas: 0.78,
+        fluidMolarFracCO2: 0.002,
+        fluidMolarFracH2S: 0.01,
+        fluidMolarFracN2: 0.002,
+        fluidSalinityWater: 50000,
+        porosity: 0.08,
+        pressureFormationInitialDatum: 5200,
+        primaryFluidType: FormationInput.PrimaryFluidTypeEnum.OIL,
+        rsi: 800,
+        saturationGasInitial: 0.1,
+        saturationOilInitial: 0.4,
+        saturationWaterInitial: 0.5,
+        temperatureFormationDatum: 218,
+        thicknessFormation: 180,
+        volumeAcquiferInitial: 0
+    ));
+
+    // UPSERT new wellbore formation info
+    await client.WellboreFormationApi().UpsertFormationsAsync(formationProperties);
+    Console.WriteLine("Wellbore Formation Info Updated: " + defaultBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 5. 5.2 - Get wellbore formation info 
-if (_client != null)
+try
 {
-    try
-    {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required.  Bore ID/Primary Key from your source database
-        var formationProperties = await _client.WellboreFormationApi()
-            .GetFormationByWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Found Formation Info for : " + formationProperties.Name);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id did not exist
-        Console.WriteLine(ex.Message);
-    }
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required.  Bore ID/Primary Key from your source database
+    var formationProperties = await client.WellboreFormationApi()
+        .GetFormationsByWellAsync(sourceWellId);
+    if (formationProperties.Count > 0)
+    Console.WriteLine("Found Formation Info for : " + formationProperties[0].Name);
+    else
+        Console.WriteLine("No formation Info found for: " + sourceWellId);
+
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id did not exist
+    Console.WriteLine(ex.ToString());
+}
+
 
 // 5. 5.3 - Delete wellbore formation info 
-if (_client != null)
+try
 {
-    try
-    {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required.  Bore ID/Primary Key from your source database
-        await _client.WellboreFormationApi().DeleteFormationBySourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Deleted Formation Info for : " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id did not exist
-        Console.WriteLine(ex.Message);
-    }
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required.  Bore ID/Primary Key from your source database
+    await client.WellboreFormationApi().DeleteFormationBySourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Deleted Formation Info for : " + sourceBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 6. 6.1 - Add a deviation survey
-if (_client != null)
+try
 {
-    try
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var surveyPoints = new List<DeviationSurveyInput>();
+    for (var i = 0; i < 50; i++)
     {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var surveyPoints = new List<DeviationSurveyInput>();
-        for (int i = 0; i < 50; i++)
-        {
-            surveyPoints.Add(new DeviationSurveyInput()
-            {
-                SourceWellId = sourceWellId,
-                SourceWellboreId = sourceBoreId,
-                SourceId = "DB-ID-WELL-001-BORE-0-SURV-0" + i, //<-- Unique survey point/station id. Required
-                Azi = i,
-                Inc = i,
-                Md = i,
-                Tvd = i,
-            });
-        }
+        surveyPoints.Add(new DeviationSurveyInput(
+                sourceWellId: sourceWellId,
+                sourceWellboreId: sourceBoreId,
+                sourceId: "DB-ID-WELL-001-BORE-0-SURV-0" + i, //<-- Unique survey point/station id. Required
+                azi: i,
+                inc: i,
+                md: i,
+                tvd: i
+            )
+        );
+    }
 
-        // UPSERT Deviation survey
-        Console.WriteLine("Upserting the deviation survey for : "
-            + sourceBoreId + ". This may take a few seconds.");
-        await _client.DeviationSurveyApi().UpsertDeviationSurveysAsync(surveyPoints);
-        Console.WriteLine("Survey created for: " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // UPSERT Deviation survey
+    Console.WriteLine("Upserting the deviation survey for : "
+                      + sourceBoreId + ". This may take a few seconds.");
+    await client.DeviationSurveyApi().UpsertDeviationSurveysAsync(surveyPoints);
+    Console.WriteLine("Survey created for: " + sourceBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 6. 6.2 - Get a deviation survey
-if (_client != null)
+try
 {
-    try
-    {
-        // GET Deviation survey
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var survey = await _client.DeviationSurveyApi()
-            .GetDeviationSurveyBySourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Found deviation survey for : " + sourceBoreId + ". Found " + survey.Count + " survey points");
-
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // GET Deviation survey
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var survey = await client.DeviationSurveyApi()
+        .GetDeviationSurveyBySourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Found deviation survey for : " + sourceBoreId + ". Found " + survey.Count +
+                      " survey points");
+}
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
+
 // 6. 6.3 - Delete a deviation survey
-if (_client != null)
+try
 {
-    try
-    {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        await _client.DeviationSurveyApi()
-            .DeleteDeviationSurveysBySourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Survey Deleted for " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        // If you delete a wellbore
-        Console.WriteLine(ex.Message);
-    }
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    await client.DeviationSurveyApi()
+        .DeleteDeviationSurveysBySourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Survey Deleted for " + sourceBoreId);
+}
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    // If you delete a wellbore
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
 
 // 7. 7.1 - Add casing to the wellbore
-if (_client != null)
+try
 {
-    try
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var wellBoreCasing = new List<CasingInput>();
+    for (var i = 0; i < 10; i++)
     {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var wellBoreCasing = new List<CasingInput>();
-        for (int i = 0; i < 10; i++)
-        {
-            wellBoreCasing.Add(new CasingInput()
-            {
-                SourceWellId = sourceWellId, //<-- Required
-                SourceWellboreId = sourceBoreId, //<-- Required
-                SourceId = "DB-ID-WELL-001-BORE-0-CAS-" + i, //<-- Required. Must be unique
-                TopMd = i,//<-- Required
-                BottomMd = i + 1,//<-- Required
-                Od = 5, // //<-- RequiredOuter diameter of the casing
-                Id = 3, // //<-- RequiredInner diameter of the casing
-                Roughness = i, //<-- Required. Friction. Use 0 if not available
-                RunDate = DateTime.Today //Installation date
-            });
-        }
+        wellBoreCasing.Add(new CasingInput(
+                sourceWellId: sourceWellId, //<-- Required
+                sourceWellboreId: sourceBoreId, //<-- Required
+                sourceId: "DB-ID-WELL-001-BORE-0-CAS-" + i, //<-- Required. Must be unique
+                topMd: i, //<-- Required
+                bottomMd: i + 1, //<-- Required
+                od: 5, // //<-- RequiredOuter diameter of the casing
+                id: 3, // //<-- RequiredInner diameter of the casing
+                roughness: i, //<-- Required. Friction. Use 0 if not available
+                runDate: DateTime.Today //Installation date
+            )
+        );
+    }
 
-        // UPSERT Casing
-        Console.WriteLine("Upserting the wellbore casing for: "
-            + sourceBoreId + ". This may take a few seconds.");
-        await _client.WellboreCasingApi().UpsertCasingAsync(wellBoreCasing);
-        Console.WriteLine("Casing created for: " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // UPSERT Casing
+    Console.WriteLine("Upserting the wellbore casing for: "
+                      + sourceBoreId + ". This may take a few seconds.");
+    await client.WellboreCasingApi().UpsertCasingAsync(wellBoreCasing);
+    Console.WriteLine("Casing created for: " + sourceBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 7. 7.2 - Get casing for the wellbore
-if (_client != null)
+
+try
 {
-    try
-    {
-        // GET Casing
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var wellboreCasing = await _client.WellboreCasingApi()
-            .GetCasingBySourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Found casing for : " + sourceBoreId + ". Found " + wellboreCasing.Count + " Records");
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // GET Casing
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var wellboreCasing = await client.WellboreCasingApi()
+        .GetCasingBySourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Found casing for : " + sourceBoreId + ". Found " + wellboreCasing.Count + " Records");
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 7. 7.3 - delete casing for the wellbore
-if (_client != null)
+
+try
 {
-    try
-    {
-        // DELETE Casing
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        await _client.WellboreCasingApi()
-            .DeleteCasingBySourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Deleted casing for : " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // DELETE Casing
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    await client!.WellboreCasingApi()
+        .DeleteCasingBySourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Deleted casing for : " + sourceBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 8. 8.1 - Add tubing to the wellbore
-if (_client != null)
+try
 {
-    try
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var wellboreTubing = new List<TubingInput>();
+    for (var i = 0; i < 10; i++)
     {
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var wellboreTubing = new List<TubingInput>();
-        for (int i = 0; i < 10; i++)
-        {
-            wellboreTubing.Add(new TubingInput()
-            {
-                SourceWellId = sourceWellId, //<-- Required
-                SourceWellboreId = sourceBoreId, //<-- Required
-                SourceId = "DB-ID-WELL-001-BORE-0-TUB-" + i, //<-- Required. Must be unique for each object
-                TopMd = i,//<-- Required
-                BottomMd = i + 1,//<-- Required
-                Od = 4, // //<-- Required. Outer diameter of the tubing
-                Id = 2, // //<-- Required. Inner diameter of the tubing
-                Roughness = i, //<-- Required. Friction. Use 0 if not available
-                RunDate = DateTime.Today //Installation date
-            });
-        }
+        wellboreTubing.Add(new TubingInput(
+                sourceWellId: sourceWellId, //<-- Required
+                sourceWellboreId: sourceBoreId, //<-- Required
+                sourceId: "DB-ID-WELL-001-BORE-0-TUB-" + i, //<-- Required. Must be unique for each object
+                topMd: i, //<-- Required
+                bottomMd: i + 1, //<-- Required
+                od: 4, // //<-- Required. Outer diameter of the tubing
+                id: 2, // //<-- Required. Inner diameter of the tubing
+                roughness: i, //<-- Required. Friction. Use 0 if not available
+                runDate: DateTime.Today //Installation date
+            )
+        );
+    }
 
-        // UPSERT Tubing
-        Console.WriteLine("Upserting the wellbore tubing for: "
-            + sourceBoreId + ". This may take a few seconds.");
-        await _client.WellboreTubingApi().UpsertTubingAsync(wellboreTubing);
-        Console.WriteLine("Tubing created for: " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // UPSERT Tubing
+    Console.WriteLine("Upserting the wellbore tubing for: "
+                      + sourceBoreId + ". This may take a few seconds.");
+    await client.WellboreTubingApi().UpsertTubingAsync(wellboreTubing);
+    Console.WriteLine("Tubing created for: " + sourceBoreId);
+}
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
+
 // 8. 8.2 - Get tubing for the wellbore
-if (_client != null)
+try
 {
-    try
-    {
-        // GET Tubing
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        var wellboreTubing = await _client.WellboreTubingApi()
-            .GetTubingForSourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Found tubing for : " + sourceBoreId + ". Found " + wellboreTubing.Count + " Records");
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // GET Tubing
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    var wellboreTubing = await client.WellboreTubingApi()
+        .GetTubingForSourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Found tubing for : " + sourceBoreId + ". Found " + wellboreTubing.Count + " Records");
+}
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
 }
 
 // 8. 8.3 - delete tubing for the wellbore
-if (_client != null)
+try
 {
-    try
-    {
-        // DELETE Tubing
-        var sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
-        var sourceBoreId = "DB-ID-WELL-001-BORE-0";//<-- Required. Bore ID/Primary Key from your source database
-        await _client.WellboreTubingApi()
-             .DeleteTubingBySourceWellboreAsync(sourceWellId, sourceBoreId);
-        Console.WriteLine("Deleted tubing for : " + sourceBoreId);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the wellbore Id  did not exist
-        Console.WriteLine(ex.Message);
-    }
+    // DELETE Tubing
+    const string sourceWellId = "DB-ID-WELL-001"; //<-- Required. Well ID/Primary Key from your source database
+    const string sourceBoreId = "DB-ID-WELL-001-BORE-0"; //<-- Required. Bore ID/Primary Key from your source database
+    await client.WellboreTubingApi()
+        .DeleteTubingBySourceWellboreAsync(sourceWellId, sourceBoreId);
+    Console.WriteLine("Deleted tubing for : " + sourceBoreId);
 }
+catch (Exception ex)
+{
+    // Most likely the wellbore Id  did not exist
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 9. 9.1 -> Insert production record
-if (_client != null)
+try
 {
-    try
-    {
+    var dailyProductionInput = new DailyProductionInput(
+        uwi: "00123456789120", //<-- Required. Must exist in well header table
+        date: DateTime.Today, // <-- Required. 
+        oilRate: 100, // <-- Required. 
+        gasRate: 500, // <-- Required. 
+        waterRate: 50, // <-- Required. 
+        choke: 32, // <-- Required. (use 0 if not available)
+        tubingPressure: 150, // <-- Required.
+        casingPressure: 75, // <-- Required.
+        downtimeHours: 12, // <-- Optional.(use 0 if not available)
+        downtimeCode: "POWER-LOSS-PAD" //<-- Optional (use empty string or null if not available)
+                                       //Other optional lift related inputs are available  e.g. EspFrequency
+    );
 
-        DailyProductionInput dailyProductionInput = new DailyProductionInput()
-        {
-            Uwi = "00123456789120", //<-- Required. Must exist in well header table
-            Date = DateTime.Today, // <-- Required. 
-            OilRate = 100, // <-- Required. 
-            GasRate = 500, // <-- Required. 
-            WaterRate = 50, // <-- Required. 
-            Choke = 32, // <-- Required. (use 0 if not available)
-            TubingPressure = 150, // <-- Required.
-            CasingPressure = 75, // <-- Required.
-            DowntimeHours = 12, // <-- Optional.(use 0 if not available)
-            DowntimeCode = "POWER-LOSS-PAD", //<-- Optional (use empty string or null if not avaialable)
-            //Other optional lift related inputs are available  e.g. EspFrequency
-        };
 
-        // UPSERT 1 Daily production record
-        await _client.ProductionApi().UpsertDailyAsync(new List<DailyProductionInput>() { dailyProductionInput });
-        Console.WriteLine("Daily Production Record Created: " + dailyProductionInput.Uwi);
-    }
-    catch (Exception ex)
-    {
-        // Most likely a required field is missing
-        Console.WriteLine(ex.Message);
-    }
+    // UPSERT 1 Daily production record
+    await client.ProductionApi().UpsertDailyAsync(new List<DailyProductionInput>() { dailyProductionInput });
+    Console.WriteLine("Daily Production Record Created: " + dailyProductionInput.Uwi);
 }
+catch (Exception ex)
+{
+    // Most likely a required field is missing
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
+}
+
 
 // 9. 9.2 - Insert production history
-if (_client != null)
+try
 {
-    try
+    // Create 365 daily production records
+    var productionHistory = new List<DailyProductionInput>();
+    var random = new Random();
+    const string uwi = "00123456789120"; // <-- Use Well UWI. Do not use SourceId
+    for (var i = 365; i >= 1; i--)
     {
-        // Create 365 daily production records
-        List<DailyProductionInput> productionHistory = new List<DailyProductionInput>();
-        var random = new Random();
-        var uwi = "00123456789120"; // <-- Use Well UWI. Do not use SourceId
-        for (int i = 365; i >= 1; i--)
-        {
-            productionHistory.Add(new DailyProductionInput()
-            {
-                Uwi = uwi,
-                Date = DateTime.Today.AddDays(-i), // <-- Required.
-                OilRate = 100 + random.Next(50), // <-- Required.
-                GasRate = 500 + random.Next(100), // <-- Required.
-                WaterRate = 50 + random.Next(10), // <-- Required.
-                Choke = 32 + random.Next(5), // <-- Required. Use 0 if not available
-                TubingPressure = 150 + random.Next(30), // <-- Required.
-                CasingPressure = 75 + random.Next(10), // <-- Required
-            });
-        }
+        productionHistory.Add(new DailyProductionInput(
+            uwi: uwi,
+            date: DateTime.Today.AddDays(-i), // <-- Required.
+            oilRate: 100 + random.Next(50), // <-- Required.
+            gasRate: 500 + random.Next(100), // <-- Required.
+            waterRate: 50 + random.Next(10), // <-- Required.
+            choke: 32 + random.Next(5), // <-- Required. Use 0 if not available
+            tubingPressure: 150 + random.Next(30), // <-- Required.
+            casingPressure: 75 + random.Next(10) // <-- Required
+        ));
+    }
 
-        // UPSERT 365 daily production history records
-        await _client.ProductionApi().UpsertDailyAsync(productionHistory);
-        Console.WriteLine("Production History Inserted for well 00123456789120");
-    }
-    catch (Exception ex)
-    {
-        // Most likely a required field is missing
-        //Error calling UpsertDaily: {\"status\":\"BAD_REQUEST\",\"message\":\
-        //"Data integrity violation occurred,
-        //check input arguments\",\"timestamp\":\"2022-10-10T20:59:33.125718\",\"errors\":
-        //[\"Well with uwi 00123456789120 was not found in current schema\"]}"
-        Console.WriteLine(ex.Message);
-    }
+    // UPSERT 365 daily production history records
+    await client.ProductionApi().UpsertDailyAsync(productionHistory);
+    Console.WriteLine("Production History Inserted for well 00123456789120");
+}
+catch (Exception ex)
+{
+    // Most likely a required field is missing
+    //Error calling UpsertDaily: {\"status\":\"BAD_REQUEST\",\"message\":\
+    //"Data integrity violation occurred,
+    //check input arguments\",\"timestamp\":\"2022-10-10T20:59:33.125718\",\"errors\":
+    //[\"Well with uwi 00123456789120 was not found in current schema\"]}"
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
-// 9. 9.3 - Get Daily Production 
-if (_client != null)
-{
-    try
-    {
-        // GET production history
-        var uwi = "00123456789120";
-        var productionHistory = await _client.ProductionApi().GetDailyAsync(
-            uwi, //<-- Use Well UWI.Do not use SourceId
-            DateTime.MinValue,// <-- History start
-            DateTime.Today,// <-- History end
-            null, 5000); // <-- Page Size 5000 (limits query to fist 5000 records)
 
-        Console.WriteLine("Found " + productionHistory.Count() +
-            " Daily Production Records for well: " + uwi);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the well UWI did not exist in well header table
-        Console.WriteLine(ex.Message);
-    }
+// 9. 9.3 - Get Daily Production 
+try
+{
+    // GET production history
+    var uwi = "00123456789120";
+    var productionHistory = await client.ProductionApi().GetDailyAsync(
+        uwi: uwi, //<-- Use Well UWI.Do not use SourceId
+        startDate: DateTime.MinValue, // <-- History start
+        endDate: DateTime.Today, // <-- History end
+        page: null,
+        limit: 5000); // <-- Page Size 5000 (limits query to fist 5000 records)
+
+    Console.WriteLine($"Found {productionHistory.Count} Daily Production Records for well: {uwi} ");
+}
+catch (Exception ex)
+{
+    // Most likely the well UWI did not exist in well header table
+    Console.WriteLine(ex.ToString());
 }
 
 // 9. 9.4 - Delete production record
-if (_client != null)
-{
-    try
-    {
-        //DELETE production history
-        var uwi = "00123456789120";
-        var numRecordsDeleted =
-            await _client.ProductionApi().DeleteDailyAsync(uwi,
-                                            DateTime.Today.AddDays(-1),  // <-- Yesterday
-                                            DateTime.Today.AddDays(-1));
 
-        Console.WriteLine("Production Record Deleted. Well:" + uwi
-                        + " Deleted Record Count:" + numRecordsDeleted);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the UWI did not exist in well header table
-        Console.WriteLine(ex.Message);
-    }
+try
+{
+    //DELETE production history
+    var uwi = "00123456789120";
+    var numRecordsDeleted =
+        await client.ProductionApi().DeleteDailyAsync(
+            uwi: uwi,
+            startDate: DateTime.Today.AddDays(-1), // <-- Yesterday
+            endDate: DateTime.Today.AddDays(-1));
+
+    Console.WriteLine("Production Record Deleted. Well:" + uwi
+                                                         + " Deleted Record Count:" + numRecordsDeleted);
+}
+catch (Exception ex)
+{
+    // Most likely the UWI did not exist in well header table
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
 
+
 // 9. 9.6 - Delete production history
-if (_client != null)
+try
 {
-    try
-    {
-        // DELETE range of records
-        var uwi = "00123456789120";
-        var numRecordsDeleted =
-            await _client.ProductionApi().DeleteDailyAsync(uwi,
-                                            DateTime.MinValue,  // <-- Start
-                                            DateTime.Today.AddDays(-1));// <-- End;
+    // DELETE range of records
+    var uwi = "00123456789120";
+    var numRecordsDeleted =
+        await client.ProductionApi().DeleteDailyAsync(uwi,
+            DateTime.MinValue, // <-- Start
+            DateTime.Today.AddDays(-1)); // <-- End;
 
-        Console.WriteLine("Production Record Deleted. Well:" + uwi
-                        + " Deleted Record Count:" + numRecordsDeleted);
-    }
-    catch (Exception ex)
-    {
-        // Most likely the UWI did not exist in well header table
-        Console.WriteLine(ex.Message);
-    }
-
-
-
+    Console.WriteLine("Production Record Deleted. Well:" + uwi
+                                                         + " Deleted Record Count:" + numRecordsDeleted);
+}
+catch (Exception ex)
+{
+    // Most likely the UWI did not exist in well header table
+    Console.WriteLine(ex.ToString());
+    Environment.Exit(1);
 }
