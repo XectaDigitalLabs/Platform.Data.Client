@@ -2519,6 +2519,21 @@
             "format": "double",
             "nullable": true
           },
+          "srpIntakePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpFluidLoad": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpFillage": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
           "downtimeHours": {
             "type": "number",
             "format": "double",
@@ -2642,6 +2657,21 @@
             "nullable": true
           },
           "srpStrokesPerMin": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpIntakePressure": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpFluidLoad": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "srpFillage": {
             "type": "number",
             "format": "double",
             "nullable": true
