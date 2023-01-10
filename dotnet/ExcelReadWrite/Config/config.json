@@ -1,0 +1,8 @@
+{
+  "ApiUrl": "https://data.onxecta.com",
+  "AuthUrl": "https://prod.authenticate.onxecta.com",
+  "ApiClientId": "Your client Id",
+  "ApiClientSecret": "Your client Secret",
+  "TlsPem": "c:\\demo_keys\\xecta-data-api.pem",
+  "TlsKey": "c:\\demo_keys\\xecta-data-api.key"
+}

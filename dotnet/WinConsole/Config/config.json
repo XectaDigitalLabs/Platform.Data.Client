@@ -1,0 +1,278 @@
+{
+  "LogFile": "logs\\log.txt",
+  "ApiPush": true,
+  "ApiUrl": "http://data.onxecta.com",
+  "AuthUrl": "https://prod.authenticate.onxecta.com",
+  "ApiClientId": "your client id",
+  "ApiSecret": "your client secret",
+  "TlsPem": "c:\\Demo_Keys\\xecta-data-api.pem",
+  "TlsKey": "c:\\Demo_Keys\\xecta-data-api.key",
+  "Connection": "Data Source=localhost\\sqlexpress;Initial Catalog=testDB; Persist Security Info=True;User ID=testUser; password=testPassword@123",
+  "DefaultFluid" : "GAS",
+  "UseIdAsUwi": true,
+  "UseBackFill": true,
+  "UseWellAsWellbore": true,
+  "DeleteThenSync": false,
+  "CollectionMaps": [
+    {
+      "Collection": "Well",
+      "Sql": "SELECT dbo.well_header.*, dbo.well_header_history.* FROM dbo.well_header INNER JOIN dbo.well_header_history ON dbo.well_header.id = dbo.well_header_history.well_header_id",
+      "Columns": [
+        {
+          "MapTo": "sourceid",
+          "Column": "id"
+        },
+        {
+          "MapTo": "name",
+          "Column": "name"
+        },
+        {
+          "MapTo": "group1",
+          "Column": "asset"
+        },
+        {
+          "MapTo": "group2",
+          "Column": "field"
+        },
+        {
+          "MapTo": "group3",
+          "Column": "area"
+        },
+        {
+          "MapTo": "fluid",
+          "Column": "fluid_type_id"
+        },
+        {
+          "MapTo": "lifttype",
+          "Column": "lift_type_id"
+        },
+        {
+          "MapTo": "type",
+          "Column": "well_function_id"
+        },
+        {
+          "MapTo": "lat",
+          "Column": "surface_latitude"
+        },
+        {
+          "MapTo": "lon",
+          "Column": "surface_longitude"
+        }
+      ]
+    },
+    {
+      "Collection": "WellDailyProduction",
+      "Sql": "SELECT * from well_daily_production_data WHERE well_header_id={WellId}",
+      "Columns": [
+        {
+          "MapTo": "sourceid",
+          "Column": "id"
+        },
+        {
+          "MapTo": "uwi",
+          "Column": "well_header_id"
+        },
+        {
+          "MapTo": "date",
+          "Column": "production_date"
+        },
+        {
+          "MapTo": "oilRate",
+          "Column": "rate_oil"
+        },
+        {
+          "MapTo": "gasRate",
+          "Column": "rate_gas"
+        },
+        {
+          "MapTo": "waterRate",
+          "Column": "rate_water"
+        },
+        {
+          "MapTo": "tubingPressure",
+          "Column": "pressure_tubing"
+        },
+        {
+          "MapTo": "casingPressure",
+          "Column": "pressure_casing"
+        },
+        {
+          "MapTo": "choke",
+          "Column": "choke"
+        },
+        {
+          "MapTo": "wellheadTemperature",
+          "Column": "temperature_tubing"
+        },
+        {
+          "MapTo": "downtimeHours",
+          "Column": "downtime"
+        }
+
+      ]
+    },
+    {
+      "Collection": "Wellbore",
+      "Sql": "NOT USED. UseWellAsWellBore = TRUE",
+      "Columns": []
+    },
+    {
+      "Collection": "WellboreFormation",
+      "Sql": "SELECT dbo.reservoir_properties.original_gas_in_place, dbo.reservoir_properties.porosity, dbo.reservoir_properties.pressure_reservoir_initial_datum, dbo.reservoir_properties.saturation_gas_residual, dbo.reservoir_properties.saturation_gas_irreducible, dbo.reservoir_properties.temperature_reservoir, dbo.well_formations.well_header_id, dbo.well_formations.formation_name, dbo.reservoir_properties.allocation_factor,  dbo.reservoir_properties.temperature_gradient, dbo.reservoir_properties.rsi, dbo.pvt_model.oil_gravity, dbo.pvt_model.gas_gravity, dbo.pvt_model.co2_molar_fraction, dbo.pvt_model.n2_molar_fraction, dbo.pvt_model.dew_point FROM dbo.pvt_model INNER JOIN  dbo.reservoir_properties ON dbo.pvt_model.reservoir_properties_id = dbo.reservoir_properties.id INNER JOIN  dbo.well_formations ON dbo.reservoir_properties.formation_id = dbo.well_formations.id WHERE (dbo.well_formations.well_header_id = {WellId})",
+      "Columns": [
+        {
+          "MapTo": "sourceid",
+          "Column": "id"
+        },
+        {
+          "MapTo": "name",
+          "Column": "formation_name"
+        },
+        {
+          "MapTo": "allocationFactor",
+          "Column": "allocation_factor"
+        },
+        {
+          "MapTo": "compressibilityRock",
+          "Column": "compressibility_rock"
+        },
+        {
+          "MapTo": "pressureFormationInitialDatum",
+          "Column": "pressure_reservoir_initial_datum"
+        },
+        {
+          "MapTo": "temperatureFormationDatum",
+          "Column": "temperature_reservoir"
+        },
+        {
+          "MapTo": "depth",
+          "Column": "start_true_vertical_depth"
+        },
+        {
+          "MapTo": "thicknessFormation",
+          "Column": "thickness"
+        },
+        {
+          "MapTo": "porosity",
+          "Column": "porosity"
+        },
+        {
+          "MapTo": "saturationWaterInitial",
+          "Column": "saturation_water_initial"
+        },
+        {
+          "MapTo": "rsi",
+          "Column": "rsi"
+        },
+        {
+          "MapTo": "volumeAcquiferInitial",
+          "Column": "acquifer_original"
+        },
+        {
+          "MapTo": "fluidGravityApi",
+          "Column": "oil_gravity"
+        },
+        {
+          "MapTo": "fluidGravityGas",
+          "Column": "gas_gravity"
+        },
+        {
+          "MapTo": "fluidSalinityWater",
+          "Column": "water_salinity"
+        },
+        {
+          "MapTo": "fluidMolarFracN2",
+          "Column": "n2_molar_fraction"
+        },
+        {
+          "MapTo": "fluidMolarFracCO2",
+          "Column": "co2_molar_fraction"
+        },
+        {
+          "MapTo": "fluidMolarFracH2S",
+          "Column": "h2s_molar_fraction"
+        }
+      ]
+    },
+    {
+      "Collection": "WellboreDeviationSurvey",
+      "Sql": "SELECT * from dbo.well_deviation_survey WHERE well_header_id={WellId}",
+      "Columns": [
+        {
+          "MapTo": "sourceId",
+          "Column": "id"
+        },
+        {
+          "MapTo": "md",
+          "Column": "measured_depth"
+        },
+        {
+          "MapTo": "tvd",
+          "Column": "true_vertical_depth"
+        },
+        {
+          "MapTo": "inc",
+          "Column": "inclination"
+        },
+        {
+          "MapTo": "azi",
+          "Column": "azimuth"
+        }
+      ]
+    },
+    {
+      "Collection": "WellboreCasing",
+      "Sql": "SELECT * from dbo.well_completion_casing WHERE well_header_id={WellId}",
+      "Columns": [
+        {
+          "MapTo": "sourceId",
+          "Column": "id"
+        },
+        {
+          "MapTo": "topMd",
+          "Column": "start_measured_depth"
+        },
+        {
+          "MapTo": "id",
+          "Column": "inner_diameter"
+        },
+        {
+          "MapTo": "od",
+          "Column": "outer_diameter"
+        }
+      ]
+    },
+    {
+      "Collection": "WellboreTubing",
+      "Sql": "SELECT * from dbo.well_completion_tubing WHERE well_header_id={WellId}",
+      "Columns": [
+        {
+          "MapTo": "sourceId",
+          "Column": "id"
+        },
+        {
+          "MapTo": "topMd",
+          "Column": "start_measured_depth"
+        },
+        {
+          "MapTo": "bottomMd",
+          "Column": "end_measured_depth"
+        },
+        {
+          "MapTo": "id",
+          "Column": "inner_diameter"
+        },
+        {
+          "MapTo": "od",
+          "Column": "outer_diameter"
+        },
+        {
+          "MapTo": "roughness",
+          "Column": "inner_roughness"
+        }
+
+      ]
+    }
+
+  ]
+}
