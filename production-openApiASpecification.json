@@ -48,8 +48,16 @@
       }
     },
     {
+      "name": "ESP",
+      "description": "Query or Update esp Data"
+    },
+    {
       "name": "Formation Property",
       "description": "Query or Update formation property Data"
+    },
+    {
+      "name": "GasLiftValve",
+      "description": "Query or Update Gas Lift Valve Data"
     },
     {
       "name": "Deviation Survey",
@@ -304,6 +312,51 @@
         }
       }
     },
+    "/api/production/glv": {
+      "post": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Bulk Add / Update Esp Data",
+        "operationId": "upsertEsp",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/GasLiftValveInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/formation": {
       "post": {
         "tags": [
@@ -341,6 +394,51 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Formation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/esp": {
+      "post": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Bulk Add / Update Esp Data",
+        "operationId": "upsertEsp_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ESPInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
                   }
                 }
               }
@@ -476,6 +574,414 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Casing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceTubingId}/glv/{sourceId}": {
+      "get": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Fetch a tubing record by source id",
+        "operationId": "getEspBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GasLiftValve"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/GasLiftValve"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Delete gas lift valve records by source id",
+        "operationId": "deleteGLVBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceTubingId}/esp/{sourceId}": {
+      "get": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Fetch a esp record by source id",
+        "operationId": "getEspBySource_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Esp"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/Esp"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Delete esp records by source id",
+        "operationId": "deleteEspBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceTubingId}/esp": {
+      "get": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Fetch esp records by source wellbore id",
+        "operationId": "getEspForSourceTubing",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Delete esp records by well source id",
+        "operationId": "deleteEspBySourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceTubingId}": {
+      "get": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Fetch esp records by source wellbore id",
+        "operationId": "getGLVForSourceEsp",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
                   }
                 }
               }
@@ -880,6 +1386,100 @@
         }
       }
     },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/glv": {
+      "get": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Fetch tubing records by source wellbore id",
+        "operationId": "getEspForSourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Delete gas lift valve records by well source id",
+        "operationId": "deleteGLVBySourceWellbore_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/formation": {
       "get": {
         "tags": [
@@ -952,6 +1552,100 @@
             "description": "OK",
             "content": {
               "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/esp": {
+      "get": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Fetch esp records by source wellbore id",
+        "operationId": "getEspForSourceWellbore_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Delete esp records by well source id",
+        "operationId": "deleteEspBySourceWellbore_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
                 "schema": {
                   "type": "integer",
                   "format": "int32"
@@ -1681,6 +2375,84 @@
         }
       }
     },
+    "/api/production/well/{sourceWellId}/glv": {
+      "get": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Fetch gas lift valve records by source well id",
+        "operationId": "getESPsForWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GasLiftValve"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Delete tubing records by well source id",
+        "operationId": "deleteGasLiftValveBySourceWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/well/{sourceWellId}/formation": {
       "get": {
         "tags": [
@@ -1743,6 +2515,84 @@
             "description": "OK",
             "content": {
               "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/esp": {
+      "get": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Fetch tubing records by source well id",
+        "operationId": "getESPsForWell_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ESP"
+        ],
+        "summary": "Delete esp records by well source id",
+        "operationId": "deleteEspBySourceWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
                 "schema": {
                   "type": "integer",
                   "format": "int32"
@@ -2095,6 +2945,60 @@
           }
         }
       }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceTubingId}/glv": {
+      "delete": {
+        "tags": [
+          "GasLiftValve"
+        ],
+        "summary": "Delete gas lift valve records by well source id",
+        "operationId": "deleteGLVBySourceWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTubingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2177,6 +3081,27 @@
           }
         }
       },
+      "LocalTime": {
+        "type": "object",
+        "properties": {
+          "hour": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "minute": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "second": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nano": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "Well": {
         "required": [
           "fluid",
@@ -2185,6 +3110,7 @@
           "lon",
           "name",
           "sourceId",
+          "timezone",
           "type",
           "uwi",
           "xid"
@@ -2256,6 +3182,203 @@
           "mudLine": {
             "type": "number",
             "format": "double",
+            "nullable": true
+          },
+          "timezone": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "rules": {
+                "type": "object",
+                "properties": {
+                  "fixedOffset": {
+                    "type": "boolean"
+                  },
+                  "transitions": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "offsetBefore": {
+                          "type": "object",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "offsetAfter": {
+                          "type": "object",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "instant": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "overlap": {
+                          "type": "boolean"
+                        },
+                        "duration": {
+                          "type": "object",
+                          "properties": {
+                            "seconds": {
+                              "type": "integer",
+                              "format": "int64"
+                            },
+                            "zero": {
+                              "type": "boolean"
+                            },
+                            "nano": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "negative": {
+                              "type": "boolean"
+                            },
+                            "positive": {
+                              "type": "boolean"
+                            },
+                            "units": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "durationEstimated": {
+                                    "type": "boolean"
+                                  },
+                                  "timeBased": {
+                                    "type": "boolean"
+                                  },
+                                  "dateBased": {
+                                    "type": "boolean"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "gap": {
+                          "type": "boolean"
+                        },
+                        "dateTimeAfter": {
+                          "type": "string",
+                          "format": "date-time"
+                        },
+                        "dateTimeBefore": {
+                          "type": "string",
+                          "format": "date-time"
+                        }
+                      }
+                    }
+                  },
+                  "transitionRules": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "month": {
+                          "type": "string",
+                          "enum": [
+                            "JANUARY",
+                            "FEBRUARY",
+                            "MARCH",
+                            "APRIL",
+                            "MAY",
+                            "JUNE",
+                            "JULY",
+                            "AUGUST",
+                            "SEPTEMBER",
+                            "OCTOBER",
+                            "NOVEMBER",
+                            "DECEMBER"
+                          ]
+                        },
+                        "timeDefinition": {
+                          "type": "string",
+                          "enum": [
+                            "UTC",
+                            "WALL",
+                            "STANDARD"
+                          ]
+                        },
+                        "standardOffset": {
+                          "type": "object",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "offsetBefore": {
+                          "type": "object",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "offsetAfter": {
+                          "type": "object",
+                          "properties": {
+                            "totalSeconds": {
+                              "type": "integer",
+                              "format": "int32"
+                            },
+                            "id": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "dayOfWeek": {
+                          "type": "string",
+                          "enum": [
+                            "MONDAY",
+                            "TUESDAY",
+                            "WEDNESDAY",
+                            "THURSDAY",
+                            "FRIDAY",
+                            "SATURDAY",
+                            "SUNDAY"
+                          ]
+                        },
+                        "dayOfMonthIndicator": {
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "localTime": {
+                          "$ref": "#/components/schemas/LocalTime"
+                        },
+                        "midnightEndOfDay": {
+                          "type": "boolean"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
             "nullable": true
           }
         }
@@ -2523,6 +3646,138 @@
           }
         }
       },
+      "GasLiftValveInput": {
+        "required": [
+          "glvStation",
+          "installMd",
+          "portSize",
+          "pullDate",
+          "runDate",
+          "sourceId",
+          "sourceMandrelId",
+          "sourceTubingId",
+          "sourceWellId",
+          "sourceWellboreId",
+          "surfaceClosePressure",
+          "surfaceOpenPressure",
+          "testRackOpenPressure"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceWellId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "sourceTubingId": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceMandrelId": {
+            "type": "string"
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "glvStation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "installMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "testRackOpenPressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "surfaceOpenPressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "surfaceClosePressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "portSize": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "GasLiftValve": {
+        "required": [
+          "glvStation",
+          "installMd",
+          "portSize",
+          "pullDate",
+          "runDate",
+          "sourceId",
+          "sourceMandrelId",
+          "surfaceClosePressure",
+          "surfaceOpenPressure",
+          "testRackOpenPressure",
+          "tubingXid",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tubingXid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "sourceMandrelId": {
+            "type": "string"
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "glvStation": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "installMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "testRackOpenPressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "surfaceOpenPressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "surfaceClosePressure": {
+            "type": "number",
+            "format": "double"
+          },
+          "portSize": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
       "FormationInput": {
         "required": [
           "depth",
@@ -2774,6 +4029,141 @@
             "format": "double",
             "nullable": true,
             "default": 0.0
+          }
+        }
+      },
+      "ESPInput": {
+        "required": [
+          "hasGasHandler",
+          "hasSeparator",
+          "headDegradation",
+          "installOrder",
+          "name",
+          "runDate",
+          "separationEfficiency",
+          "sourceId",
+          "sourceTubingId",
+          "sourceWellId",
+          "sourceWellboreId",
+          "stages",
+          "viscosityCorrection"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceWellId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "sourceTubingId": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "installOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "headDegradation": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "hasGasHandler": {
+            "type": "boolean"
+          },
+          "hasSeparator": {
+            "type": "boolean"
+          },
+          "viscosityCorrection": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "separationEfficiency": {
+            "type": "number",
+            "format": "double"
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "Esp": {
+        "required": [
+          "hasGasHandler",
+          "hasSeparator",
+          "headDegradation",
+          "installOrder",
+          "name",
+          "runDate",
+          "separationEfficiency",
+          "sourceId",
+          "stages",
+          "tubingId"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "tubingId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "installOrder": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "headDegradation": {
+            "type": "number",
+            "format": "double"
+          },
+          "hasGasHandler": {
+            "type": "boolean"
+          },
+          "hasSeparator": {
+            "type": "boolean"
+          },
+          "viscosityCorrection": {
+            "type": "boolean"
+          },
+          "separationEfficiency": {
+            "type": "number",
+            "format": "double"
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
