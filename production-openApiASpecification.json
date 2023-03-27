@@ -27,6 +27,13 @@
   ],
   "tags": [
     {
+      "name": "TimeSeriesConfiguration",
+      "description": "Query or mutate time series configuration data",
+      "externalDocs": {
+        "url": "https://docs.onxecta.com/docs/timeseries-tags"
+      }
+    },
+    {
       "name": "Wellbore",
       "description": "Query or Mutate Wellbore Data",
       "externalDocs": {
@@ -38,6 +45,13 @@
       "description": "Query or mutation tubing data",
       "externalDocs": {
         "url": "https://docs.onxecta.com/docs/tubing-schema"
+      }
+    },
+    {
+      "name": "TimeSeriesHistory",
+      "description": "Query or mutate time series data",
+      "externalDocs": {
+        "url": "https://docs.onxecta.com/docs/well-sucker-rod-pump"
       }
     },
     {
@@ -259,6 +273,98 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Tubing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/tsconfig": {
+      "post": {
+        "tags": [
+          "TimeSeriesConfiguration"
+        ],
+        "summary": "Bulk Add / Update Time Series Configuration Data",
+        "description": "This operation will add or update multiple time series configuration entities using batching for efficiency",
+        "operationId": "upsertTimeSeriesConfiguration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TimeSeriesInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeries"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeries"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/ts": {
+      "post": {
+        "tags": [
+          "TimeSeriesHistory"
+        ],
+        "summary": "Bulk Add / Update Time Series Data",
+        "description": "This operation will add or update multiple time series records using batching for efficiency",
+        "operationId": "upsertTimeSeriesHistory",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TimeSeriesHistoryInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeriesHistory"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeriesHistory"
                   }
                 }
               }
@@ -2297,6 +2403,176 @@
         }
       }
     },
+    "/api/production/well/{sourceWellId}/tsconfig": {
+      "get": {
+        "tags": [
+          "TimeSeriesConfiguration"
+        ],
+        "summary": "Get time series configuration by well source id",
+        "operationId": "findTimeSeriesConfigurationBySourceWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeries"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeries"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "TimeSeriesConfiguration"
+        ],
+        "summary": "Delete time series configuration by well source id",
+        "operationId": "deleteTimeSeriesBySourceWellId",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/ts": {
+      "get": {
+        "tags": [
+          "TimeSeriesHistory"
+        ],
+        "summary": "Get time series configuration by well source id",
+        "operationId": "getTimeSeriesHistoryByWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeriesHistory"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeriesHistory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/timeseries/{sourceTimeSeriesId}/ts": {
+      "get": {
+        "tags": [
+          "TimeSeriesHistory"
+        ],
+        "summary": "Get time series configuration by well source id",
+        "operationId": "getTimeSeriesHistoryByWell_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceTimeSeriesId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeriesHistory"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSeriesHistory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/well/{sourceWellId}/srp": {
       "get": {
         "tags": [
@@ -3081,27 +3357,6 @@
           }
         }
       },
-      "LocalTime": {
-        "type": "object",
-        "properties": {
-          "hour": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "minute": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "second": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "nano": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "Well": {
         "required": [
           "fluid",
@@ -3110,7 +3365,6 @@
           "lon",
           "name",
           "sourceId",
-          "timezone",
           "type",
           "uwi",
           "xid"
@@ -3185,200 +3439,7 @@
             "nullable": true
           },
           "timezone": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "rules": {
-                "type": "object",
-                "properties": {
-                  "fixedOffset": {
-                    "type": "boolean"
-                  },
-                  "transitions": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "offsetBefore": {
-                          "type": "object",
-                          "properties": {
-                            "totalSeconds": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "id": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "offsetAfter": {
-                          "type": "object",
-                          "properties": {
-                            "totalSeconds": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "id": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "instant": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "overlap": {
-                          "type": "boolean"
-                        },
-                        "duration": {
-                          "type": "object",
-                          "properties": {
-                            "seconds": {
-                              "type": "integer",
-                              "format": "int64"
-                            },
-                            "zero": {
-                              "type": "boolean"
-                            },
-                            "nano": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "negative": {
-                              "type": "boolean"
-                            },
-                            "positive": {
-                              "type": "boolean"
-                            },
-                            "units": {
-                              "type": "array",
-                              "items": {
-                                "type": "object",
-                                "properties": {
-                                  "durationEstimated": {
-                                    "type": "boolean"
-                                  },
-                                  "timeBased": {
-                                    "type": "boolean"
-                                  },
-                                  "dateBased": {
-                                    "type": "boolean"
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "gap": {
-                          "type": "boolean"
-                        },
-                        "dateTimeAfter": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
-                        "dateTimeBefore": {
-                          "type": "string",
-                          "format": "date-time"
-                        }
-                      }
-                    }
-                  },
-                  "transitionRules": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "month": {
-                          "type": "string",
-                          "enum": [
-                            "JANUARY",
-                            "FEBRUARY",
-                            "MARCH",
-                            "APRIL",
-                            "MAY",
-                            "JUNE",
-                            "JULY",
-                            "AUGUST",
-                            "SEPTEMBER",
-                            "OCTOBER",
-                            "NOVEMBER",
-                            "DECEMBER"
-                          ]
-                        },
-                        "timeDefinition": {
-                          "type": "string",
-                          "enum": [
-                            "UTC",
-                            "WALL",
-                            "STANDARD"
-                          ]
-                        },
-                        "standardOffset": {
-                          "type": "object",
-                          "properties": {
-                            "totalSeconds": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "id": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "offsetBefore": {
-                          "type": "object",
-                          "properties": {
-                            "totalSeconds": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "id": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "offsetAfter": {
-                          "type": "object",
-                          "properties": {
-                            "totalSeconds": {
-                              "type": "integer",
-                              "format": "int32"
-                            },
-                            "id": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "dayOfWeek": {
-                          "type": "string",
-                          "enum": [
-                            "MONDAY",
-                            "TUESDAY",
-                            "WEDNESDAY",
-                            "THURSDAY",
-                            "FRIDAY",
-                            "SATURDAY",
-                            "SUNDAY"
-                          ]
-                        },
-                        "dayOfMonthIndicator": {
-                          "type": "integer",
-                          "format": "int32"
-                        },
-                        "localTime": {
-                          "$ref": "#/components/schemas/LocalTime"
-                        },
-                        "midnightEndOfDay": {
-                          "type": "boolean"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
+            "type": "string",
             "nullable": true
           }
         }
@@ -3537,11 +3598,242 @@
           }
         }
       },
+      "TimeSeriesInput": {
+        "required": [
+          "measurement",
+          "sourceId",
+          "sourceWellId",
+          "unit"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceWellId": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "measurement": {
+            "type": "string",
+            "enum": [
+              "CHOKE",
+              "WHP",
+              "WHT",
+              "DHGP",
+              "DHGT",
+              "OILRATE",
+              "GASRATE",
+              "WATERRATE",
+              "CONDRATE",
+              "SANDRATE",
+              "SANDIND",
+              "PRESSUREUPSTREAM"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "PERCENT",
+              "SIXTY_FOURTHS",
+              "PSIG",
+              "PSIA",
+              "PSIA_PER_BARREL",
+              "BARG",
+              "BARA",
+              "BARA_PER_BARREL",
+              "STB_PER_DAY",
+              "STB_PER_DAY_PER_PSIA",
+              "CUBIC_METER_PER_DAY",
+              "BBL",
+              "SCF",
+              "SCF_PER_DAY",
+              "MSCF",
+              "MMSCF",
+              "MSCF_PER_DAY",
+              "MMSCF_PER_DAY",
+              "MSCF_PER_DAY_PER_PSIA",
+              "MMSCF_PER_DAY_PER_PSIA",
+              "FARENHEIT",
+              "CELSIUS",
+              "STB",
+              "FEET",
+              "METERS",
+              "KILOMETERS",
+              "DARCY",
+              "MILLIDARCY",
+              "POUNDS_HOUR",
+              "GRAMS_PER_SECOND",
+              "HP",
+              "HZ",
+              "SPM",
+              "LBF"
+            ]
+          }
+        }
+      },
+      "TimeSeries": {
+        "required": [
+          "measurement",
+          "sourceId",
+          "type",
+          "unit",
+          "version",
+          "wellXid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "wellXid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "measurement": {
+            "type": "string",
+            "enum": [
+              "CHOKE",
+              "WHP",
+              "WHT",
+              "DHGP",
+              "DHGT",
+              "OILRATE",
+              "GASRATE",
+              "WATERRATE",
+              "CONDRATE",
+              "SANDRATE",
+              "SANDIND",
+              "PRESSUREUPSTREAM"
+            ]
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "PERCENT",
+              "SIXTY_FOURTHS",
+              "PSIG",
+              "PSIA",
+              "PSIA_PER_BARREL",
+              "BARG",
+              "BARA",
+              "BARA_PER_BARREL",
+              "STB_PER_DAY",
+              "STB_PER_DAY_PER_PSIA",
+              "CUBIC_METER_PER_DAY",
+              "BBL",
+              "SCF",
+              "SCF_PER_DAY",
+              "MSCF",
+              "MMSCF",
+              "MSCF_PER_DAY",
+              "MMSCF_PER_DAY",
+              "MSCF_PER_DAY_PER_PSIA",
+              "MMSCF_PER_DAY_PER_PSIA",
+              "FARENHEIT",
+              "CELSIUS",
+              "STB",
+              "FEET",
+              "METERS",
+              "KILOMETERS",
+              "DARCY",
+              "MILLIDARCY",
+              "POUNDS_HOUR",
+              "GRAMS_PER_SECOND",
+              "HP",
+              "HZ",
+              "SPM",
+              "LBF"
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "createdBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "TimeSeriesHistoryInput": {
+        "required": [
+          "sourceTimeSeriesId",
+          "sourceWellId",
+          "timestamp",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceWellId": {
+            "type": "string"
+          },
+          "sourceTimeSeriesId": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "TimeSeriesHistory": {
+        "required": [
+          "timeSeriesXid",
+          "timestamp",
+          "value",
+          "xid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timeSeriesXid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
       "SuckerRodPumpInput": {
         "required": [
           "installMd",
-          "plungerClearance",
           "plungerDIA",
+          "plungerLength",
           "rodNumber",
           "sourceId",
           "sourceWellId",
@@ -3648,10 +3940,8 @@
       },
       "GasLiftValveInput": {
         "required": [
-          "glvStation",
           "installMd",
           "portSize",
-          "pullDate",
           "runDate",
           "sourceId",
           "sourceMandrelId",
@@ -3659,8 +3949,7 @@
           "sourceWellId",
           "sourceWellboreId",
           "surfaceClosePressure",
-          "surfaceOpenPressure",
-          "testRackOpenPressure"
+          "surfaceOpenPressure"
         ],
         "type": "object",
         "properties": {
@@ -3685,11 +3974,13 @@
           },
           "pullDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "glvStation": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "installMd": {
             "type": "number",
@@ -3697,7 +3988,8 @@
           },
           "testRackOpenPressure": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           },
           "surfaceOpenPressure": {
             "type": "number",
@@ -3715,16 +4007,13 @@
       },
       "GasLiftValve": {
         "required": [
-          "glvStation",
           "installMd",
           "portSize",
-          "pullDate",
           "runDate",
           "sourceId",
           "sourceMandrelId",
           "surfaceClosePressure",
           "surfaceOpenPressure",
-          "testRackOpenPressure",
           "tubingXid",
           "xid"
         ],
@@ -3750,11 +4039,13 @@
           },
           "pullDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "glvStation": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "installMd": {
             "type": "number",
@@ -3762,7 +4053,8 @@
           },
           "testRackOpenPressure": {
             "type": "number",
-            "format": "double"
+            "format": "double",
+            "nullable": true
           },
           "surfaceOpenPressure": {
             "type": "number",
@@ -3798,6 +4090,9 @@
             "type": "string"
           },
           "sourceWellboreId": {
+            "type": "string"
+          },
+          "sourceId": {
             "type": "string"
           },
           "name": {
@@ -3863,6 +4158,26 @@
           "rsi": {
             "type": "number",
             "format": "double"
+          },
+          "condensateGasRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "waterGasRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "originalGasInPlace": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "originalOilInPlace": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "volumeAcquiferInitial": {
             "type": "number",
@@ -3989,6 +4304,26 @@
           "rsi": {
             "type": "number",
             "format": "double"
+          },
+          "condensateGasRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "waterGasRatio": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "originalGasInPlace": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "originalOilInPlace": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "volumeAcquiferInitial": {
             "type": "number",
