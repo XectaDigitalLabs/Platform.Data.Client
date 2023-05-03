@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://data-sandbox.onxecta.com",
+      "url": "https://data.onxecta.com",
       "description": "AWS Cloud API Endpoint"
     },
     {
@@ -34,13 +34,6 @@
       }
     },
     {
-      "name": "Wellbore",
-      "description": "Query or Mutate Wellbore Data",
-      "externalDocs": {
-        "url": "https://dash.readme.com/project/xecta/v2.0/docs/wellbore-header-schema"
-      }
-    },
-    {
       "name": "Tubing",
       "description": "Query or mutation tubing data",
       "externalDocs": {
@@ -53,21 +46,6 @@
       "externalDocs": {
         "url": "https://docs.onxecta.com/docs/well-sucker-rod-pump"
       }
-    },
-    {
-      "name": "Well",
-      "description": "Query or mutation well  data",
-      "externalDocs": {
-        "url": "https://docs.onxecta.com/docs/well-header-schema"
-      }
-    },
-    {
-      "name": "ESP",
-      "description": "Query or Update esp Data"
-    },
-    {
-      "name": "Formation Property",
-      "description": "Query or Update formation property Data"
     },
     {
       "name": "GasLiftValve",
@@ -91,6 +69,36 @@
     {
       "name": "Casing",
       "description": "Query or mutation casing data"
+    },
+    {
+      "name": "Wellbore",
+      "description": "Query or Mutate Wellbore Data",
+      "externalDocs": {
+        "url": "https://dash.readme.com/project/xecta/v2.0/docs/wellbore-header-schema"
+      }
+    },
+    {
+      "name": "Allocation",
+      "description": "Query or mutate allocation data"
+    },
+    {
+      "name": "Formation",
+      "description": "Query or Update formation Data"
+    },
+    {
+      "name": "DownHole Equipment",
+      "description": "Query or update equipment Data"
+    },
+    {
+      "name": "Well",
+      "description": "Query or mutation well  data",
+      "externalDocs": {
+        "url": "https://docs.onxecta.com/docs/well-header-schema"
+      }
+    },
+    {
+      "name": "ESP",
+      "description": "Query or Update esp Data"
     }
   ],
   "paths": {
@@ -354,18 +362,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeSeriesHistory"
-                  }
+                  "type": "integer",
+                  "format": "int32"
                 }
               },
               "application/x-ndjson": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TimeSeriesHistory"
-                  }
+                  "type": "integer",
+                  "format": "int32"
                 }
               }
             }
@@ -423,8 +427,8 @@
         "tags": [
           "GasLiftValve"
         ],
-        "summary": "Bulk Add / Update Esp Data",
-        "operationId": "upsertEsp",
+        "summary": "Bulk Add / Update GLV Data",
+        "operationId": "upsertGLV",
         "requestBody": {
           "content": {
             "application/json": {
@@ -466,7 +470,7 @@
     "/api/production/formation": {
       "post": {
         "tags": [
-          "Formation Property"
+          "Formation"
         ],
         "summary": "Bulk Add / Update Formation Property Data",
         "operationId": "upsertFormations",
@@ -514,7 +518,7 @@
           "ESP"
         ],
         "summary": "Bulk Add / Update Esp Data",
-        "operationId": "upsertEsp_1",
+        "operationId": "upsertEsp",
         "requestBody": {
           "content": {
             "application/json": {
@@ -545,6 +549,51 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Esp"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/equipment": {
+      "post": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Bulk Add / Update Formation Property Data",
+        "operationId": "upsertEquipment",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/DownHoleEquipmentInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownHoleEquipmentEntity"
                   }
                 }
               }
@@ -688,13 +737,54 @@
         }
       }
     },
+    "/api/production/allocation": {
+      "post": {
+        "tags": [
+          "Allocation"
+        ],
+        "summary": "Bulk Add / Update Allocation Data",
+        "operationId": "upsertAllocation",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/AllocationInput"
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/tubing/{sourceTubingId}/glv/{sourceId}": {
       "get": {
         "tags": [
           "GasLiftValve"
         ],
         "summary": "Fetch a tubing record by source id",
-        "operationId": "getEspBySource",
+        "operationId": "getGLVBySource",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -814,7 +904,7 @@
           "ESP"
         ],
         "summary": "Fetch a esp record by source id",
-        "operationId": "getEspBySource_1",
+        "operationId": "getEspBySource",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -1043,8 +1133,8 @@
         "tags": [
           "GasLiftValve"
         ],
-        "summary": "Fetch esp records by source wellbore id",
-        "operationId": "getGLVForSourceEsp",
+        "summary": "Fetch GLV records by source wellbore id",
+        "operationId": "getGLVForSourceGLV",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -1498,7 +1588,7 @@
           "GasLiftValve"
         ],
         "summary": "Fetch tubing records by source wellbore id",
-        "operationId": "getEspForSourceWellbore",
+        "operationId": "getGLVForSourceWellbore",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -1589,7 +1679,7 @@
     "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/formation": {
       "get": {
         "tags": [
-          "Formation Property"
+          "Formation"
         ],
         "summary": "Fetch formation by wellbore ",
         "operationId": "getFormationsByWellbore",
@@ -1617,12 +1707,18 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Formation"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
                 }
               },
               "application/x-ndjson": {
                 "schema": {
-                  "$ref": "#/components/schemas/Formation"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Formation"
+                  }
                 }
               }
             }
@@ -1631,7 +1727,7 @@
       },
       "delete": {
         "tags": [
-          "Formation Property"
+          "Formation"
         ],
         "summary": "Delete a single formation",
         "operationId": "deleteFormationBySourceWellbore",
@@ -1674,7 +1770,7 @@
           "ESP"
         ],
         "summary": "Fetch esp records by source wellbore id",
-        "operationId": "getEspForSourceWellbore_1",
+        "operationId": "getEspForSourceWellbore",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -1723,6 +1819,204 @@
         ],
         "summary": "Delete esp records by well source id",
         "operationId": "deleteEspBySourceWellbore_1",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/equipment/{sourceId}": {
+      "get": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Fetch a equipment record by source id",
+        "operationId": "getEquipmentBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Delete equipment records by source id",
+        "operationId": "deleteEquipmentBySource",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/wellbore/{sourceWellboreId}/equipment": {
+      "get": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Fetch equipment by wellbore ",
+        "operationId": "getEquipmentByWellbore",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sourceWellboreId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Delete equipment records by well source id",
+        "operationId": "deleteEquipmentBySourceWellbore",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -2657,7 +2951,7 @@
           "GasLiftValve"
         ],
         "summary": "Fetch gas lift valve records by source well id",
-        "operationId": "getESPsForWell",
+        "operationId": "getGLVsForWell",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -2732,7 +3026,7 @@
     "/api/production/well/{sourceWellId}/formation": {
       "get": {
         "tags": [
-          "Formation Property"
+          "Formation"
         ],
         "summary": "Fetch formations by well ",
         "operationId": "getFormationsByWell",
@@ -2772,7 +3066,7 @@
       },
       "delete": {
         "tags": [
-          "Formation Property"
+          "Formation"
         ],
         "summary": "Delete all formations for a given well regardless of wellbore",
         "operationId": "deleteFormationsBySourceWell",
@@ -2807,7 +3101,7 @@
           "ESP"
         ],
         "summary": "Fetch tubing records by source well id",
-        "operationId": "getESPsForWell_1",
+        "operationId": "getESPsForWell",
         "parameters": [
           {
             "name": "sourceWellId",
@@ -2869,6 +3163,78 @@
                 }
               },
               "application/x-ndjson": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/well/{sourceWellId}/equipment": {
+      "get": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Fetch equipment by well ",
+        "operationId": "getEquipmentByWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DownHoleEquipmentEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "DownHole Equipment"
+        ],
+        "summary": "Delete all equipments for a given well regardless of wellbore",
+        "operationId": "deleteEquipmentBySourceWell",
+        "parameters": [
+          {
+            "name": "sourceWellId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
                 "schema": {
                   "type": "integer",
                   "format": "int32"
@@ -3179,6 +3545,114 @@
         ],
         "summary": "Delete Daily Production",
         "operationId": "deleteDaily",
+        "parameters": [
+          {
+            "name": "uwi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/production/allocation/{uwi}": {
+      "get": {
+        "tags": [
+          "Allocation"
+        ],
+        "summary": "Fetch Allocation Records",
+        "operationId": "getAllocation",
+        "parameters": [
+          {
+            "name": "uwi",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "startDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "endDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AllocationEntity"
+                  }
+                }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AllocationEntity"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Allocation"
+        ],
+        "summary": "Delete Allocation",
+        "operationId": "deleteAllocation",
         "parameters": [
           {
             "name": "uwi",
@@ -3802,33 +4276,6 @@
           }
         }
       },
-      "TimeSeriesHistory": {
-        "required": [
-          "timeSeriesXid",
-          "timestamp",
-          "value",
-          "xid"
-        ],
-        "type": "object",
-        "properties": {
-          "xid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "timeSeriesXid": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "value": {
-            "type": "number",
-            "format": "double"
-          }
-        }
-      },
       "SuckerRodPumpInput": {
         "required": [
           "installMd",
@@ -4325,7 +4772,7 @@
             "format": "double",
             "nullable": true
           },
-          "volumeAcquiferInitial": {
+          "volumeAquiferInitial": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -4342,7 +4789,7 @@
             "type": "number",
             "format": "double"
           },
-          "fluidComingledGOR": {
+          "fluidCommingledGOR": {
             "type": "number",
             "format": "double",
             "nullable": true
@@ -4499,6 +4946,123 @@
           "pullDate": {
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+      "DownHoleEquipmentInput": {
+        "required": [
+          "bottomMd",
+          "sourceId",
+          "sourceWellId",
+          "sourceWellboreId",
+          "topMd",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "sourceWellId": {
+            "type": "string"
+          },
+          "sourceWellboreId": {
+            "type": "string"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "PACKER",
+              "DOWNHOLEGAUGE"
+            ]
+          },
+          "topMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "bottomMd": {
+            "type": "number",
+            "format": "double"
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "DownHoleEquipmentEntity": {
+        "required": [
+          "bottomMD",
+          "sourceId",
+          "topMD",
+          "type",
+          "version",
+          "wellboreXid"
+        ],
+        "type": "object",
+        "properties": {
+          "xid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "wellboreXid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sourceId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "PACKER",
+              "DOWNHOLEGAUGE"
+            ]
+          },
+          "topMD": {
+            "type": "number",
+            "format": "double"
+          },
+          "bottomMD": {
+            "type": "number",
+            "format": "double"
+          },
+          "runDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pullDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "createdBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "updatedBy": {
+            "type": "string",
+            "readOnly": true
+          },
+          "version": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
           }
         }
       },
@@ -4951,6 +5515,101 @@
             "type": "string",
             "format": "date-time",
             "nullable": true
+          }
+        }
+      },
+      "AllocationInput": {
+        "required": [
+          "date",
+          "factor",
+          "gasRate",
+          "oilRate",
+          "uwi",
+          "waterRate"
+        ],
+        "type": "object",
+        "properties": {
+          "uwi": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "oilRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "gasRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "waterRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "factor": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "TimeSeriesHistory": {
+        "required": [
+          "timeSeriesXid",
+          "timestamp",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "timeSeriesXid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "value": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "AllocationEntity": {
+        "required": [
+          "factor",
+          "gasRate",
+          "oilRate",
+          "timestamp",
+          "waterRate",
+          "wellXid"
+        ],
+        "type": "object",
+        "properties": {
+          "wellXid": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "oilRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "gasRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "waterRate": {
+            "type": "number",
+            "format": "double"
+          },
+          "factor": {
+            "type": "number",
+            "format": "double"
           }
         }
       }
