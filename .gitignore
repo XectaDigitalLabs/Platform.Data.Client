@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/dotnet/Tutorial/obj
+/dotnet/ExcelReadWrite/obj
+/dotnet/packages
+/dotnet/ServiceHost/obj/Debug
+/dotnet/.vs
+/dotnet/WinConsole/obj/Debug/net6.0
+/dotnet/WinConsole/obj
