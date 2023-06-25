@@ -12,7 +12,7 @@ var configJson = File.ReadAllText(configFilePath);
 Config? config = JsonSerializer.Deserialize<Config>(configJson);
 
 // 2. Connect to API 
-XectaApiClient? client; 
+XectaApiClient? client;
 try
 {
     // Setup the api, auth urls, and the mTLS certificate
@@ -241,7 +241,10 @@ try
     var formationProperties = await client.WellboreFormationApi()
         .GetFormationsByWellboreAsync(sourceWellId, sourceBoreId);
     if (formationProperties != null)
-        Console.WriteLine("Found Formation Info for : " + sourceBoreId + "->" + formationProperties.Name);
+    {
+        foreach (Formation f in formationProperties)
+            Console.WriteLine("Found Formation Info for : " + sourceBoreId + "->" + formationProperties);
+    }
     else
         Console.WriteLine("No formation Info found for: " + sourceWellId + " " + sourceBoreId);
 
@@ -507,7 +510,7 @@ try
         casingPressure: 75, // <-- Required.
         downtimeHours: 12, // <-- Optional.(use 0 if not available)
         downtimeCode: "POWER-LOSS-PAD" //<-- Optional (use empty string or null if not available)
-       //Other optional lift related inputs are available  e.g. EspFrequency
+                                       //Other optional lift related inputs are available  e.g. EspFrequency
     );
 
 
